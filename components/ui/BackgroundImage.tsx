@@ -1,17 +1,20 @@
-import { View, StyleSheet } from "react-native"
+import { StyleSheet } from "react-native"
+import { ImageBackground } from "react-native"
 
 function BackgroundImage({ children }) {
   return (
-    <View
+    <ImageBackground
+      source={require('../../assets/images/background-light.png')}
       style={styles.backgroundImage}
-    >{children}</View>
+      resizeMode="cover"
+    >
+      {children}
+    </ImageBackground>
   )
 }
 
-
 const styles = StyleSheet.create({
   backgroundImage: {
-    backgroundColor: 'limegreen',
     height: '100%',
     width: '100%'
   }
