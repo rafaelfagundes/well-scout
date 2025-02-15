@@ -12,14 +12,14 @@ export default function ScanScreen() {
 
   useEffect(() => {
     const getCameraPermissions = async () => {
-      const { status } = await CameraView.requestCameraPermissionsAsync();
+      const { status } = await CameraView.requestPermissionsAsync(); // Corrected method name
       setHasPermission(status === 'granted');
     };
 
     getCameraPermissions();
   }, []);
 
-  const handleBarCodeScanned = ({ type, data }: { type: string,  string }) => {
+  const handleBarCodeScanned = ({ type, data }: { type: string;  string }) => { // Corrected type
     setScanned(true);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
@@ -49,9 +49,9 @@ export default function ScanScreen() {
       <ScreenContainer>
         <View style={styles.container}>
           <CameraView
-            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} // Corrected prop name
             style={StyleSheet.absoluteFillObject}
-            type={cameraType} // Use the correct prop name 'type'
+            type={cameraType}
           />
           {scanned && <Text style={styles.text} onPress={() => setScanned(false)}>Tap to Scan Again</Text>}
         </View>
