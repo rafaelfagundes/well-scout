@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Alert } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { useState } from 'react';
 import type { BarcodeScanningResult } from 'expo-camera';
@@ -26,8 +26,22 @@ export default function ScanScreen() {
     return (
       <BackgroundImage>
         <ScreenContainer>
-          <Text>We need your permission to show the camera</Text>
-          <Text style={styles.text} onPress={requestPermission}>Grant permission</Text>
+          <Text style={styles.text} onPress={() => {
+            Alert.alert(
+              "Camera Permission Required",
+              "We need access to your camera to scan barcodes. Would you like to enable camera access?",
+              [
+                {
+                  text: "Not Now",
+                  style: "cancel"
+                },
+                {
+                  text: "Enable Camera",
+                  onPress: requestPermission
+                }
+              ]
+            );
+          }}>Enable Camera Access</Text>
         </ScreenContainer>
       </BackgroundImage>
     );
