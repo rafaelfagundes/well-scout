@@ -2,22 +2,30 @@ import React from 'react'
 import { SafeAreaView, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { Image } from "expo-image"
 import { UserCircleGear } from 'phosphor-react-native'
+import { Colors } from '@/constants/Colors'
+import { useColorScheme } from '@/hooks/useColorScheme.web'
 
 interface ScreenContainerProps {
   children: React.ReactNode[] | React.ReactNode
 }
 
 export default function ScreenContainer({ children }: ScreenContainerProps) {
+  const colorScheme = useColorScheme()
+
+  const colors = Colors[colorScheme ?? 'light']
+  // const logo = colorScheme === 'dark' ? require('../../assets/images/logo-light.svg') : require('../../assets/images/logo-dark.svg')
+  const logo = require(`../../assets/images/logo-${colorScheme ?? 'light'}.svg`)
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
         <View style={styles.topHeader}>
           <Image
             style={styles.logo}
-            source={require('../../assets/images/logo-dark.svg')}
+            source={logo}
           ></Image>
           <TouchableOpacity>
-            <UserCircleGear size={32} />
+            <UserCircleGear size={32} color={colors.text} />
           </TouchableOpacity>
         </View>
         <View>{children}</View>
