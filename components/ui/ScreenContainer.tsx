@@ -16,6 +16,7 @@ export default function ScreenContainer({ children }: ScreenContainerProps) {
   const colors = Colors[colorScheme ?? 'light']
   const logo = colorScheme === 'dark' ? require('../../assets/images/logo-light.svg') : require('../../assets/images/logo-dark.svg')
   const tabBarHeight = useBottomTabBarHeight()
+  console.log(tabBarHeight)
 
   const styles = StyleSheet.create({
     container: {
@@ -34,7 +35,7 @@ export default function ScreenContainer({ children }: ScreenContainerProps) {
     },
     children: {
       flex: 1,
-      marginBottom: tabBarHeight,
+      marginBottom: tabBarHeight - 21,
     }
   });
 

@@ -4,11 +4,42 @@ import ScreenContainer from '@/components/ui/ScreenContainer';
 import { Text } from 'react-native'
 import BackgroundImage from '@/components/ui/BackgroundImage';
 
-export default function HomeScreen() {
+export default function ProductsScreen() {
   return (
     <BackgroundImage>
       <ScreenContainer>
-        <Text>Rafael</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
+        <Text>Products</Text>
       </ScreenContainer>
     </BackgroundImage>
   );
