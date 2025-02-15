@@ -1,57 +1,51 @@
 import { StyleSheet, View, Text } from 'react-native';
-import { CameraView, CameraType } from 'expo-camera';
-import { useState, useEffect } from 'react';
+import { CameraView, useCameraPermissions } from 'expo-camera';
+import { useState } from 'react';
+import type { BarcodeScanningResult } from 'expo-camera';
 
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 
 export default function ScanScreen() {
-  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const [permission, requestPermission] = useCameraPermissions();
   const [scanned, setScanned] = useState(false);
-  const [cameraType, setCameraType] = useState(CameraType.back); // Added camera type state
 
-  useEffect(() => {
-    const getCameraPermissions = async () => {
-      const { status } = await CameraView.requestPermissionsAsync(); // Corrected method name
-      setHasPermission(status === 'granted');
-    };
+  if (!permission) {
+    // Camera permissions are still loading
+    return (
+      <BackgroundImage>
+        <ScreenContainer>
+          <Text>Requesting camera permission...</Text>
+        </ScreenContainer>
+      </BackgroundImage>
+    );
+  }
 
-    getCameraPermissions();
-  }, []);
+  if (!permission.granted) {
+    // Camera permissions are not granted yet
+    return (
+      <BackgroundImage>
+        <ScreenContainer>
+          <Text>We need your permission to show the camera</Text>
+          <Text style={styles.text} onPress={requestPermission}>Grant permission</Text>
+        </ScreenContainer>
+      </BackgroundImage>
+    );
+  }
 
-  const handleBarCodeScanned = ({ type, data }: { type: string;  string }) => { // Corrected type
+  const handleBarCodeScanned = (result: BarcodeScanningResult) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    alert(`Bar code with type ${result.type} and data ${result.data} has been scanned!`);
   };
-
-  if (hasPermission === null) {
-    return (
-      <BackgroundImage>
-        <ScreenContainer>
-          <Text>Requesting for camera permission</Text>
-        </ScreenContainer>
-      </BackgroundImage>
-    );
-  }
-  if (hasPermission === false) {
-    return (
-      <BackgroundImage>
-        <ScreenContainer>
-          <Text>No access to camera</Text>
-        </ScreenContainer>
-      </BackgroundImage>
-    );
-  }
-
 
   return (
     <BackgroundImage>
       <ScreenContainer>
         <View style={styles.container}>
           <CameraView
-            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} // Corrected prop name
+            onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
             style={StyleSheet.absoluteFillObject}
-            type={cameraType}
+            facing="back"
           />
           {scanned && <Text style={styles.text} onPress={() => setScanned(false)}>Tap to Scan Again</Text>}
         </View>
