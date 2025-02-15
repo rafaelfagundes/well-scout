@@ -1,18 +1,46 @@
-import { StyleSheet, View, Text, Alert, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, Text, Alert, SafeAreaView } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
+import type { CameraType, BarcodeScanningResult } from 'expo-camera';
 import { useState } from 'react';
-import type { BarcodeScanningResult } from 'expo-camera';
 
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import Logo from '@/components/ui/Logo';
 
 export default function ScanScreen() {
   const [permission, requestPermission] = useCameraPermissions();
   const [scanned, setScanned] = useState(false);
-  const [capturedImage, setCapturedImage] = useState<string | null>(null); // Store the image URI
+  const [facing] = useState<CameraType>('back');
+  const tabBarHeight = useBottomTabBarHeight()
+
+  const styles = StyleSheet.create({
+    container: {
+      flexDirection: 'column',
+      justifyContent: 'center',
+      paddingHorizontal: 16,
+      // height: "100%",
+      // width: "100%",
+    },
+    text: {
+      color: 'white',
+      fontSize: 16,
+      textAlign: 'center',
+      marginTop: 20,
+    },
+    cameraView: {
+      width: "100%",
+      height: "100%",
+      borderRadius: 20,
+      overflow: "hidden",
+    },
+    header: {
+      flexDirection: 'row',
+      marginTop: 20
+    }
+  });
 
   if (!permission) {
-    // Camera permissions are still loading
     return (
       <BackgroundImage>
         <ScreenContainer>
@@ -23,7 +51,6 @@ export default function ScanScreen() {
   }
 
   if (!permission.granted) {
-    // Camera permissions are not granted yet
     return (
       <BackgroundImage>
         <ScreenContainer>
@@ -53,100 +80,31 @@ export default function ScanScreen() {
     alert(`Bar code with type ${result.type} and data ${result.data} has been scanned!`);
   };
 
-  const takePicture = async () => {
-    if (this.camera) {
-      const options = { quality: 0.5, base64: false, skipProcessing: true };
-      const photo = await this.camera.takePictureAsync(options);
-      setCapturedImage(photo.uri);
-      setScanned(true); //optionally set scanned to true after taking a picture
-    }
-  };
-
-
   return (
     <BackgroundImage>
-      <ScreenContainer>
+      <SafeAreaView>
         <View style={styles.container}>
+          <View style={styles.header}>
+            <Logo />
+          </View>
           <CameraView
-            ref={(ref) => {
-              this.camera = ref;
+            // style={{ ...StyleSheet.absoluteFillObject, ...styles.cameraView }}
+            style={{ ...styles.cameraView }}
+            facing={facing}
+            barcodeScannerSettings={{
+              barcodeTypes: ['qr', 'ean13', 'ean8', 'upc_a'],
             }}
             onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
-            style={StyleSheet.absoluteFillObject}
-            facing="back"
           />
-          {scanned && !capturedImage && (
-            <Text style={styles.text} onPress={() => setScanned(false)}>Tap to Scan Again</Text>
-          )}
 
-          {!capturedImage && (
-            <TouchableOpacity style={styles.captureButton} onPress={takePicture}>
-              <Text style={styles.buttonText}>Take Photo</Text>
-            </TouchableOpacity>
-          )}
-
-          {capturedImage && (
-            <View style={styles.imagePreviewContainer}>
-              <Image source={{ uri: capturedImage }} style={styles.imagePreview} />
-              <TouchableOpacity style={styles.retakeButton} onPress={() => {
-                setCapturedImage(null);
-                setScanned(false); // Allow rescanning after retake.
-              }}>
-                <Text style={styles.buttonText}>Retake</Text>
-              </TouchableOpacity>
-            </View>
+          {scanned && (
+            <Text style={styles.text} onPress={() => setScanned(false)}>
+              Tap to Scan Again
+            </Text>
           )}
         </View>
-      </ScreenContainer>
+      </SafeAreaView>
     </BackgroundImage>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-  text: {
-    color: 'white',
-    fontSize: 16,
-    textAlign: 'center',
-    marginTop: 20,
-  },
-  captureButton: {
-    position: 'absolute',
-    bottom: 30,
-    alignSelf: 'center',
-    padding: 20,
-    backgroundColor: 'blue',
-    borderRadius: 10,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 18,
-  },
-  imagePreviewContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black', // Semi-transparent background
-  },
-  imagePreview: {
-    width: '80%', // Adjust as needed
-    height: '80%', // Adjust as needed
-    resizeMode: 'contain',
-  },
-  retakeButton: {
-    position: 'absolute',
-    bottom: 30,
-    alignSelf: 'center',
-    padding: 20,
-    backgroundColor: 'red',
-    borderRadius: 10,
-  },
-});
