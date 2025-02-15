@@ -28,7 +28,8 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: 'transparent',
           position: 'absolute',
-          margin: 10
+          margin: 10,
+          borderTopWidth: 0
         },
       }}>
       <Tabs.Screen
