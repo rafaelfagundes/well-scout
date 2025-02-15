@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text } from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import { CameraView, CameraType } from 'expo-camera';
 import { useState, useEffect } from 'react';
 
 import ScreenContainer from '@/components/ui/ScreenContainer';
@@ -8,14 +8,15 @@ import BackgroundImage from '@/components/ui/BackgroundImage';
 export default function ScanScreen() {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState(false);
+  const [cameraType, setCameraType] = useState(CameraType.back); // Added camera type state
 
   useEffect(() => {
-    const getBarCodeScannerPermissions = async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
+    const getCameraPermissions = async () => {
+      const { status } = await CameraView.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
     };
 
-    getBarCodeScannerPermissions();
+    getCameraPermissions();
   }, []);
 
   const handleBarCodeScanned = ({ type, data }: { type: string,  string }) => {
@@ -47,9 +48,10 @@ export default function ScanScreen() {
     <BackgroundImage>
       <ScreenContainer>
         <View style={styles.container}>
-          <BarCodeScanner
+          <CameraView
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
             style={StyleSheet.absoluteFillObject}
+            type={cameraType} // Use the correct prop name 'type'
           />
           {scanned && <Text style={styles.text} onPress={() => setScanned(false)}>Tap to Scan Again</Text>}
         </View>
