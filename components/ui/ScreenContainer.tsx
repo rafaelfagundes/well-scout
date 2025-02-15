@@ -13,8 +13,7 @@ export default function ScreenContainer({ children }: ScreenContainerProps) {
   const colorScheme = useColorScheme()
 
   const colors = Colors[colorScheme ?? 'light']
-  // const logo = colorScheme === 'dark' ? require('../../assets/images/logo-light.svg') : require('../../assets/images/logo-dark.svg')
-  const logo = require(`../../assets/images/logo-${colorScheme ?? 'light'}.svg`)
+  const logo = colorScheme === 'dark' ? require('../../assets/images/logo-light.svg') : require('../../assets/images/logo-dark.svg')
 
   return (
     <SafeAreaView>
@@ -28,7 +27,7 @@ export default function ScreenContainer({ children }: ScreenContainerProps) {
             <UserCircleGear size={32} color={colors.text} />
           </TouchableOpacity>
         </View>
-        <View>{children}</View>
+        <View style={styles.children}>{children}</View>
       </View>
     </SafeAreaView>
   )
@@ -39,7 +38,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 16,
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   topHeader: {
     paddingVertical: 20,
@@ -49,6 +48,9 @@ const styles = StyleSheet.create({
   logo: {
     width: 151,
     height: 32
+  },
+  children: {
+    backgroundColor: 'red',
   }
 });
 
