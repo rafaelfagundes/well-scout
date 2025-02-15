@@ -9,37 +9,6 @@ export default function ProductsScreen() {
     <BackgroundImage>
       <ScreenContainer>
         <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
-        <Text>Products</Text>
       </ScreenContainer>
     </BackgroundImage>
   );
