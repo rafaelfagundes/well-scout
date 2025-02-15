@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { SafeAreaView, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import { Image } from "expo-image"
 import { UserCircleGear } from 'phosphor-react-native'
 import { Colors } from '@/constants/Colors'
@@ -50,12 +50,8 @@ export default function ScreenContainer({ children }: ScreenContainerProps) {
             <UserCircleGear size={32} color={colors.text} />
           </TouchableOpacity>
         </View>
-        <View style={styles.children}>{children}</View>
+        <ScrollView style={styles.children}>{children}</ScrollView>
       </View>
     </SafeAreaView>
   )
 }
-
-
-
-
