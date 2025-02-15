@@ -17,6 +17,27 @@ export default function ScreenContainer({ children }: ScreenContainerProps) {
   const logo = colorScheme === 'dark' ? require('../../assets/images/logo-light.svg') : require('../../assets/images/logo-dark.svg')
   const tabBarHeight = useBottomTabBarHeight()
 
+  const styles = StyleSheet.create({
+    container: {
+      padding: 16,
+      width: '100%',
+      height: '100%',
+    },
+    topHeader: {
+      paddingVertical: 20,
+      flexDirection: 'row',
+      justifyContent: 'space-between'
+    },
+    logo: {
+      width: 151,
+      height: 32
+    },
+    children: {
+      flex: 1,
+      marginBottom: tabBarHeight,
+    }
+  });
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -36,25 +57,5 @@ export default function ScreenContainer({ children }: ScreenContainerProps) {
 }
 
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-    width: '100%',
-    height: '100%',
-  },
-  topHeader: {
-    paddingVertical: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  logo: {
-    width: 151,
-    height: 32
-  },
-  children: {
-    flex: 1,
-    marginBottom: tabBarHeight,
-  }
-});
 
 
