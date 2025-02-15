@@ -16,11 +16,10 @@ export default function ScanScreen() {
 
   const styles = StyleSheet.create({
     container: {
+      flex: 1, // Make the container take up all available space
       flexDirection: 'column',
       justifyContent: 'center',
       paddingHorizontal: 16,
-      // height: "100%",
-      // width: "100%",
     },
     text: {
       color: 'white',
@@ -30,13 +29,16 @@ export default function ScanScreen() {
     },
     cameraView: {
       width: "100%",
-      height: "100%",
       borderRadius: 20,
       overflow: "hidden",
+      flex: 1, // Make CameraView fill its parent
     },
     header: {
       flexDirection: 'row',
       marginTop: 20
+    },
+    cameraContainer: {
+      flex: 1, // Add this to make the camera container fill the SafeAreaView
     }
   });
 
@@ -82,21 +84,21 @@ export default function ScanScreen() {
 
   return (
     <BackgroundImage>
-      <SafeAreaView>
+      <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.header}>
             <Logo />
           </View>
-          <CameraView
-            // style={{ ...StyleSheet.absoluteFillObject, ...styles.cameraView }}
-            style={{ ...styles.cameraView }}
-            facing={facing}
-            barcodeScannerSettings={{
-              barcodeTypes: ['qr', 'ean13', 'ean8', 'upc_a'],
-            }}
-            onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
-          />
-
+          <View style={styles.cameraContainer}>
+            <CameraView
+              style={styles.cameraView}
+              facing={facing}
+              barcodeScannerSettings={{
+                barcodeTypes: ['qr', 'ean13', 'ean8', 'upc_a'],
+              }}
+              onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
+            />
+          </View>
           {scanned && (
             <Text style={styles.text} onPress={() => setScanned(false)}>
               Tap to Scan Again
@@ -107,4 +109,3 @@ export default function ScanScreen() {
     </BackgroundImage>
   );
 }
-
