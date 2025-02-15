@@ -4,6 +4,7 @@ import { Image } from "expo-image"
 import { UserCircleGear } from 'phosphor-react-native'
 import { Colors } from '@/constants/Colors'
 import { useColorScheme } from '@/hooks/useColorScheme.web'
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 
 interface ScreenContainerProps {
   children: React.ReactNode[] | React.ReactNode
@@ -14,6 +15,7 @@ export default function ScreenContainer({ children }: ScreenContainerProps) {
 
   const colors = Colors[colorScheme ?? 'light']
   const logo = colorScheme === 'dark' ? require('../../assets/images/logo-light.svg') : require('../../assets/images/logo-dark.svg')
+  const tabBarHeight = useBottomTabBarHeight()
 
   return (
     <SafeAreaView>
@@ -50,7 +52,8 @@ const styles = StyleSheet.create({
     height: 32
   },
   children: {
-    backgroundColor: 'red',
+    flex: 1,
+    marginBottom: tabBarHeight,
   }
 });
 
