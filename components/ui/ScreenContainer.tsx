@@ -5,6 +5,7 @@ import { UserCircleGear } from 'phosphor-react-native'
 import { Colors } from '@/constants/Colors'
 import { useColorScheme } from '@/hooks/useColorScheme.web'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
+import Logo from './Logo'
 
 interface ScreenContainerProps {
   children: React.ReactNode[] | React.ReactNode
@@ -12,11 +13,8 @@ interface ScreenContainerProps {
 
 export default function ScreenContainer({ children }: ScreenContainerProps) {
   const colorScheme = useColorScheme()
-
   const colors = Colors[colorScheme ?? 'light']
-  const logo = colorScheme === 'dark' ? require('../../assets/images/logo-light.svg') : require('../../assets/images/logo-dark.svg')
   const tabBarHeight = useBottomTabBarHeight()
-  console.log(tabBarHeight)
 
   const styles = StyleSheet.create({
     container: {
@@ -25,7 +23,8 @@ export default function ScreenContainer({ children }: ScreenContainerProps) {
       height: '100%',
     },
     topHeader: {
-      paddingVertical: 20,
+      marginTop: 4,
+      marginBottom: 20,
       flexDirection: 'row',
       justifyContent: 'space-between'
     },
@@ -43,10 +42,7 @@ export default function ScreenContainer({ children }: ScreenContainerProps) {
     <SafeAreaView>
       <View style={styles.container}>
         <View style={styles.topHeader}>
-          <Image
-            style={styles.logo}
-            source={logo}
-          ></Image>
+          <Logo />
           <TouchableOpacity>
             <UserCircleGear size={32} color={colors.text} />
           </TouchableOpacity>

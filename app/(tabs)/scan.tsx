@@ -1,25 +1,32 @@
-import { StyleSheet, View, Text, Alert, SafeAreaView } from 'react-native';
+import { StyleSheet, View, Text, Alert, SafeAreaView, TouchableOpacity, useColorScheme } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import type { CameraType, BarcodeScanningResult } from 'expo-camera';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import Logo from '@/components/ui/Logo';
+import { Flashlight, UserCircleGear } from 'phosphor-react-native';
+import { Colors } from '@/constants/Colors';
 
 export default function ScanScreen() {
   const [permission, requestPermission] = useCameraPermissions();
   const [scanned, setScanned] = useState(false);
   const [facing] = useState<CameraType>('back');
+  const [barCode, setBarCode] = useState<string>("")
+  const [enableTorch, setEnableTorch] = useState(false)
   const tabBarHeight = useBottomTabBarHeight()
+  const colorScheme = useColorScheme()
+  const colors = Colors[colorScheme ?? 'light']
 
   const styles = StyleSheet.create({
     container: {
-      flex: 1, // Make the container take up all available space
+      flex: 1,
       flexDirection: 'column',
       justifyContent: 'center',
       paddingHorizontal: 16,
+      marginBottom: tabBarHeight
     },
     text: {
       color: 'white',
@@ -31,16 +38,29 @@ export default function ScanScreen() {
       width: "100%",
       borderRadius: 20,
       overflow: "hidden",
-      flex: 1, // Make CameraView fill its parent
+      flex: 1,
     },
     header: {
       flexDirection: 'row',
-      marginTop: 20
+      marginVertical: 20,
+      justifyContent: 'space-between',
+    },
+    headerButtons: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      width: 64 + 20 // margin
     },
     cameraContainer: {
-      flex: 1, // Add this to make the camera container fill the SafeAreaView
+      flex: 1,
     }
   });
+
+
+  useEffect(() => {
+    if (barCode !== "") {
+      console.log(barCode)
+    }
+  }, [barCode])
 
   if (!permission) {
     return (
@@ -78,8 +98,9 @@ export default function ScanScreen() {
   }
 
   const handleBarCodeScanned = (result: BarcodeScanningResult) => {
-    setScanned(true);
-    alert(`Bar code with type ${result.type} and data ${result.data} has been scanned!`);
+    // setScanned(true);
+    // alert(`Bar code with type ${result.type} and data ${result.data} has been scanned!`);
+    setBarCode(result.data)
   };
 
   return (
@@ -88,9 +109,19 @@ export default function ScanScreen() {
         <View style={styles.container}>
           <View style={styles.header}>
             <Logo />
+            <View style={styles.headerButtons}>
+              <TouchableOpacity onPress={() => setEnableTorch(!enableTorch)}>
+                <Flashlight size={32} color={colors.text} weight={enableTorch ? 'fill' : 'regular'} />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <UserCircleGear size={32} color={colors.text} />
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={styles.cameraContainer}>
             <CameraView
+              autofocus='on'
+              enableTorch={enableTorch}
               style={styles.cameraView}
               facing={facing}
               barcodeScannerSettings={{
