@@ -7,7 +7,7 @@ import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import Logo from '@/components/ui/Logo';
-import { Flashlight, UserCircleGear } from 'phosphor-react-native';
+import { Flashlight, Info, UserCircleGear } from 'phosphor-react-native';
 import { Colors } from '@/constants/Colors';
 
 export default function ScanScreen() {
@@ -37,6 +37,7 @@ export default function ScanScreen() {
     cameraView: {
       width: "100%",
       borderRadius: 20,
+      backgroundColor: 'black',
       overflow: "hidden",
       flex: 1,
     },
@@ -48,7 +49,8 @@ export default function ScanScreen() {
     headerButtons: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      width: 64 + 20 // margin
+      // width: 64 + 20 // margin
+      width: 116
     },
     cameraContainer: {
       flex: 1,
@@ -110,6 +112,9 @@ export default function ScanScreen() {
           <View style={styles.header}>
             <Logo />
             <View style={styles.headerButtons}>
+              <TouchableOpacity onPress={() => console.log('go to ProductDetailScreen')}>
+                <Info size={32} />
+              </TouchableOpacity>
               <TouchableOpacity onPress={() => setEnableTorch(!enableTorch)}>
                 <Flashlight size={32} color={colors.text} weight={enableTorch ? 'fill' : 'regular'} />
               </TouchableOpacity>
