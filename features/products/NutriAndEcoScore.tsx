@@ -1,6 +1,5 @@
 import { Fonts } from '@/constants/Fonts';
-import { getBackgroundColorAsync } from 'expo-system-ui';
-import { Tree } from 'phosphor-react-native';
+import { Leaf, Plant, Tree, TreeEvergreen } from 'phosphor-react-native';
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 
@@ -51,8 +50,8 @@ function EcoScore({ ecoScore }: { ecoScore: string }) {
       alignItems: 'center'
     },
     icon: {
-      width: 30,
-      height: 30,
+      width: 28,
+      height: 28,
       borderRadius: 15,
       justifyContent: 'center',
       alignItems: 'center',
@@ -68,21 +67,19 @@ function EcoScore({ ecoScore }: { ecoScore: string }) {
       paddingLeft: 20,
       paddingRight: 10,
       marginLeft: -15,
-      height: 20
+      height: 18
     },
     text: {
       fontFamily: Fonts.sansSerif,
       fontWeight: 700,
       color: '#FFF',
-      fontSize: 14,
+      fontSize: 12,
     }
   })
 
-
-
   return <View style={styles.item}>
     <View style={styles.icon}>
-      <Tree size={20} color="#FFF" />
+      <Tree size={18} color="#FFF" weight='fill' />
     </View>
     <View style={styles.textHolder}>
       <Text style={styles.text}>{ecoScore.toUpperCase()}</Text>
@@ -98,20 +95,22 @@ function NutriScore({ nutriScore, isScore = false, isFirst = false, isLast = fal
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      width: 25,
-      height: isScore ? 30 : 20,
+      width: isLast || isFirst ? 28 : 24,
+      height: isScore ? 28 : 18,
       backgroundColor: color,
-      borderTopLeftRadius: isFirst || isScore ? 4 : 0,
-      borderBottomLeftRadius: isFirst || isScore ? 4 : 0,
-      borderTopRightRadius: isLast || isScore ? 4 : 0,
-      borderBottomRightRadius: isLast || isScore ? 4 : 0,
-      marginHorizontal: isScore ? 1 : 0
+      borderTopLeftRadius: isFirst || isScore ? 9 : 0,
+      borderBottomLeftRadius: isFirst || isScore ? 9 : 0,
+      borderTopRightRadius: isLast || isScore ? 9 : 0,
+      borderBottomRightRadius: isLast || isScore ? 9 : 0,
+      marginHorizontal: isScore ? 1 : 0,
+      paddingRight: isLast && !isScore ? 4 : 0,
+      paddingLeft: isFirst && !isScore ? 4 : 0,
     },
     ratingLetter: {
       color: '#FFF',
       fontFamily: Fonts.sansSerif,
       fontWeight: 700,
-      fontSize: 14
+      fontSize: 12
     }
   })
 

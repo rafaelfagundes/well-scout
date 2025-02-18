@@ -17,6 +17,7 @@ interface ProductItemProps {
 }
 
 export default function ProductItem({
+  id,
   imageUrl,
   productName,
   brandName,
@@ -95,27 +96,27 @@ export default function ProductItem({
   return (
     <Link href={`/product/${id}`} asChild>
       <TouchableOpacity style={styles.card}>
-      <View style={styles.cardContent}>
-        <View style={styles.topContainer}>
-          <View style={styles.productInfo}>
-            <View style={styles.imageContainer}>
-              <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" />
-            </View>
-            <View style={styles.infoContainer}>
-              <View>
-                <Text style={styles.productName}>{productName}</Text>
-                <Text style={styles.brandName}>{brandName}</Text>
+        <View style={styles.cardContent}>
+          <View style={styles.topContainer}>
+            <View style={styles.productInfo}>
+              <View style={styles.imageContainer}>
+                <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" />
               </View>
-              <NutriAndEcoScore nutriScore={nutriScore} ecoScore={ecoScore}></NutriAndEcoScore>
+              <View style={styles.infoContainer}>
+                <View>
+                  <Text style={styles.productName}>{productName}</Text>
+                  <Text style={styles.brandName}>{brandName}</Text>
+                </View>
+                <NutriAndEcoScore nutriScore={nutriScore} ecoScore={ecoScore}></NutriAndEcoScore>
+              </View>
             </View>
-          </View>
-          <View style={styles.timeContainer}>
-            <Clock size={12} color={Colors[colorScheme ?? 'light'].text} />
-            <Text style={styles.timeText}>{formatRelativeTime(createdDate)}</Text>
+            <View style={styles.timeContainer}>
+              <Clock size={12} color={Colors[colorScheme ?? 'light'].text} />
+              <Text style={styles.timeText}>{formatRelativeTime(createdDate)}</Text>
+            </View>
           </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
     </Link>
   );
 }

@@ -12,7 +12,7 @@ interface ScreenContainerProps {
   scrollView?: boolean
 }
 
-export default function ScreenContainer({ children }: ScreenContainerProps) {
+export default function ScreenContainer({ children, scrollView = true }: ScreenContainerProps) {
   const colorScheme = useColorScheme()
   const colors = Colors[colorScheme ?? 'light']
   const tabBarHeight = useBottomTabBarHeight()
