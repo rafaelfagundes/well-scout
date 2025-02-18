@@ -54,7 +54,7 @@ const DATA = [
     id: "321654987",
     ecoScore: 'a',
     nutriScore: 'b',
-    imageUrl: 'https://images.unsplash.com/photo-1574484284002-952d9d0f5cff?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    imageUrl: 'https://images.unsplash.com/photo-1589828910786-1ca6da0c7682?q=80&w=2704&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     brandName: 'Green Valley',
     productName: 'Organic Yogurt',
     createdDate: new Date()
@@ -63,7 +63,7 @@ const DATA = [
     id: "654987321",
     ecoScore: 'c',
     nutriScore: 'c',
-    imageUrl: 'https://images.unsplash.com/photo-1615485736164-f6279a1ff9e3?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    imageUrl: 'https://images.unsplash.com/photo-1624684244440-1130c3b65783?q=80&w=3085&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     brandName: 'Crunchy Co',
     productName: 'Peanut Butter',
     createdDate: new Date()
@@ -90,7 +90,7 @@ const DATA = [
     id: "369147258",
     ecoScore: 'a',
     nutriScore: 'a',
-    imageUrl: 'https://images.unsplash.com/photo-1603569283847-aa239f12b0f0?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    imageUrl: 'https://images.unsplash.com/photo-1591959376511-a48af62889a3?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     brandName: 'Pure Spring',
     productName: 'Mineral Water',
     createdDate: new Date()
