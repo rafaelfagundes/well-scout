@@ -55,24 +55,21 @@ const DATA = [
 export default function ProductsScreen() {
   return (
     <BackgroundImage>
-      <ScreenContainer>
-        <FlatList
-          data={DATA}
-          renderItem={({ item }) => (
-            <ProductItem
-              id={item.id}
-              ecoScore={item.ecoScore}
-              nutriScore={item.nutriScore}
-              imageUrl={item.imageUrl}
-              brandName={item.brandName}
-              productName={item.productName}
-              createdDate={item.createdDate}
-              style={{ marginBottom: 20 }}
-            />
-          )}
-          keyExtractor={item => item.id}
-        />
-      </ScreenContainer>
+      <FlatList
+        data={DATA}
+        renderItem={({ item }) => (
+          <ProductItem
+            id={item.id}
+            ecoScore={item.ecoScore}
+            nutriScore={item.nutriScore}
+            imageUrl={item.imageUrl}
+            brandName={item.brandName}
+            productName={item.productName}
+            createdDate={item.createdDate}
+          />
+        )}
+        keyExtractor={item => item.id}
+      />
     </BackgroundImage>
   );
 }
