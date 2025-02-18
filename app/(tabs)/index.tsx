@@ -1,4 +1,4 @@
-import { StyleSheet, FlatList } from 'react-native';
+import { StyleSheet, FlatList, View } from 'react-native';
 
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
@@ -57,6 +57,7 @@ export default function ProductsScreen() {
     <BackgroundImage>
       <FlatList
         data={DATA}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
         renderItem={({ item }) => (
           <ProductItem
             id={item.id}
@@ -75,4 +76,7 @@ export default function ProductsScreen() {
 }
 
 const styles = StyleSheet.create({
+  separator: {
+    height: 20,
+  },
 });
