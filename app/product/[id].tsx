@@ -28,18 +28,12 @@ export default function Product() {
     </View>
   );
 
-  if (!product) return (
-    <View>
-      <Text>Loading...</Text>
-    </View>
-  );
-
   if (!product) {
-    return <View></View>
+    return <LoadingView />;
   }
-
-  if (loading) {
-    return <View></View>
+  
+  if (!product.product) {
+    return <NoProductView />;
   }
 
   return (
@@ -47,4 +41,26 @@ export default function Product() {
   );
 }
 
-const styles = StyleSheet.create({})
+function LoadingView() {
+  return (
+    <View style={styles.centered}>
+      <Text>Loading...</Text>
+    </View>
+  );
+}
+
+function NoProductView() {
+  return (
+    <View style={styles.centered}>
+      <Text>No product found</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  centered: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+})
