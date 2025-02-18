@@ -113,7 +113,7 @@ export default function ProductItem({
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
