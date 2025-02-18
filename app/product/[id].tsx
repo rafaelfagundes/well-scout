@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
+import { useLocalSearchParams } from 'expo-router';
 
-export default function Product({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default function Product() {
+  const { id } = useLocalSearchParams<{ id: string }>();
   const [product, setProduct] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
