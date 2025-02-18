@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, useColorScheme } from 'react-native';
+import { View, Text, Image, StyleSheet, useColorScheme, TouchableOpacity } from 'react-native';
 import { Clock } from 'phosphor-react-native';
 import { Fonts } from '@/constants/Fonts';
 import NutriAndEcoScore from './NutriAndEcoScore';
@@ -92,7 +92,7 @@ export default function ProductItem({
     },
   });
   return (
-    <View style={styles.card}>
+    <TouchableOpacity style={styles.card}>
       <View style={styles.cardContent}>
         <View style={styles.topContainer}>
           <View style={styles.productInfo}>
