@@ -6,6 +6,7 @@ import { HapticTab } from '@/components/HapticTab';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Swap, Cube, Barcode, Gauge, MagnifyingGlass } from 'phosphor-react-native';
+import { Fonts } from '@/constants/Fonts';
 
 
 const ICON_SIZE = 32
@@ -23,7 +24,7 @@ export default function TabLayout() {
         tabBarBackground: undefined,
         tabBarLabelStyle: {
           marginTop: 5,
-          fontFamily: 'SansationBold',
+          fontFamily: Fonts.sansSerif,
           fontSize: 14
         },
         tabBarStyle: {
