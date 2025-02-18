@@ -9,6 +9,7 @@ import Logo from './Logo'
 
 interface ScreenContainerProps {
   children: React.ReactNode[] | React.ReactNode
+  scrollView?: boolean
 }
 
 export default function ScreenContainer({ children }: ScreenContainerProps) {
@@ -47,7 +48,11 @@ export default function ScreenContainer({ children }: ScreenContainerProps) {
             <UserCircleGear size={32} color={colors.text} />
           </TouchableOpacity>
         </View>
-        <ScrollView style={styles.children}>{children}</ScrollView>
+        {scrollView !== false ? (
+          <ScrollView style={styles.children}>{children}</ScrollView>
+        ) : (
+          <View style={styles.children}>{children}</View>
+        )}
       </View>
     </SafeAreaView>
   )
