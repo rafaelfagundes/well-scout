@@ -27,7 +27,7 @@ const DATA = [
     id: "987654321",
     ecoScore: 'c',
     nutriScore: 'b',
-    imageUrl: 'https://images.unsplash.com/photo-1601057822812-f2771800559c?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    imageUrl: 'https://images.unsplash.com/photo-1621057621391-7ed446a24b41?q=80&w=3214&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     brandName: 'Nature Valley',
     productName: 'Granola Bars',
     createdDate: new Date()
@@ -36,8 +36,8 @@ const DATA = [
     id: "456789123",
     ecoScore: 'd',
     nutriScore: 'd',
-    imageUrl: 'https://images.unsplash.com/photo-1582401654466-b0f455075d9a?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    brandName: 'Generic Brand',
+    imageUrl: 'https://images.unsplash.com/photo-1600952841320-db92ec4047ca?q=80&w=3125&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    brandName: 'Elma Chips',
     productName: 'Potato Chips',
     createdDate: new Date()
   },
@@ -55,28 +55,31 @@ const DATA = [
 export default function ProductsScreen() {
   return (
     <BackgroundImage>
-      <FlatList
-        data={DATA}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-        renderItem={({ item }) => (
-          <ProductItem
-            id={item.id}
-            ecoScore={item.ecoScore}
-            nutriScore={item.nutriScore}
-            imageUrl={item.imageUrl}
-            brandName={item.brandName}
-            productName={item.productName}
-            createdDate={item.createdDate}
-          />
-        )}
-        keyExtractor={item => item.id}
-      />
+      <ScreenContainer scrollView={false}>
+        <FlatList
+          data={DATA}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          renderItem={({ item }) => (
+            <ProductItem
+              id={item.id}
+              ecoScore={item.ecoScore}
+              nutriScore={item.nutriScore}
+              imageUrl={item.imageUrl}
+              brandName={item.brandName}
+              productName={item.productName}
+              createdDate={item.createdDate}
+            />
+          )}
+          keyExtractor={item => item.id}
+        />
+
+      </ScreenContainer>
     </BackgroundImage>
   );
 }
 
 const styles = StyleSheet.create({
   separator: {
-    height: 20,
+    height: 10,
   },
 });
