@@ -49,6 +49,51 @@ const DATA = [
     brandName: 'Fresh Produce',
     productName: 'Apples',
     createdDate: new Date()
+  },
+  {
+    id: "321654987",
+    ecoScore: 'a',
+    nutriScore: 'b',
+    imageUrl: 'https://images.unsplash.com/photo-1574484284002-952d9d0f5cff?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    brandName: 'Green Valley',
+    productName: 'Organic Yogurt',
+    createdDate: new Date()
+  },
+  {
+    id: "654987321",
+    ecoScore: 'c',
+    nutriScore: 'c',
+    imageUrl: 'https://images.unsplash.com/photo-1615485736164-f6279a1ff9e3?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    brandName: 'Crunchy Co',
+    productName: 'Peanut Butter',
+    createdDate: new Date()
+  },
+  {
+    id: "147258369",
+    ecoScore: 'd',
+    nutriScore: 'e',
+    imageUrl: 'https://images.unsplash.com/photo-1611250282006-4484dd3fba6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    brandName: 'Sweet Treats',
+    productName: 'Chocolate Bar',
+    createdDate: new Date()
+  },
+  {
+    id: "258369147",
+    ecoScore: 'b',
+    nutriScore: 'b',
+    imageUrl: 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    brandName: 'Mediterranean Delight',
+    productName: 'Olive Oil',
+    createdDate: new Date()
+  },
+  {
+    id: "369147258",
+    ecoScore: 'a',
+    nutriScore: 'a',
+    imageUrl: 'https://images.unsplash.com/photo-1603569283847-aa239f12b0f0?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    brandName: 'Pure Spring',
+    productName: 'Mineral Water',
+    createdDate: new Date()
   }
 ];
 
