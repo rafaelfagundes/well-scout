@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, useColorScheme, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, useColorScheme, TouchableOpacity, Dimensions } from 'react-native';
 import { Link } from 'expo-router';
 import { Clock } from 'phosphor-react-native';
 import { Fonts } from '@/constants/Fonts';
@@ -66,13 +66,15 @@ export default function ProductItem({
       fontFamily: Fonts.sansSerif,
       fontSize: 15,
       fontWeight: '700',
+      maxWidth: Dimensions.get('screen').width - 112,
     },
     brandName: {
       color: Colors[colorScheme ?? 'light'].text,
       fontFamily: Fonts.sansSerif,
       fontSize: 12,
       marginTop: 2,
-      opacity: .85
+      opacity: .85,
+      maxWidth: Dimensions.get('screen').width - 112,
     },
     timeContainer: {
       flexDirection: 'row',
