@@ -1,8 +1,9 @@
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, useColorScheme } from 'react-native';
 import { Clock } from 'phosphor-react-native';
 import { Fonts } from '@/constants/Fonts';
 import NutriAndEcoScore from './NutriAndEcoScore';
 import { formatRelativeTime } from '@/lib/formatRelativeTime';
+import { Colors } from '@/constants/Colors';
 
 interface ProductItemProps {
   id: string;
@@ -22,6 +23,74 @@ export default function ProductItem({
   nutriScore,
   createdDate,
 }: ProductItemProps) {
+
+  const colorScheme = useColorScheme()
+
+  const styles = StyleSheet.create({
+    card: {
+      borderRadius: 20,
+      backgroundColor: Colors[colorScheme ?? 'light'].background,
+      opacity: 0.85
+    },
+    cardContent: {
+      padding: 10,
+    },
+    topContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
+    },
+    productInfo: {
+      flexDirection: 'row',
+      flex: 1,
+    },
+    imageContainer: {
+      width: 70,
+      height: 70,
+      borderRadius: 12,
+      overflow: 'hidden',
+      backgroundColor: '#8B2323',
+      marginRight: 10,
+    },
+    image: {
+      width: '100%',
+      height: '100%',
+    },
+    infoContainer: {
+      justifyContent: 'space-between',
+    },
+    productName: {
+      color: Colors[colorScheme ?? 'light'].text,
+      fontFamily: Fonts.sansSerif,
+      fontSize: 15,
+      fontWeight: '700',
+    },
+    brandName: {
+      color: Colors[colorScheme ?? 'light'].text,
+      fontFamily: Fonts.sansSerif,
+      fontSize: 12,
+      marginTop: 2,
+      opacity: .85
+    },
+    timeContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 2,
+      marginRight: 10,
+      marginTop: 3,
+    },
+    timeText: {
+      fontFamily: Fonts.sansSerif,
+      fontSize: 11,
+      color: Colors[colorScheme ?? 'light'].text,
+    },
+    chevron: {
+      position: 'absolute',
+      right: 16,
+      top: '50%',
+      transform: [{ translateY: -12 }], // Half of icon height (24/2)
+    },
+  });
   return (
     <View style={styles.card}>
       <View style={styles.cardContent}>
@@ -39,7 +108,7 @@ export default function ProductItem({
             </View>
           </View>
           <View style={styles.timeContainer}>
-            <Clock size={12} color="#6b7280" />
+            <Clock size={12} color={Colors[colorScheme ?? 'light'].text} />
             <Text style={styles.timeText}>{formatRelativeTime(createdDate)}</Text>
           </View>
         </View>
@@ -48,70 +117,3 @@ export default function ProductItem({
   );
 }
 
-const styles = StyleSheet.create({
-  card: {
-    borderRadius: 20,
-    backgroundColor: 'white',
-    // shadowColor: '#000',
-    // shadowOffset: { width: 0, height: 2 },
-    // shadowOpacity: 0.1,
-    // shadowRadius: 4,
-    // elevation: 2,
-  },
-  cardContent: {
-    padding: 10,
-  },
-  topContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-  },
-  productInfo: {
-    flexDirection: 'row',
-    flex: 1,
-  },
-  imageContainer: {
-    width: 70,
-    height: 70,
-    borderRadius: 16,
-    overflow: 'hidden',
-    backgroundColor: '#8B2323',
-    marginRight: 10,
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-  },
-  infoContainer: {
-    justifyContent: 'space-between',
-  },
-  productName: {
-    fontFamily: Fonts.sansSerif,
-    fontSize: 15,
-    fontWeight: '700',
-  },
-  brandName: {
-    fontFamily: Fonts.sansSerif,
-    fontSize: 12,
-    color: '#6b7280',
-    marginTop: 4,
-  },
-  timeContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    marginRight: 10,
-    marginTop: 3,
-  },
-  timeText: {
-    fontFamily: Fonts.sansSerif,
-    fontSize: 11,
-    color: '#6b7280',
-  },
-  chevron: {
-    position: 'absolute',
-    right: 16,
-    top: '50%',
-    transform: [{ translateY: -12 }], // Half of icon height (24/2)
-  },
-});
