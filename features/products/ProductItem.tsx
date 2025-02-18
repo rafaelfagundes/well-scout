@@ -13,7 +13,7 @@ interface ProductItemProps {
   brandName: string;
   ecoScore: string;
   nutriScore: string;
-  createdDate: Date;
+  createdDate?: Date;
 }
 
 export default function ProductItem({
@@ -110,10 +110,10 @@ export default function ProductItem({
                 <NutriAndEcoScore nutriScore={nutriScore} ecoScore={ecoScore}></NutriAndEcoScore>
               </View>
             </View>
-            <View style={styles.timeContainer}>
+            {createdDate && <View style={styles.timeContainer}>
               <Clock size={12} color={Colors[colorScheme ?? 'light'].text} />
               <Text style={styles.timeText}>{formatRelativeTime(createdDate)}</Text>
-            </View>
+            </View>}
           </View>
         </View>
       </TouchableOpacity>
