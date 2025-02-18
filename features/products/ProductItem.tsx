@@ -1,38 +1,48 @@
 import { View, Text, Image, StyleSheet } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { ArrowUp, Clock } from 'phosphor-react-native';
+import { Clock } from 'phosphor-react-native';
 import { Fonts } from '@/constants/Fonts';
 import NutriAndEcoScore from './NutriAndEcoScore';
+import { formatRelativeTime } from '@/lib/formatRelativeTime';
 
-export default function ProductRating() {
+interface ProductItemProps {
+  id: string;
+  imageUrl: string;
+  productName: string;
+  brandName: string;
+  ecoScore: string;
+  nutriScore: string;
+  createdDate: Date;
+}
+
+export default function ProductItem({
+  imageUrl,
+  productName,
+  brandName,
+  ecoScore,
+  nutriScore,
+  createdDate,
+}: ProductItemProps) {
   return (
     <View style={styles.card}>
       <View style={styles.cardContent}>
         <View style={styles.topContainer}>
           <View style={styles.productInfo}>
             <View style={styles.imageContainer}>
-              <Image
-                source={{
-                  uri: 'https://images.unsplash.com/photo-1528750596806-ff12e21cda04?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                }}
-                style={styles.image}
-                resizeMode="cover"
-              />
+              <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" />
             </View>
             <View style={styles.infoContainer}>
               <View>
-                <Text style={styles.productName}>Ketchup</Text>
-                <Text style={styles.brandName}>Heinz</Text>
+                <Text style={styles.productName}>{productName}</Text>
+                <Text style={styles.brandName}>{brandName}</Text>
               </View>
-              <NutriAndEcoScore nutriScore='b' ecoScore='c'></NutriAndEcoScore>
+              <NutriAndEcoScore nutriScore={nutriScore} ecoScore={ecoScore}></NutriAndEcoScore>
             </View>
           </View>
           <View style={styles.timeContainer}>
             <Clock size={12} color="#6b7280" />
-            <Text style={styles.timeText}>4 hours ago</Text>
+            <Text style={styles.timeText}>{formatRelativeTime(createdDate)}</Text>
           </View>
         </View>
-
       </View>
     </View>
   );
@@ -66,14 +76,14 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     overflow: 'hidden',
     backgroundColor: '#8B2323',
-    marginRight: 10
+    marginRight: 10,
   },
   image: {
     width: '100%',
     height: '100%',
   },
   infoContainer: {
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   productName: {
     fontFamily: Fonts.sansSerif,
@@ -84,14 +94,14 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.sansSerif,
     fontSize: 12,
     color: '#6b7280',
-    marginTop: 4
+    marginTop: 4,
   },
   timeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
     marginRight: 10,
-    marginTop: 3
+    marginTop: 3,
   },
   timeText: {
     fontFamily: Fonts.sansSerif,
