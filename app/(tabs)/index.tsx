@@ -1,4 +1,5 @@
 import { StyleSheet, FlatList, View } from 'react-native';
+import { Link } from 'expo-router';
 
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
@@ -105,15 +106,17 @@ export default function ProductsScreen() {
           data={DATA}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           renderItem={({ item }) => (
-            <ProductItem
-              id={item.id}
-              ecoScore={item.ecoScore}
-              nutriScore={item.nutriScore}
-              imageUrl={item.imageUrl}
-              brandName={item.brandName}
-              productName={item.productName}
-              createdDate={item.createdDate}
-            />
+            <Link href={`/product/${item.id}`} asChild>
+              <ProductItem
+                id={item.id}
+                ecoScore={item.ecoScore}
+                nutriScore={item.nutriScore}
+                imageUrl={item.imageUrl}
+                brandName={item.brandName}
+                productName={item.productName}
+                createdDate={item.createdDate}
+              />
+            </Link>
           )}
           keyExtractor={item => item.id}
         />

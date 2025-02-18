@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocalSearchParams } from 'expo-router';
 import {
   View,
   Text,
@@ -11,43 +12,47 @@ import {
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
-const ProductDetailsScreen = ({ route }) => {
-  // This would normally come from your route params
-  // For now, we'll simulate a loading state and then a product
+const ProductDetailsScreen = () => {
   const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState(null);
+  
+  // Get the product ID from the route
+  const { id } = useLocalSearchParams();
   const [expandedSection, setExpandedSection] = useState(null);
 
   // Simulate fetching product data
   React.useEffect(() => {
     // In a real app, you'd fetch this data from an API
     setTimeout(() => {
-      // Example product data
-      setProduct({
-        code: '3017620422003',
-        product_name: 'Nutella - Ferrero - 400g',
-        brands: 'Ferrero,Nutella',
-        image_url: 'https://images.openfoodfacts.org/images/products/301/762/042/2003/front_en.289.400.jpg',
-        nutriscore_grade: 'e',
-        ecoscore_grade: 'd',
-        nova_group: 4,
-        nutriments: {
-          energy: 2252,
-          energy_unit: 'kJ',
-          fat: 30.9,
-          'saturated-fat': 10.6,
-          carbohydrates: 57.5,
-          sugars: 56.3,
-          proteins: 6.3,
-          salt: 0.107,
-        },
-        ingredients_text: 'Sugar, palm oil, hazelnuts (13%), skimmed milk powder (8.7%), fat-reduced cocoa (7.4%), emulsifier (lecithins) (soy), vanillin.',
-        allergens: 'en:milk,en:nuts,en:soybeans',
-        categories_tags: ['en:breakfasts', 'en:spreads', 'en:sweet-spreads', 'en:cocoa-and-hazelnuts-spreads', 'en:hazelnut-spreads'],
-        packaging: 'Plastic,Glass',
-        origins: 'Italy',
-        labels_tags: ['en:green-dot', 'en:made-in-italy'],
-      });
+      // Find the product in the DATA array
+      const foundProduct = DATA.find(p => p.id === id);
+      if (foundProduct) {
+        setProduct({
+          code: foundProduct.id,
+          product_name: foundProduct.productName,
+          brands: foundProduct.brandName,
+          image_url: foundProduct.imageUrl,
+          nutriscore_grade: foundProduct.nutriScore.toLowerCase(),
+          ecoscore_grade: foundProduct.ecoScore.toLowerCase(),
+          nova_group: 3, // Default to processed food
+          nutriments: {
+            energy: 2000,
+            energy_unit: 'kJ',
+            fat: 10,
+            'saturated-fat': 3,
+            carbohydrates: 50,
+            sugars: 20,
+            proteins: 5,
+            salt: 0.5,
+          },
+          ingredients_text: 'Ingredients not available',
+          allergens: 'en:milk,en:nuts',
+          categories_tags: ['en:food'],
+          packaging: 'Plastic',
+          origins: 'Unknown',
+          labels_tags: ['en:organic'],
+        });
+      }
       setLoading(false);
     }, 1500);
   }, []);
