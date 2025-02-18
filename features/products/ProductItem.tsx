@@ -104,8 +104,8 @@ export default function ProductItem({
               </View>
               <View style={styles.infoContainer}>
                 <View>
-                  <Text style={styles.productName} numberOfLines={1}>{productName}</Text>
-                  <Text style={styles.brandName} numberOfLines={1}>{brandName}</Text>
+                  <Text style={styles.productName} numberOfLines={1} ellipsizeMode="tail">{productName}</Text>
+                  <Text style={styles.brandName} numberOfLines={1} ellipsizeMode="tail">{brandName}</Text>
                 </View>
                 <NutriAndEcoScore nutriScore={nutriScore} ecoScore={ecoScore}></NutriAndEcoScore>
               </View>
