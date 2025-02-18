@@ -1,4 +1,5 @@
 import { View, Text, Image, StyleSheet, useColorScheme, TouchableOpacity } from 'react-native';
+import { Link } from 'expo-router';
 import { Clock } from 'phosphor-react-native';
 import { Fonts } from '@/constants/Fonts';
 import NutriAndEcoScore from './NutriAndEcoScore';
@@ -92,7 +93,8 @@ export default function ProductItem({
     },
   });
   return (
-    <TouchableOpacity style={styles.card}>
+    <Link href={`/product/${id}`} asChild>
+      <TouchableOpacity style={styles.card}>
       <View style={styles.cardContent}>
         <View style={styles.topContainer}>
           <View style={styles.productInfo}>
@@ -114,6 +116,7 @@ export default function ProductItem({
         </View>
       </View>
     </TouchableOpacity>
+    </Link>
   );
 }
 
