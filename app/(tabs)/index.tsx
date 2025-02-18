@@ -67,6 +67,7 @@ export default function ProductsScreen() {
               brandName={item.brandName}
               productName={item.productName}
               createdDate={item.createdDate}
+              style={{ marginBottom: 20 }}
             />
           )}
           keyExtractor={item => item.id}
