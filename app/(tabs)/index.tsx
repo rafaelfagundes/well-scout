@@ -70,6 +70,7 @@ function ProductsTabs({ activeTab, setActiveTab }: ProductsTabsProps) {
       padding: 4,
       borderRadius: 20,
       height: 40,
+      opacity: 0.85,
     },
     tabs: {
       flexDirection: 'row',
