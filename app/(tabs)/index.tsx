@@ -10,6 +10,9 @@ import { RootState } from '@/state/store';
 import { Colors } from '@/constants/Colors';
 import { ProductsTabs } from '@/features/products/ProductTabs';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing } from 'react-native-reanimated';
+import { useDispatch } from 'react-redux';
+import { removeProductFromHistory, addProductToFavorites } from '@/features/products/productSlice';
+import { Swipeable } from 'react-native-gesture-handler';
 
 enum Tabs {
   HISTORY = 'history',
@@ -23,6 +26,7 @@ export default function ProductsScreen() {
   const [searchText, setSearchText] = useState("");
   const [debouncedSearchText, setDebouncedSearchText] = useState("");
   const [showSearch, setShowSearch] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -71,15 +75,30 @@ export default function ProductsScreen() {
           data={filteredData}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           renderItem={({ item }) => (
-            <ProductItem
-              id={item.id}
-              ecoScore={item.ecoScore}
-              nutriScore={item.nutriScore}
-              imageUrl={item.imageUrl}
-              brandName={item.brandName}
-              productName={item.productName}
-              createdDate={item.createdDate}
-            />
+            <Swipeable
+              renderLeftActions={() => (
+                <View style={{ justifyContent: 'center', alignItems: 'flex-start', flex: 1, backgroundColor: 'red', paddingLeft: 20 }}>
+                  <Text style={{ color: 'white' }}>Delete</Text>
+                </View>
+              )}
+              renderRightActions={() => (
+                <View style={{ justifyContent: 'center', alignItems: 'flex-end', flex: 1, backgroundColor: '#4CAF50', paddingRight: 20 }}>
+                  <Text style={{ color: 'white' }}>Favorite</Text>
+                </View>
+              )}
+              onSwipeableLeftOpen={() => dispatch(addProductToFavorites(item))}
+              onSwipeableRightOpen={() => dispatch(removeProductFromHistory(item))}
+            >
+              <ProductItem
+                id={item.id}
+                ecoScore={item.ecoScore}
+                nutriScore={item.nutriScore}
+                imageUrl={item.imageUrl}
+                brandName={item.brandName}
+                productName={item.productName}
+                createdDate={item.createdDate}
+              />
+            </Swipeable>
           )}
           keyExtractor={item => item.id}
         />
