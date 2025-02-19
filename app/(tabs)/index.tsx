@@ -1,4 +1,5 @@
-import { StyleSheet, FlatList, View, TouchableOpacity, Text, useColorScheme } from 'react-native';
+import { StyleSheet, FlatList, View, TouchableOpacity, Text, useColorScheme, TextInput } from 'react-native';
+import { MagnifyingGlass } from 'phosphor-react-native';
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import ProductItem from '@/features/products/ProductItem';
@@ -16,21 +17,58 @@ enum Tabs {
 export default function ProductsScreen() {
   const history = useSelector((state: RootState) => state.product.history);
   const favorites = useSelector((state: RootState) => state.product.favorites);
+  const colorScheme = useColorScheme();
   const [activeTab, setActiveTab] = useState(Tabs.HISTORY);
-
+  const [searchText, setSearchText] = useState("");
+  const [debouncedSearchText, setDebouncedSearchText] = useState("");
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchText(searchText);
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [searchText]);
+  
   const styles = StyleSheet.create({
     separator: {
       height: 10,
     },
+    searchContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      height: 40,
+      borderRadius: 20,
+      borderWidth: 1,
+      borderColor: '#ccc',
+      paddingHorizontal: 10,
+      marginVertical: 10,
+    },
+    searchInput: {
+      flex: 1,
+      height: 40,
+    },
   });
-
+  const selectedData = activeTab === Tabs.HISTORY ? history : favorites;
+  const filteredData = selectedData.filter(item =>
+    item.productName.toLowerCase().includes(debouncedSearchText.toLowerCase()) ||
+    item.brandName.toLowerCase().includes(debouncedSearchText.toLowerCase())
+  );
+  
   return (
     <BackgroundImage>
       <ScreenContainer scrollView={false}>
         <ProductsTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        <View style={styles.searchContainer}>
+          <MagnifyingGlass size={24} color={Colors[colorScheme ?? 'light'].text} style={{ marginRight: 8 }} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search"
+            value={searchText}
+            onChangeText={(text) => setSearchText(text)}
+          />
+        </View>
         <View style={{ height: 10 }} />
         <FlatList
-          data={activeTab === Tabs.HISTORY ? history : favorites}
+          data={filteredData}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           renderItem={({ item }) => (
             <ProductItem
