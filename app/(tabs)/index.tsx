@@ -105,7 +105,7 @@ export default function ProductsScreen() {
                   productName={item.productName}
                   createdDate={item.createdDate}
                 />
-              </Swipeable>
+              </ReanimatedSwipeable>
             )}
             keyExtractor={item => item.id}
           />
