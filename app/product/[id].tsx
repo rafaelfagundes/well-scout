@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams, Stack } from 'expo-router';
 import { useDispatch } from 'react-redux';
@@ -24,7 +24,8 @@ export default function Product() {
             brandName: data.product.brands,
             nutriScore: data.product.nutriscore_grade,
             ecoScore: data.product.ecoscore_grade,
-            id: data.code
+            id: data.code,
+            createdDate: new Date()
           }));
         }
       } catch (err) {

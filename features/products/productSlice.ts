@@ -163,8 +163,3 @@ export const selectProductFavorites = (state: RootState) => state.product.favori
 
 export default productSlice.reducer;
 
-export const isProductInHistory = (state: RootState, id: string): boolean =>
-  state.product.history.some((product) => product.id === id);
-
-
-
