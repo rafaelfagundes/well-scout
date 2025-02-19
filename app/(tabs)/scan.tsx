@@ -129,6 +129,7 @@ export default function ScanScreen() {
               enableTorch={enableTorch}
               style={styles.cameraView}
               facing={facing}
+
               barcodeScannerSettings={{
                 barcodeTypes: ['qr', 'ean13', 'ean8', 'upc_a'],
               }}
