@@ -1,6 +1,5 @@
 import { StyleSheet, View, Text, Alert, SafeAreaView, TouchableOpacity, useColorScheme } from 'react-native';
-import { CameraView, useCameraPermissions } from 'expo-camera';
-import type { CameraType, BarcodeScanningResult } from 'expo-camera';
+import { Camera, useCameraPermission, useCodeScanner } from 'react-native-vision-camera';
 import { useEffect, useState } from 'react';
 
 import ScreenContainer from '@/components/ui/ScreenContainer';
@@ -11,9 +10,15 @@ import { Flashlight, Info, UserCircleGear } from 'phosphor-react-native';
 import { Colors } from '@/constants/Colors';
 
 export default function ScanScreen() {
-  const [permission, requestPermission] = useCameraPermissions();
+  const { hasPermission, requestPermission } = useCameraPermission();
   const [scanned, setScanned] = useState(false);
   const [facing] = useState<CameraType>('back');
+  const codeScanner = useCodeScanner({
+    codeTypes: ['qr', 'ean-13'],
+    onCodeScanned: (codes) => {
+      console.log(`Scanned ${codes.length} codes!`)
+    }
+  });
   const [barCode, setBarCode] = useState<string>("")
   const [enableTorch, setEnableTorch] = useState(false)
   const tabBarHeight = useBottomTabBarHeight()
@@ -124,14 +129,11 @@ export default function ScanScreen() {
             </View>
           </View>
           <View style={styles.cameraContainer}>
-            <CameraView
+            <Camera
               enableTorch={enableTorch}
               style={styles.cameraView}
               facing={facing}
-              barcodeScannerSettings={{
-                barcodeTypes: ['qr', 'ean13', 'ean8', 'upc_a'],
-              }}
-              onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
+              codeScanner={codeScanner}
             />
           </View>
           {scanned && (
