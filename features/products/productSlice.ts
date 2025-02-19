@@ -141,7 +141,9 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     addProductToHistory: (state, action: PayloadAction<ProductItem>) => {
-      state.history.push(action.payload);
+      if (!state.history.some(product => product.id === action.payload.id)) {
+        state.history.push(action.payload);
+      }
     },
     removeProductFromHistory: (state, action: PayloadAction<ProductItem>) => {
       state.history = state.history.filter(item => item.id !== action.payload.id);
