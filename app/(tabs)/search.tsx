@@ -39,6 +39,7 @@ export default function SearchScreen() {
               touchable={false}
             />
           )}
+          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
           contentContainerStyle={styles.resultsContainer}
         />
       </ScreenContainer>

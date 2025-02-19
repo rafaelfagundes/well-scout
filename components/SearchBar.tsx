@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, StyleSheet, useColorScheme } from 'react-native';
 import { MagnifyingGlass } from 'phosphor-react-native';
 import { Colors } from '@/constants/Colors';
@@ -30,6 +30,19 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText }) => {
       fontSize: 15
     },
   });
+  const [localText, setLocalText] = useState(searchText);
+
+  useEffect(() => {
+    setLocalText(searchText);
+  }, [searchText]);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      onChangeText(localText);
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [localText]);
+
   return (
     <View style={styles.container}>
       <MagnifyingGlass size={24} color={Colors[colorScheme ?? 'light'].text} style={{ marginRight: 8 }} />
@@ -37,8 +50,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText }) => {
         autoFocus
         style={styles.input}
         placeholder="Search"
-        value={searchText}
-        onChangeText={onChangeText}
+        value={localText}
+        onChangeText={setLocalText}
+        autoCorrect={false}
+        autoCapitalize="none"
       />
     </View>
   );
