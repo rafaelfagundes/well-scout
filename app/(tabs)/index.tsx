@@ -87,8 +87,8 @@ export default function ProductsScreen() {
                     <Text style={{ color: 'white' }}>Favorite</Text>
                   </View>
                 )}
-                onSwipeableLeftOpen={() => dispatch(addProductToFavorites(item))}
-                onSwipeableRightOpen={() => dispatch(removeProductFromHistory(item))}
+                onSwipeableLeftWillOpen={() => dispatch(addProductToFavorites(item))}
+                onSwipeableRightWillOpen={() => dispatch(removeProductFromHistory(item))}
               >
                 <ProductItem
                   id={item.id}
