@@ -4,10 +4,15 @@
  */
 
 const tintColorLight = '#095256';
-const tintColorDark = '#fff';
+const tintColorDark = '#00DF82';
 
-const inactiveTabBarItemLight = '#09525670';
+const tintConstrastColorLight = '#fff';
+const tintConstrastColorDark = '#095256';
+
+const activeTabBarItemLight = tintColorLight;
+const activeTabBarItemDark = '#FFF';
 const inactiveTabBarItemDark = '#FFFFFF60';
+const inactiveTabBarItemLight = '#09525675';
 
 
 export const Colors = {
@@ -15,7 +20,9 @@ export const Colors = {
     text: '#095256',
     background: '#fff',
     tint: tintColorLight,
+    tintConstrast: tintConstrastColorLight,
     inactiveTabBarItem: inactiveTabBarItemLight,
+    activeTabBarItem: activeTabBarItemLight,
     icon: '#687076',
     tabIconDefault: '#687076',
     tabIconSelected: tintColorLight,
@@ -24,7 +31,9 @@ export const Colors = {
     text: '#ECEDEE',
     background: '#151718',
     tint: tintColorDark,
+    tintConstrast: tintConstrastColorDark,
     inactiveTabBarItem: inactiveTabBarItemDark,
+    activeTabBarItem: activeTabBarItemDark,
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,

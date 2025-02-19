@@ -1,6 +1,5 @@
 import React from 'react'
 import { SafeAreaView, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
-import { Image } from "expo-image"
 import { UserCircleGear } from 'phosphor-react-native'
 import { Colors } from '@/constants/Colors'
 import { useColorScheme } from '@/hooks/useColorScheme.web'
@@ -35,7 +34,7 @@ export default function ScreenContainer({ children, scrollView = true }: ScreenC
     },
     children: {
       flex: 1,
-      marginBottom: tabBarHeight - 21,
+      marginBottom: tabBarHeight - 30,
     }
   });
 

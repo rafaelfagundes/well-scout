@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, Stack } from 'expo-router';
 import ProductDetailScreen from '@/features/products/ProductDetailScreen';
 
 export default function Product() {
@@ -11,10 +11,9 @@ export default function Product() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`https://world.openfoodfacts.org/api/v3/product/${id}.json?fields=product_name,brands,image_front_url,nutriscore_grade,nutriscore_score,ecoscore_grade,ecoscore_score`);
+        const response = await fetch(`https://world.openfoodfacts.org/api/v3/product/${id}.json`);
         const data = await response.json();
         setProduct(data);
-        console.log(data)
       } catch (err) {
         setError('Failed to fetch product');
       }
@@ -22,22 +21,36 @@ export default function Product() {
     fetchProduct();
   }, [id]);
 
-  if (error) return (
-    <View>
-      <Text>{error}</Text>
-    </View>
-  );
+  const headerBackTitle = "Back"
+
+  if (error) {
+    return <>
+      <Stack.Screen options={{ title: 'Error', headerBackTitle }} />
+      <View>
+        <Text>{error}</Text>
+      </View>
+    </>
+  }
 
   if (!product) {
-    return <LoadingView />;
+    return <>
+      <Stack.Screen options={{ title: 'Loading...', headerBackTitle }} />
+      <LoadingView />
+    </>
   }
-  
+
   if (!product.product) {
-    return <NoProductView />;
+    return <>
+      <Stack.Screen options={{ title: 'Product Not Found', headerBackTitle }} />
+      <NoProductView />
+    </>
   }
 
   return (
-    <ProductDetailScreen product={product}></ProductDetailScreen>
+    <>
+      <Stack.Screen options={{ title: product.product?.product_name ?? "Unkown Product", headerBackTitle }} />
+      <ProductDetailScreen product={product}></ProductDetailScreen>
+    </>
   );
 }
 
@@ -56,6 +69,7 @@ function NoProductView() {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   centered: {

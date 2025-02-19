@@ -14,6 +14,7 @@ interface ProductItemProps {
   ecoScore: string;
   nutriScore: string;
   createdDate?: Date;
+  touchable?: boolean;
 }
 
 export default function ProductItem({
@@ -24,6 +25,7 @@ export default function ProductItem({
   ecoScore,
   nutriScore,
   createdDate,
+  touchable = true
 }: ProductItemProps) {
 
   const colorScheme = useColorScheme()
@@ -66,7 +68,7 @@ export default function ProductItem({
       fontFamily: Fonts.sansSerif,
       fontSize: 15,
       fontWeight: '700',
-      maxWidth: Dimensions.get('screen').width - 112,
+      maxWidth: Dimensions.get('screen').width - 122,
     },
     brandName: {
       color: Colors[colorScheme ?? 'light'].text,
@@ -74,7 +76,7 @@ export default function ProductItem({
       fontSize: 12,
       marginTop: 2,
       opacity: .85,
-      maxWidth: Dimensions.get('screen').width - 112,
+      maxWidth: Dimensions.get('screen').width - 250,
     },
     timeContainer: {
       flexDirection: 'row',
@@ -88,16 +90,10 @@ export default function ProductItem({
       fontSize: 11,
       color: Colors[colorScheme ?? 'light'].text,
     },
-    chevron: {
-      position: 'absolute',
-      right: 16,
-      top: '50%',
-      transform: [{ translateY: -12 }], // Half of icon height (24/2)
-    },
   });
   return (
     <Link href={`/product/${id}`} asChild>
-      <TouchableOpacity style={styles.card}>
+      <TouchableOpacity style={styles.card} disabled={!touchable} >
         <View style={styles.cardContent}>
           <View style={styles.topContainer}>
             <View style={styles.productInfo}>
@@ -106,8 +102,8 @@ export default function ProductItem({
               </View>
               <View style={styles.infoContainer}>
                 <View>
-                  <Text style={styles.productName} numberOfLines={1} ellipsizeMode="tail">{productName}</Text>
                   <Text style={styles.brandName} numberOfLines={1} ellipsizeMode="tail">{brandName}</Text>
+                  <Text style={styles.productName} numberOfLines={1} ellipsizeMode="tail">{productName}</Text>
                 </View>
                 <NutriAndEcoScore nutriScore={nutriScore} ecoScore={ecoScore}></NutriAndEcoScore>
               </View>

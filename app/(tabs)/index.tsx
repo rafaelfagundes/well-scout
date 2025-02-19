@@ -1,4 +1,4 @@
-import { StyleSheet, FlatList, View, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, FlatList, View, TouchableOpacity, Text, useColorScheme } from 'react-native';
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import ProductItem from '@/features/products/ProductItem';
@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import React, { useState } from 'react';
 import { RootState } from '@/state/store';
 import { Fonts } from '@/constants/Fonts';
+import { Colors } from '@/constants/Colors';
 
 enum Tabs {
   HISTORY = 'history',
@@ -26,7 +27,8 @@ export default function ProductsScreen() {
   return (
     <BackgroundImage>
       <ScreenContainer scrollView={false}>
-        <ProductsTabs activeTab={activeTab} setActiveTab={setActiveTab}></ProductsTabs>
+        <ProductsTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        <View style={{ height: 10 }} />
         <FlatList
           data={activeTab === Tabs.HISTORY ? history : favorites}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
@@ -43,12 +45,10 @@ export default function ProductsScreen() {
           )}
           keyExtractor={item => item.id}
         />
-
       </ScreenContainer>
     </BackgroundImage>
   );
 }
-
 
 type ProductsTabsProps = {
   activeTab: Tabs;
@@ -56,39 +56,88 @@ type ProductsTabsProps = {
 }
 
 function ProductsTabs({ activeTab, setActiveTab }: ProductsTabsProps) {
+  const colorScheme = useColorScheme();
+
+  const backgroundColor = Colors[colorScheme ?? 'light'].background;
+
+  const activeTabColor = Colors[colorScheme ?? 'light'].tint;
+  const activeTabTextColor = Colors[colorScheme ?? 'light'].tintConstrast;
+  const inactiveTabTextColor = Colors[colorScheme ?? 'light'].text;
+
   const styles = StyleSheet.create({
+    container: {
+      backgroundColor,
+      padding: 4,
+      borderRadius: 20,
+      height: 40,
+    },
     tabs: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      alignItems: 'center',
-      marginTop: 20,
-      marginBottom: 20
     },
     tab: {
-      flexDirection: 'row',
+      flex: 1,
+      justifyContent: 'center',
       alignItems: 'center',
-      padding: 10,
-      borderRadius: 10,
-      backgroundColor: '#F2F2F2'
+      height: 32,
+      borderRadius: 25,
     },
     tabText: {
       fontFamily: Fonts.sansSerif,
-      fontWeight: 700,
       fontSize: 14,
-      color: '#000'
+      textAlign: 'center',
+      fontWeight: '600',
+    },
+    inactiveTab: {
+      backgroundColor: 'transparent',
+    },
+    inactiveTabText: {
+      color: inactiveTabTextColor,
     },
     activeTab: {
-      backgroundColor: '#ccc'
-    }
-  })
+      backgroundColor: activeTabColor,
+    },
+    activeTabText: {
+      color: activeTabTextColor,
+    },
+  });
+
   return (
-    <View style={styles.tabs}>
-      <TouchableOpacity style={[styles.tab, activeTab === Tabs.HISTORY && styles.activeTab]} onPress={() => setActiveTab(Tabs.HISTORY)}>
-        <Text style={styles.tabText}>History</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={[styles.tab, activeTab === Tabs.FAVORITES && styles.activeTab]} onPress={() => setActiveTab(Tabs.FAVORITES)}>
-        <Text style={styles.tabText}>Favorites</Text>
-      </TouchableOpacity>
+    <View style={styles.container}>
+      <View style={styles.tabs}>
+        <TouchableOpacity
+          style={[
+            styles.tab,
+            activeTab === Tabs.HISTORY ? styles.activeTab : styles.inactiveTab
+          ]}
+          onPress={() => setActiveTab(Tabs.HISTORY)}
+        >
+          <Text
+            style={[
+              styles.tabText,
+              activeTab === Tabs.HISTORY ? styles.activeTabText : styles.inactiveTabText
+            ]}
+          >
+            History
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.tab,
+            activeTab === Tabs.FAVORITES ? styles.activeTab : styles.inactiveTab
+          ]}
+          onPress={() => setActiveTab(Tabs.FAVORITES)}
+        >
+          <Text
+            style={[
+              styles.tabText,
+              activeTab === Tabs.FAVORITES ? styles.activeTabText : styles.inactiveTabText
+            ]}
+          >
+            Favorites
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
-  )
+  );
 }

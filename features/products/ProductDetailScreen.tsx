@@ -21,13 +21,14 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
   return (
     <View style={styles.container}>
       <ProductItem
-        imageUrl=''
-        createdDate={new Date()}
-        productName={product.product_name}
-        brandName=''
-        nutriScore=''
-        ecoScore=''
+        imageUrl={product.product.image_front_url}
+        productName={product.product.product_name}
+        brandName={product.product.brands}
+        nutriScore={product.product.nutriscore_grade}
+        ecoScore={product.product.ecoscore_grade}
         id={product.code}
+        createdDate={new Date()}
+        touchable={false}
       />
     </View>
   )
