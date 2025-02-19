@@ -1,4 +1,4 @@
-import { StyleSheet, FlatList, View, TouchableOpacity, Text, useColorScheme } from 'react-native';
+import { StyleSheet, FlatList, View, Text, useColorScheme } from 'react-native';
 import { MagnifyingGlass } from 'phosphor-react-native';
 import SearchBar from '@/components/SearchBar';
 import ScreenContainer from '@/components/ui/ScreenContainer';
