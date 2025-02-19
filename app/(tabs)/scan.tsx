@@ -132,6 +132,8 @@ export default function ScanScreen() {
 
               barcodeScannerSettings={{
                 barcodeTypes: ['qr', 'ean13', 'ean8', 'upc_a'],
+                isGuidanceEnabled: true,
+                isHighlightingEnabled: true,
               }}
               onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
             />
