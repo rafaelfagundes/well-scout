@@ -2,6 +2,7 @@ import React from 'react';
 import { View, TextInput, StyleSheet, useColorScheme } from 'react-native';
 import { MagnifyingGlass } from 'phosphor-react-native';
 import { Colors } from '@/constants/Colors';
+import { Fonts } from '@/constants/Fonts';
 
 interface SearchBarProps {
   searchText: string;
@@ -19,12 +20,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText }) => {
       height: 40,
       borderRadius: 20,
       paddingHorizontal: 10,
-      marginTop: 10,
     },
     input: {
       flex: 1,
       height: 40,
       color: Colors[colorScheme ?? 'light'].text,
+      fontFamily: Fonts.sansSerif,
+      fontWeight: 'bold',
     },
   });
   return (

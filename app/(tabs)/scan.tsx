@@ -69,7 +69,7 @@ export default function ScanScreen() {
     cameraContainer: {
       flex: 1,
       backgroundColor: 'black',
-      borderRadius: 20,
+      borderRadius: 22,
     }
   });
 

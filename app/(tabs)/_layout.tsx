@@ -29,7 +29,7 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: 'transparent',
           position: 'absolute',
-          margin: 10,
+          marginHorizontal: 16,
           borderTopWidth: 0
         },
       }}>

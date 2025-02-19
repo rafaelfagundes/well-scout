@@ -18,10 +18,10 @@ enum Tabs {
 export default function ProductsScreen() {
   const history = useSelector((state: RootState) => state.product.history);
   const favorites = useSelector((state: RootState) => state.product.favorites);
-  const colorScheme = useColorScheme();
   const [activeTab, setActiveTab] = useState(Tabs.HISTORY);
   const [searchText, setSearchText] = useState("");
   const [debouncedSearchText, setDebouncedSearchText] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -29,8 +29,6 @@ export default function ProductsScreen() {
     }, 300);
     return () => clearTimeout(handler);
   }, [searchText]);
-
-  const backgroundColor = Colors[colorScheme ?? 'light'].background;
 
   const styles = StyleSheet.create({
     separator: {
@@ -43,11 +41,19 @@ export default function ProductsScreen() {
     item.brandName.toLowerCase().includes(debouncedSearchText.toLowerCase())
   );
 
+  const extraButton = {
+    icon: <MagnifyingGlass size={32} color={Colors[useColorScheme() ?? 'light'].text} />,
+    onPress: () => setShowSearch(!showSearch),
+  };
+
   return (
     <BackgroundImage>
-      <ScreenContainer scrollView={false}>
+      <ScreenContainer scrollView={false} extraButtons={[extraButton]}>
+        {showSearch && <>
+          <SearchBar searchText={searchText} onChangeText={setSearchText} />
+          <View style={{ height: 10 }} />
+        </>}
         <ProductsTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-        <SearchBar searchText={searchText} onChangeText={setSearchText} />
         <View style={{ height: 10 }} />
         <FlatList
           data={filteredData}
