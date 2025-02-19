@@ -31,15 +31,15 @@ export default function ProductsScreen() {
     return () => clearTimeout(handler);
   }, [searchText]);
 
-  const searchBarHeight = useSharedValue(showSearch ? 60 : 0);
+  const searchBarHeight = useSharedValue(showSearch ? 50 : 0);
 
   useEffect(() => {
-    searchBarHeight.value = withTiming(showSearch ? 60 : 0, { duration: 300 });
+    searchBarHeight.value = withTiming(showSearch ? 50 : 0, { duration: 200 });
   }, [showSearch]);
 
   const animatedSearchBarStyle = useAnimatedStyle(() => ({
     height: searchBarHeight.value,
-    opacity: searchBarHeight.value / 60,
+    opacity: searchBarHeight.value,
   }));
 
   const styles = StyleSheet.create({
