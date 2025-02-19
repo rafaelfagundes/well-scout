@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, Button, ScrollView, Text } from 'react-native';
+import { StyleSheet, Button, FlatList, Text } from 'react-native';
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
+import SearchBar from '@/components/SearchBar';
 
 export default function SearchScreen() {
   const [query, setQuery] = useState("");
@@ -20,20 +21,18 @@ export default function SearchScreen() {
   return (
     <BackgroundImage>
       <ScreenContainer>
-        <TextInput 
-          style={styles.input}
-          placeholder="Search for products by name or category"
-          value={query}
-          onChangeText={setQuery}
-        />
+        <SearchBar searchText={query} onChangeText={setQuery} />
         <Button title="Search" onPress={searchProducts} />
-        <ScrollView style={styles.resultsContainer}>
-          {results.map((item, index) => (
-            <Text key={index} style={styles.resultText}>
+        <FlatList 
+          data={results}
+          keyExtractor={(item, index) => `${index}`}
+          renderItem={({ item }) => (
+            <Text style={styles.resultText}>
               {item.product_name} - {item.categories}
             </Text>
-          ))}
-        </ScrollView>
+          )}
+          contentContainerStyle={styles.resultsContainer}
+        />
       </ScreenContainer>
     </BackgroundImage>
   );
