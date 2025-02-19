@@ -68,13 +68,15 @@ export default function ScanScreen() {
   const codeScanner = useCodeScanner({
     codeTypes: ['qr', 'ean-13'],
     onCodeScanned: (codes) => {
-      // console.log(codes[0].value)
       // console.log(`Scanned ${codes.length} codes!`)
-      setBarCode(codes[0].value ?? "")
+      if (codes[0].value !== barCode) {
+        setBarCode(codes[0].value ?? "")
+      }
     }
   });
 
   useEffect(() => {
+    console.log(barCode)
     if (barCode !== "") {
       router.push(`/product/${barCode}`);
     }
