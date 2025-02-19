@@ -1,5 +1,6 @@
-import { StyleSheet, FlatList, View, TouchableOpacity, Text, useColorScheme, TextInput } from 'react-native';
+import { StyleSheet, FlatList, View, TouchableOpacity, Text, useColorScheme } from 'react-native';
 import { MagnifyingGlass } from 'phosphor-react-native';
+import SearchBar from '@/components/SearchBar';
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import ProductItem from '@/features/products/ProductItem';
@@ -35,20 +36,6 @@ export default function ProductsScreen() {
     separator: {
       height: 10,
     },
-    searchContainer: {
-      backgroundColor: backgroundColor + 'D9',
-      flexDirection: 'row',
-      alignItems: 'center',
-      height: 40,
-      borderRadius: 20,
-      paddingHorizontal: 10,
-      marginTop: 10,
-    },
-    searchInput: {
-      flex: 1,
-      height: 40,
-      color: Colors[colorScheme ?? 'light'].text,
-    },
   });
   const selectedData = activeTab === Tabs.HISTORY ? history : favorites;
   const filteredData = selectedData.filter(item =>
@@ -60,15 +47,7 @@ export default function ProductsScreen() {
     <BackgroundImage>
       <ScreenContainer scrollView={false}>
         <ProductsTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-        <View style={styles.searchContainer}>
-          <MagnifyingGlass size={24} color={Colors[colorScheme ?? 'light'].text} style={{ marginRight: 8 }} />
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search"
-            value={searchText}
-            onChangeText={(text) => setSearchText(text)}
-          />
-        </View>
+        <SearchBar searchText={searchText} onChangeText={setSearchText} />
         <View style={{ height: 10 }} />
         <FlatList
           data={filteredData}
