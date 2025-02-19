@@ -25,7 +25,7 @@ export default function Product() {
             nutriScore: data.product.nutriscore_grade,
             ecoScore: data.product.ecoscore_grade,
             id: data.code,
-            createdDate: new Date()
+            createdDate: new Date().toISOString()
           }));
         }
       } catch (err) {

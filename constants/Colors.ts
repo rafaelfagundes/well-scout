@@ -6,11 +6,11 @@
 const tintColorLight = '#095256';
 const tintColorDark = '#00DF82';
 
-const tintConstrastColorLight = '#fff';
+const tintConstrastColorLight = '#FFFFFF';
 const tintConstrastColorDark = '#095256';
 
 const activeTabBarItemLight = tintColorLight;
-const activeTabBarItemDark = '#FFF';
+const activeTabBarItemDark = '#FFFFFF';
 const inactiveTabBarItemDark = '#FFFFFF60';
 const inactiveTabBarItemLight = '#09525675';
 
@@ -18,7 +18,7 @@ const inactiveTabBarItemLight = '#09525675';
 export const Colors = {
   light: {
     text: '#095256',
-    background: '#fff',
+    background: '#FFFFFF',
     tint: tintColorLight,
     tintConstrast: tintConstrastColorLight,
     inactiveTabBarItem: inactiveTabBarItemLight,

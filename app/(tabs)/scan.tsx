@@ -64,11 +64,12 @@ export default function ScanScreen() {
     headerButtons: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      // width: 64 + 20 // margin
-      width: 116
+      width: 64 + 20 // margin
     },
     cameraContainer: {
       flex: 1,
+      backgroundColor: 'black',
+      borderRadius: 20,
     }
   });
 
@@ -122,9 +123,6 @@ export default function ScanScreen() {
           <View style={styles.header}>
             <Logo />
             <View style={styles.headerButtons}>
-              <TouchableOpacity onPress={() => console.log('go to ProductDetailScreen')}>
-                <Info size={32} />
-              </TouchableOpacity>
               <TouchableOpacity onPress={() => setEnableTorch(!enableTorch)}>
                 <Flashlight size={32} color={colors.text} weight={enableTorch ? 'fill' : 'regular'} />
               </TouchableOpacity>

@@ -13,7 +13,7 @@ interface ProductItemProps {
   brandName: string;
   ecoScore: string;
   nutriScore: string;
-  createdDate?: Date;
+  createdDate?: string;
   touchable?: boolean;
 }
 
@@ -66,15 +66,15 @@ export default function ProductItem({
     productName: {
       color: Colors[colorScheme ?? 'light'].text,
       fontFamily: Fonts.sansSerif,
-      fontSize: 15,
+      fontSize: 17,
       fontWeight: '700',
-      maxWidth: Dimensions.get('screen').width - 122,
+      maxWidth: Dimensions.get('screen').width - 130,
     },
     brandName: {
       color: Colors[colorScheme ?? 'light'].text,
       fontFamily: Fonts.sansSerif,
-      fontSize: 12,
-      marginTop: 2,
+      fontSize: 13,
+      marginBottom: 2,
       opacity: .85,
       maxWidth: Dimensions.get('screen').width - 250,
     },
@@ -82,8 +82,8 @@ export default function ProductItem({
       flexDirection: 'row',
       alignItems: 'center',
       gap: 2,
-      marginRight: 10,
-      marginTop: 3,
+      marginRight: 6,
+      marginTop: 1,
     },
     timeText: {
       fontFamily: Fonts.sansSerif,
@@ -110,7 +110,7 @@ export default function ProductItem({
             </View>
             {createdDate && <View style={styles.timeContainer}>
               <Clock size={12} color={Colors[colorScheme ?? 'light'].text} />
-              <Text style={styles.timeText}>{formatRelativeTime(createdDate)}</Text>
+              <Text style={styles.timeText}>{formatRelativeTime(new Date(createdDate))}</Text>
             </View>}
           </View>
         </View>

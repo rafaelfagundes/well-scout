@@ -4,7 +4,7 @@ import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import ProductItem from '@/features/products/ProductItem';
 import { useSelector } from 'react-redux';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RootState } from '@/state/store';
 import { Fonts } from '@/constants/Fonts';
 import { Colors } from '@/constants/Colors';
@@ -21,30 +21,33 @@ export default function ProductsScreen() {
   const [activeTab, setActiveTab] = useState(Tabs.HISTORY);
   const [searchText, setSearchText] = useState("");
   const [debouncedSearchText, setDebouncedSearchText] = useState("");
+
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearchText(searchText);
     }, 300);
     return () => clearTimeout(handler);
   }, [searchText]);
-  
+
+  const backgroundColor = Colors[colorScheme ?? 'light'].background;
+
   const styles = StyleSheet.create({
     separator: {
       height: 10,
     },
     searchContainer: {
+      backgroundColor: backgroundColor + 'D9',
       flexDirection: 'row',
       alignItems: 'center',
       height: 40,
       borderRadius: 20,
-      borderWidth: 1,
-      borderColor: '#ccc',
       paddingHorizontal: 10,
-      marginVertical: 10,
+      marginTop: 10,
     },
     searchInput: {
       flex: 1,
       height: 40,
+      color: Colors[colorScheme ?? 'light'].text,
     },
   });
   const selectedData = activeTab === Tabs.HISTORY ? history : favorites;
@@ -52,7 +55,8 @@ export default function ProductsScreen() {
     item.productName.toLowerCase().includes(debouncedSearchText.toLowerCase()) ||
     item.brandName.toLowerCase().includes(debouncedSearchText.toLowerCase())
   );
-  
+
+
   return (
     <BackgroundImage>
       <ScreenContainer scrollView={false}>
@@ -104,11 +108,10 @@ function ProductsTabs({ activeTab, setActiveTab }: ProductsTabsProps) {
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor,
+      backgroundColor: backgroundColor + 'D9',
       padding: 4,
       borderRadius: 20,
       height: 40,
-      opacity: 0.85,
     },
     tabs: {
       flexDirection: 'row',

@@ -8,7 +8,7 @@ export interface ProductItem {
   imageUrl: string;
   brandName: string;
   productName: string;
-  createdDate: Date
+  createdDate: string;
 }
 
 export interface ProductState {
@@ -16,12 +16,12 @@ export interface ProductState {
   favorites: ProductItem[]
 }
 
-const initialState: ProductState = {
-  history: [],
-  favorites: []
-}
+// const initialState: ProductState = {
+//   history: [],
+//   favorites: []
+// }
 
-const initialStateHardCoded: ProductState = {
+const initialState: ProductState = {
   history: [
     {
       id: "0025293001886",

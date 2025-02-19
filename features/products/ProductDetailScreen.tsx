@@ -27,7 +27,6 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
         nutriScore={product.product.nutriscore_grade}
         ecoScore={product.product.ecoscore_grade}
         id={product.code}
-        createdDate={new Date()}
         touchable={false}
       />
     </View>
