@@ -1,10 +1,13 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams, Stack } from 'expo-router';
+import { useDispatch } from 'react-redux';
+import { addProductToHistory } from '@/features/products/productSlice';
 import ProductDetailScreen from '@/features/products/ProductDetailScreen';
 
 export default function Product() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const dispatch = useDispatch();
   const [product, setProduct] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -14,6 +17,16 @@ export default function Product() {
         const response = await fetch(`https://world.openfoodfacts.org/api/v3/product/${id}.json`);
         const data = await response.json();
         setProduct(data);
+        if (data.product) {
+          dispatch(addProductToHistory({
+            imageUrl: data.product.image_front_url,
+            productName: data.product.product_name,
+            brandName: data.product.brands,
+            nutriScore: data.product.nutriscore_grade,
+            ecoScore: data.product.ecoscore_grade,
+            id: data.code
+          }));
+        }
       } catch (err) {
         setError('Failed to fetch product');
       }
