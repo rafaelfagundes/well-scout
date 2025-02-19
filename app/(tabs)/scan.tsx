@@ -11,17 +11,15 @@ import { Colors } from '@/constants/Colors';
 
 export default function ScanScreen() {
   const { hasPermission, requestPermission } = useCameraPermission();
-  useEffect(() => {
-    console.log("Current Camera Permission:", hasPermission);
-  }, [hasPermission]);
-  const [scanned, setScanned] = useState(false);
   const device = useCameraDevice('back')
-  const codeScanner = useCodeScanner({
-    codeTypes: ['qr', 'ean-13'],
-    onCodeScanned: (codes) => {
-      console.log(`Scanned ${codes.length} codes!`)
+
+  useEffect(() => {
+    if (!hasPermission) {
+      requestPermission();
     }
-  });
+  }, [hasPermission]);
+
+  const [scanned, setScanned] = useState(false);
   const [barCode, setBarCode] = useState<string>("")
   const [enableTorch, setEnableTorch] = useState(false)
   const tabBarHeight = useBottomTabBarHeight()
@@ -65,22 +63,20 @@ export default function ScanScreen() {
     }
   });
 
+  const codeScanner = useCodeScanner({
+    codeTypes: ['qr', 'ean-13'],
+    onCodeScanned: (codes) => {
+      // console.log(codes[0].value)
+      // console.log(`Scanned ${codes.length} codes!`)
+      setBarCode(codes[0].value ?? "")
+    }
+  });
 
   useEffect(() => {
     if (barCode !== "") {
       console.log(barCode)
     }
   }, [barCode])
-
-  if (!hasPermission) {
-    return (
-      <BackgroundImage>
-        <ScreenContainer>
-          <Text>Requesting camera permission...</Text>
-        </ScreenContainer>
-      </BackgroundImage>
-    );
-  }
 
   if (!hasPermission) {
     return (
@@ -107,12 +103,6 @@ export default function ScanScreen() {
     );
   }
 
-  const handleBarCodeScanned = (result) => {
-    // setScanned(true);
-    // alert(`Bar code with type ${result.type} and data ${result.data} has been scanned!`);
-    setBarCode(result.data)
-  };
-
   return (
     <BackgroundImage>
       <SafeAreaView style={{ flex: 1 }}>
@@ -132,12 +122,14 @@ export default function ScanScreen() {
             </View>
           </View>
           <View style={styles.cameraContainer}>
-            <Camera
+            {device && <Camera
               style={styles.cameraView}
               codeScanner={codeScanner}
-              device={device!}
+              device={device}
               isActive={true}
-            />
+              torch={enableTorch ? 'on' : 'off'}
+              zoom={2}
+            />}
           </View>
           {scanned && (
             <Text style={styles.text} onPress={() => setScanned(false)}>
