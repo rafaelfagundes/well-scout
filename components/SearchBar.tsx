@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { View, TextInput, StyleSheet, useColorScheme } from 'react-native';
 import { MagnifyingGlass } from 'phosphor-react-native';
 import { Colors } from '@/constants/Colors';
@@ -11,6 +11,10 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText }) => {
   const colorScheme = useColorScheme();
+  const inputRef = useRef<TextInput>(null);
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
   const backgroundColor = Colors[colorScheme ?? 'light'].background;
   const styles = StyleSheet.create({
     container: {
@@ -33,6 +37,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText }) => {
     <View style={styles.container}>
       <MagnifyingGlass size={24} color={Colors[colorScheme ?? 'light'].text} style={{ marginRight: 8 }} />
       <TextInput
+        ref={inputRef}
         style={styles.input}
         placeholder="Search"
         value={searchText}
