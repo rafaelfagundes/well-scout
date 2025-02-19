@@ -50,7 +50,12 @@ export default function ProductsScreen() {
 }
 
 
-function ProductsTabs(activeTab: string, setActiveTab: any) {
+type ProductsTabsProps = {
+  activeTab: Tabs;
+  setActiveTab: React.Dispatch<React.SetStateAction<Tabs>>;
+}
+
+function ProductsTabs({ activeTab, setActiveTab }: ProductsTabsProps) {
   const styles = StyleSheet.create({
     tabs: {
       flexDirection: 'row',
