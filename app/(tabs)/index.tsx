@@ -12,7 +12,7 @@ import { ProductsTabs } from '@/features/products/ProductTabs';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing } from 'react-native-reanimated';
 import { useDispatch } from 'react-redux';
 import { removeProductFromHistory, addProductToFavorites } from '@/features/products/productSlice';
-import { Swipeable } from 'react-native-gesture-handler';
+import { Swipeable, GestureHandlerRootView } from 'react-native-gesture-handler';
 
 enum Tabs {
   HISTORY = 'history',
@@ -63,47 +63,49 @@ export default function ProductsScreen() {
   };
 
   return (
-    <BackgroundImage>
-      <ScreenContainer scrollView={false} extraButtons={[extraButton]}>
-        <Animated.View style={[{ overflow: "hidden" }, animatedSearchBarStyle]}>
-          <SearchBar searchText={searchText} onChangeText={setSearchText} />
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <BackgroundImage>
+        <ScreenContainer scrollView={false} extraButtons={[extraButton]}>
+          <Animated.View style={[{ overflow: "hidden" }, animatedSearchBarStyle]}>
+            <SearchBar searchText={searchText} onChangeText={setSearchText} />
+            <View style={{ height: 10 }} />
+          </Animated.View>
+          <ProductsTabs activeTab={activeTab} setActiveTab={setActiveTab} />
           <View style={{ height: 10 }} />
-        </Animated.View>
-        <ProductsTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-        <View style={{ height: 10 }} />
-        <FlatList
-          data={filteredData}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
-          renderItem={({ item }) => (
-            <Swipeable
-              renderLeftActions={() => (
-                <View style={{ justifyContent: 'center', alignItems: 'flex-start', flex: 1, backgroundColor: 'red', paddingLeft: 20 }}>
-                  <Text style={{ color: 'white' }}>Delete</Text>
-                </View>
-              )}
-              renderRightActions={() => (
-                <View style={{ justifyContent: 'center', alignItems: 'flex-end', flex: 1, backgroundColor: '#4CAF50', paddingRight: 20 }}>
-                  <Text style={{ color: 'white' }}>Favorite</Text>
-                </View>
-              )}
-              onSwipeableLeftOpen={() => dispatch(addProductToFavorites(item))}
-              onSwipeableRightOpen={() => dispatch(removeProductFromHistory(item))}
-            >
-              <ProductItem
-                id={item.id}
-                ecoScore={item.ecoScore}
-                nutriScore={item.nutriScore}
-                imageUrl={item.imageUrl}
-                brandName={item.brandName}
-                productName={item.productName}
-                createdDate={item.createdDate}
-              />
-            </Swipeable>
-          )}
-          keyExtractor={item => item.id}
-        />
-      </ScreenContainer>
-    </BackgroundImage>
+          <FlatList
+            data={filteredData}
+            ItemSeparatorComponent={() => <View style={styles.separator} />}
+            renderItem={({ item }) => (
+              <Swipeable
+                renderLeftActions={() => (
+                  <View style={{ justifyContent: 'center', alignItems: 'flex-start', flex: 1, backgroundColor: 'red', paddingLeft: 20 }}>
+                    <Text style={{ color: 'white' }}>Delete</Text>
+                  </View>
+                )}
+                renderRightActions={() => (
+                  <View style={{ justifyContent: 'center', alignItems: 'flex-end', flex: 1, backgroundColor: '#4CAF50', paddingRight: 20 }}>
+                    <Text style={{ color: 'white' }}>Favorite</Text>
+                  </View>
+                )}
+                onSwipeableLeftOpen={() => dispatch(addProductToFavorites(item))}
+                onSwipeableRightOpen={() => dispatch(removeProductFromHistory(item))}
+              >
+                <ProductItem
+                  id={item.id}
+                  ecoScore={item.ecoScore}
+                  nutriScore={item.nutriScore}
+                  imageUrl={item.imageUrl}
+                  brandName={item.brandName}
+                  productName={item.productName}
+                  createdDate={item.createdDate}
+                />
+              </Swipeable>
+            )}
+            keyExtractor={item => item.id}
+          />
+        </ScreenContainer>
+      </BackgroundImage>
+    </GestureHandlerRootView>
   );
 }
 
