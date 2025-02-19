@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { RootState } from '@/state/store';
 import { Colors } from '@/constants/Colors';
 import { ProductsTabs } from '@/features/products/ProductTabs';
-import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing } from 'react-native-reanimated';
 
 enum Tabs {
   HISTORY = 'history',
@@ -34,7 +34,7 @@ export default function ProductsScreen() {
   const searchBarHeight = useSharedValue(showSearch ? 50 : 0);
 
   useEffect(() => {
-    searchBarHeight.value = withTiming(showSearch ? 50 : 0, { duration: 200 });
+    searchBarHeight.value = withTiming(showSearch ? 50 : 0, { duration: 200, easing: Easing.inOut(Easing.ease) });
   }, [showSearch]);
 
   const animatedSearchBarStyle = useAnimatedStyle(() => ({
