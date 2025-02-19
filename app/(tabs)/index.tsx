@@ -78,12 +78,12 @@ export default function ProductsScreen() {
             renderItem={({ item }) => (
               <Swipeable
                 renderLeftActions={() => (
-                  <View style={{ justifyContent: 'center', alignItems: 'flex-start', flex: 1, backgroundColor: 'red', paddingLeft: 20 }}>
+                  <View style={{ justifyContent: 'center', alignItems: 'flex-start', flex: 1, backgroundColor: 'red', paddingLeft: 20, borderRadius: 20 }}>
                     <Text style={{ color: 'white' }}>Delete</Text>
                   </View>
                 )}
                 renderRightActions={() => (
-                  <View style={{ justifyContent: 'center', alignItems: 'flex-end', flex: 1, backgroundColor: '#4CAF50', paddingRight: 20 }}>
+                  <View style={{ justifyContent: 'center', alignItems: 'flex-end', flex: 1, backgroundColor: '#4CAF50', paddingRight: 20, borderRadius: 20 }}>
                     <Text style={{ color: 'white' }}>Favorite</Text>
                   </View>
                 )}
