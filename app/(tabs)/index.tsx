@@ -9,6 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { RootState } from '@/state/store';
 import { Colors } from '@/constants/Colors';
 import { ProductsTabs } from '@/features/products/ProductTabs';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
 enum Tabs {
   HISTORY = 'history',
@@ -49,10 +50,10 @@ export default function ProductsScreen() {
   return (
     <BackgroundImage>
       <ScreenContainer scrollView={false} extraButtons={[extraButton]}>
-        {showSearch && <>
+        <Animated.View style={[{ overflow: "hidden" }, animatedSearchBarStyle]}>
           <SearchBar searchText={searchText} onChangeText={setSearchText} />
           <View style={{ height: 10 }} />
-        </>}
+        </Animated.View>
         <ProductsTabs activeTab={activeTab} setActiveTab={setActiveTab} />
         <View style={{ height: 10 }} />
         <FlatList
