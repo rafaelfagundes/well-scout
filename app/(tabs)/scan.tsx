@@ -1,8 +1,9 @@
 import { StyleSheet, View, Text, Alert, SafeAreaView, TouchableOpacity, useColorScheme } from 'react-native';
 import { Camera, useCameraDevice, useCameraPermission, useCodeScanner } from 'react-native-vision-camera';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
+import { useFocusEffect } from '@react-navigation/native';
 
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
@@ -24,6 +25,11 @@ export default function ScanScreen() {
   const router = useRouter();
   const [scanned, setScanned] = useState(false);
   const [barCode, setBarCode] = useState<string>("")
+  useFocusEffect(
+    useCallback(() => {
+      setBarCode("");
+    }, [])
+  );
   const [enableTorch, setEnableTorch] = useState(false)
   const tabBarHeight = useBottomTabBarHeight()
   const colorScheme = useColorScheme()
