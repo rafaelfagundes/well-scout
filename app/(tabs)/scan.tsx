@@ -11,6 +11,9 @@ import { Colors } from '@/constants/Colors';
 
 export default function ScanScreen() {
   const { hasPermission, requestPermission } = useCameraPermission();
+  useEffect(() => {
+    console.log("Current Camera Permission:", hasPermission);
+  }, [hasPermission]);
   const [scanned, setScanned] = useState(false);
   const device = useCameraDevice('back')
   const codeScanner = useCodeScanner({
