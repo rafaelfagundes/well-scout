@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text, Alert, SafeAreaView, TouchableOpacity, useColorScheme } from 'react-native';
-import { Camera, useCameraPermission, useCodeScanner } from 'react-native-vision-camera';
+import { Camera, useCameraDevice, useCameraPermission, useCodeScanner } from 'react-native-vision-camera';
 import { useEffect, useState } from 'react';
 
 import ScreenContainer from '@/components/ui/ScreenContainer';
@@ -12,7 +12,7 @@ import { Colors } from '@/constants/Colors';
 export default function ScanScreen() {
   const { hasPermission, requestPermission } = useCameraPermission();
   const [scanned, setScanned] = useState(false);
-  const [facing] = useState<CameraType>('back');
+  const device = useCameraDevice('back')
   const codeScanner = useCodeScanner({
     codeTypes: ['qr', 'ean-13'],
     onCodeScanned: (codes) => {
@@ -69,7 +69,7 @@ export default function ScanScreen() {
     }
   }, [barCode])
 
-  if (!permission) {
+  if (!hasPermission) {
     return (
       <BackgroundImage>
         <ScreenContainer>
@@ -79,7 +79,7 @@ export default function ScanScreen() {
     );
   }
 
-  if (!permission.granted) {
+  if (!hasPermission) {
     return (
       <BackgroundImage>
         <ScreenContainer>
@@ -104,7 +104,7 @@ export default function ScanScreen() {
     );
   }
 
-  const handleBarCodeScanned = (result: BarcodeScanningResult) => {
+  const handleBarCodeScanned = (result) => {
     // setScanned(true);
     // alert(`Bar code with type ${result.type} and data ${result.data} has been scanned!`);
     setBarCode(result.data)
@@ -130,10 +130,10 @@ export default function ScanScreen() {
           </View>
           <View style={styles.cameraContainer}>
             <Camera
-              enableTorch={enableTorch}
               style={styles.cameraView}
-              facing={facing}
               codeScanner={codeScanner}
+              device={device!}
+              isActive={true}
             />
           </View>
           {scanned && (
