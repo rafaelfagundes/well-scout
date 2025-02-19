@@ -31,6 +31,17 @@ export default function ProductsScreen() {
     return () => clearTimeout(handler);
   }, [searchText]);
 
+  const searchBarHeight = useSharedValue(showSearch ? 60 : 0);
+
+  useEffect(() => {
+    searchBarHeight.value = withTiming(showSearch ? 60 : 0, { duration: 300 });
+  }, [showSearch]);
+
+  const animatedSearchBarStyle = useAnimatedStyle(() => ({
+    height: searchBarHeight.value,
+    opacity: searchBarHeight.value / 60,
+  }));
+
   const styles = StyleSheet.create({
     separator: {
       height: 10,
