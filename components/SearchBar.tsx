@@ -27,6 +27,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText }) => {
       color: Colors[colorScheme ?? 'light'].text,
       fontFamily: Fonts.sansSerif,
       fontWeight: 'bold',
+      fontSize: 15
     },
   });
   return (
