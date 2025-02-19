@@ -1,7 +1,7 @@
 import { RootState } from "@/state/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface ProductItem {
+export interface ProductItem {
   id: string;
   ecoScore: string;
   nutriScore: string;
@@ -17,6 +17,11 @@ export interface ProductState {
 }
 
 const initialState: ProductState = {
+  history: [],
+  favorites: []
+}
+
+const initialStateHardCoded: ProductState = {
   history: [
     {
       id: "0025293001886",
