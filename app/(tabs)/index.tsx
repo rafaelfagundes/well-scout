@@ -76,14 +76,17 @@ function ProductsTabs({ activeTab, setActiveTab }: ProductsTabsProps) {
       fontWeight: 700,
       fontSize: 14,
       color: '#000'
+    },
+    activeTab: {
+      backgroundColor: '#ccc'
     }
   })
   return (
     <View style={styles.tabs}>
-      <TouchableOpacity style={styles.tab} onPress={() => setActiveTab('history')}>
+      <TouchableOpacity style={[styles.tab, activeTab === Tabs.HISTORY && styles.activeTab]} onPress={() => setActiveTab(Tabs.HISTORY)}>
         <Text style={styles.tabText}>History</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.tab} onPress={() => setActiveTab('favorites')}>
+      <TouchableOpacity style={[styles.tab, activeTab === Tabs.FAVORITES && styles.activeTab]} onPress={() => setActiveTab(Tabs.FAVORITES)}>
         <Text style={styles.tabText}>Favorites</Text>
       </TouchableOpacity>
     </View>
