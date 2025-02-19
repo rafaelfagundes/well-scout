@@ -12,7 +12,8 @@ import { ProductsTabs } from '@/features/products/ProductTabs';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing } from 'react-native-reanimated';
 import { useDispatch } from 'react-redux';
 import { removeProductFromHistory, addProductToFavorites } from '@/features/products/productSlice';
-import { Swipeable, GestureHandlerRootView } from 'react-native-gesture-handler';
+import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 enum Tabs {
   HISTORY = 'history',
@@ -76,7 +77,7 @@ export default function ProductsScreen() {
             data={filteredData}
             ItemSeparatorComponent={() => <View style={styles.separator} />}
             renderItem={({ item }) => (
-              <Swipeable
+              <ReanimatedSwipeable
                 renderLeftActions={() => (
                   <View style={{ justifyContent: 'center', alignItems: 'flex-start', flex: 1, backgroundColor: 'red', paddingLeft: 20, borderRadius: 20 }}>
                     <Text style={{ color: 'white' }}>Delete</Text>
@@ -87,8 +88,13 @@ export default function ProductsScreen() {
                     <Text style={{ color: 'white' }}>Favorite</Text>
                   </View>
                 )}
-                onSwipeableLeftWillOpen={() => dispatch(addProductToFavorites(item))}
-                onSwipeableRightWillOpen={() => dispatch(removeProductFromHistory(item))}
+                onSwipeableOpen={(direction) => {
+                  if (direction === 'left') {
+                    dispatch(addProductToFavorites(item));
+                  } else if (direction === 'right') {
+                    dispatch(removeProductFromHistory(item));
+                  }
+                }}
               >
                 <ProductItem
                   id={item.id}
