@@ -125,15 +125,11 @@ export default function ScanScreen() {
           </View>
           <View style={styles.cameraContainer}>
             <CameraView
-              autofocus='on'
               enableTorch={enableTorch}
               style={styles.cameraView}
               facing={facing}
-
               barcodeScannerSettings={{
                 barcodeTypes: ['qr', 'ean13', 'ean8', 'upc_a'],
-                isGuidanceEnabled: true,
-                isHighlightingEnabled: true,
               }}
               onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
             />
