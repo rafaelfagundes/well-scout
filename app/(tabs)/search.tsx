@@ -3,6 +3,7 @@ import { StyleSheet, Button, FlatList, Text } from 'react-native';
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import SearchBar from '@/components/SearchBar';
+import ProductItem from '@/features/products/ProductItem';
 
 export default function SearchScreen() {
   const [query, setQuery] = useState("");
@@ -27,9 +28,16 @@ export default function SearchScreen() {
           data={results}
           keyExtractor={(item, index) => `${index}`}
           renderItem={({ item }) => (
-            <Text style={styles.resultText}>
-              {item.product_name} - {item.categories}
-            </Text>
+            <ProductItem 
+              id={item.id || item.code || String(item._id)}
+              imageUrl={item.image_url || "https://via.placeholder.com/70"}
+              productName={item.product_name}
+              brandName={item.brands || "Unknown"}
+              ecoScore={item.ecoscore || "N/A"}
+              nutriScore={item.nutriscore || "N/A"}
+              createdDate={item.created_date}
+              touchable={false}
+            />
           )}
           contentContainerStyle={styles.resultsContainer}
         />
