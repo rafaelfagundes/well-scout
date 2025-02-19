@@ -1,6 +1,7 @@
 import { StyleSheet, View, Text, Alert, SafeAreaView, TouchableOpacity, useColorScheme } from 'react-native';
 import { Camera, useCameraDevice, useCameraPermission, useCodeScanner } from 'react-native-vision-camera';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'expo-router';
 
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
@@ -19,6 +20,7 @@ export default function ScanScreen() {
     }
   }, [hasPermission]);
 
+  const router = useRouter();
   const [scanned, setScanned] = useState(false);
   const [barCode, setBarCode] = useState<string>("")
   const [enableTorch, setEnableTorch] = useState(false)
@@ -74,7 +76,7 @@ export default function ScanScreen() {
 
   useEffect(() => {
     if (barCode !== "") {
-      console.log(barCode)
+      router.push(`/product/${barCode}`);
     }
   }, [barCode])
 
