@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, TextInput, StyleSheet, useColorScheme, TouchableOpacity } from 'react-native';
-import { MagnifyingGlass, XCircle } from 'phosphor-react-native'; // Import XCircle
+import { MagnifyingGlass, XCircle } from 'phosphor-react-native';
 import { Colors } from '@/constants/Colors';
 import { Fonts } from '@/constants/Fonts';
 
@@ -36,36 +36,22 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText, onSubmi
     }
   });
 
-  const [localText, setLocalText] = useState(searchText);
-
-  useEffect(() => {
-    setLocalText(searchText);
-  }, [searchText]);
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      onChangeText(localText);
-    }, 300);
-    return () => clearTimeout(handler);
-  }, [localText]);
-
   return (
     <View style={styles.container}>
       <MagnifyingGlass size={24} color={Colors[colorScheme ?? 'light'].text} style={{ marginRight: 8 }} />
       <TextInput
         style={styles.input}
         placeholder="Search"
-        value={localText}
-        onChangeText={setLocalText}
+        value={searchText}
+        onChangeText={onChangeText}
         autoCorrect={false}
         autoCapitalize="none"
         onSubmitEditing={onSubmitEditing}
       />
-      {localText !== "" && (
+      {searchText !== "" && (
         <TouchableOpacity
           style={styles.clearButton}
           onPress={() => {
-            setLocalText('');
             onChangeText('');
           }}
         >
