@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, StyleSheet, useColorScheme } from 'react-native';
-import { MagnifyingGlass } from 'phosphor-react-native';
+import { View, TextInput, StyleSheet, useColorScheme, TouchableOpacity } from 'react-native';
+import { MagnifyingGlass, XCircle } from 'phosphor-react-native'; // Import XCircle
 import { Colors } from '@/constants/Colors';
 import { Fonts } from '@/constants/Fonts';
 
 interface SearchBarProps {
   searchText: string;
   onChangeText: (text: string) => void;
-  onSubmitEditing: () => void; // Add this prop
-  returnKeyType: string;       // Add this prop
+  onSubmitEditing: () => void;
+  returnKeyType: string;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText, onSubmitEditing, returnKeyType }) => {
@@ -31,6 +31,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText, onSubmi
       fontWeight: 'bold',
       fontSize: 15
     },
+    clearButton: {
+      marginLeft: 8, // Add some spacing
+    }
   });
   const [localText, setLocalText] = useState(searchText);
 
@@ -56,9 +59,21 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText, onSubmi
         onChangeText={setLocalText}
         autoCorrect={false}
         autoCapitalize="none"
-        onSubmitEditing={onSubmitEditing}  // Pass the prop down
-        returnKeyType={returnKeyType}      // Pass the prop down
+        onSubmitEditing={onSubmitEditing}
+        returnKeyType={returnKeyType}
       />
+      {/* Conditionally render the clear button */}
+      {localText !== "" && (
+        <TouchableOpacity
+          style={styles.clearButton}
+          onPress={() => {
+            setLocalText('');
+            onChangeText('');
+          }}
+        >
+          <XCircle size={24} weight="fill" color={Colors[colorScheme ?? 'light'].text} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
