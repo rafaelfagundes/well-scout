@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '@/state/store';
 import { removeProductFromHistory, addProductToFavorites, initializeProductState, removeProductFromFavorites } from '@/features/products/productSlice'; // Import initializeProductState
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
+import type { SwipeableMethods } from 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 enum Tabs {
@@ -22,7 +23,7 @@ enum Tabs {
 }
 
 function SwipeableListItem({ item, activeTab, dispatch }: { item: any; activeTab: Tabs; dispatch: any; }) {
-  const swipeableRef = useRef<typeof ReanimatedSwipeable | null>(null);
+  const swipeableRef = useRef<SwipeableMethods | null>(null);
 
   const styles = StyleSheet.create({
     removeItem: {
