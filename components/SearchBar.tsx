@@ -13,6 +13,7 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText, onSubmitEditing }) => {
   const colorScheme = useColorScheme();
   const backgroundColor = Colors[colorScheme ?? 'light'].background;
+
   const styles = StyleSheet.create({
     container: {
       backgroundColor: backgroundColor + 'D9',
@@ -34,6 +35,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText, onSubmi
       marginLeft: 8,
     }
   });
+
   const [localText, setLocalText] = useState(searchText);
 
   useEffect(() => {
