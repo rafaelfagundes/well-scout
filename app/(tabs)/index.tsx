@@ -1,5 +1,5 @@
 import { StyleSheet, FlatList, View, Text, useColorScheme, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 import { MagnifyingGlass } from 'phosphor-react-native';
 import SearchBar from '@/components/SearchBar';
 import ScreenContainer from '@/components/ui/ScreenContainer';
@@ -106,6 +106,7 @@ export default function ProductsScreen() {
   const searchBarHeight = useSharedValue(showSearch ? 50 : 0);
 
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
 
   useEffect(() => {
     dispatch(initializeProductState());
