@@ -65,9 +65,11 @@ const productSlice = createSlice({
       saveStateToAsyncStorage(state); // Save after modifying state
     },
     addProductToFavorites: (state, action: PayloadAction<ProductItem>) => {
-      state.favorites.push(action.payload);
-      saveStateToAsyncStorage(state); // Save after modifying state
-
+      const existingIndex = state.favorites.findIndex(product => product.id === action.payload.id);
+      if (existingIndex === -1) {
+        state.favorites.push(action.payload);
+        saveStateToAsyncStorage(state); // Save after modifying state
+      }
     },
     removeProductFromFavorites: (state, action: PayloadAction<ProductItem>) => {
       state.favorites = state.favorites.filter(item => item.id !== action.payload.id);
