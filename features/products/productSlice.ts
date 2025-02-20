@@ -87,7 +87,12 @@ export const selectProductFavorites = (state: RootState) => state.product.favori
 export default productSlice.reducer;
 
 // Load initial state and dispatch
-export const initializeProductState = () => async (dispatch: any) => {
+import { ThunkAction } from '@reduxjs/toolkit';
+import { AnyAction } from 'redux';
+
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AnyAction>;
+
+export const initializeProductState = (): AppThunk<Promise<void>> => async (dispatch) => {
     const loadedState = await loadStateFromAsyncStorage();
     dispatch(setInitialState(loadedState));
 }
