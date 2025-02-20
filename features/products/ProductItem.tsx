@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, useColorScheme, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, Image, StyleSheet, useColorScheme, TouchableOpacity, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import { Link } from 'expo-router';
 import { Clock } from 'phosphor-react-native';
 import { Fonts } from '@/constants/Fonts';
@@ -92,7 +92,7 @@ export default function ProductItem({
   });
   return (
     <Link href={`/product/${id}`} asChild>
-      <TouchableOpacity style={styles.card} disabled={!touchable} >
+      <TouchableWithoutFeedback style={styles.card} disabled={!touchable} >
         <View style={styles.cardContent}>
           <View style={styles.topContainer}>
             <View style={styles.productInfo}>
@@ -113,7 +113,7 @@ export default function ProductItem({
             </View>}
           </View>
         </View>
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     </Link>
   );
 }
