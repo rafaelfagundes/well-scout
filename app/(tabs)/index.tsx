@@ -5,7 +5,7 @@ import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import ProductItem from '@/features/products/ProductItem';
 import { useSelector } from 'react-redux';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { RootState } from '@/state/store';
 import { Colors } from '@/constants/Colors';
 import { ProductsTabs } from '@/features/products/ProductTabs';
@@ -109,41 +109,48 @@ export default function ProductsScreen() {
           <FlatList
             data={filteredData}
             ItemSeparatorComponent={() => <View style={styles.separator} />}
-            renderItem={({ item }) => (
-              <ReanimatedSwipeable
-                renderLeftActions={() => (
-                  <View style={styles.removeItem}>
-                    <Text style={styles.removeItemText}>Delete</Text>
-                  </View>
-                )}
-                renderRightActions={() => (
-                  <View style={styles.addRemoveItemFromFavorites}>
-                    <Text style={styles.addRemoveItemFromFavoritesText}>{activeTab === Tabs.FAVORITES ? 'Remove from Favorites' : 'Add to Favorites'}</Text>
-                  </View>
-                )}
-                onSwipeableOpen={(direction) => {
-                  if (direction === 'left') {
-                    dispatch(removeProductFromHistory(item));
-                  } else if (direction === 'right') {
-                    if (activeTab === Tabs.HISTORY) {
-                      dispatch(addProductToFavorites(item));
-                    } else {
-                      dispatch(removeProductFromFavorites(item));
+            renderItem={({ item }) => {
+              const swipeableRef = useRef(null);
+              return (
+                <ReanimatedSwipeable
+                  ref={swipeableRef}
+                  renderLeftActions={() => (
+                    <View style={styles.removeItem}>
+                      <Text style={styles.removeItemText}>Delete</Text>
+                    </View>
+                  )}
+                  renderRightActions={() => (
+                    <View style={styles.addRemoveItemFromFavorites}>
+                      <Text style={styles.addRemoveItemFromFavoritesText}>
+                        {activeTab === Tabs.FAVORITES ? 'Remove from Favorites' : 'Add to Favorites'}
+                      </Text>
+                    </View>
+                  )}
+                  onSwipeableOpen={(direction) => {
+                    if (direction === 'left') {
+                      dispatch(removeProductFromHistory(item));
+                    } else if (direction === 'right') {
+                      if (activeTab === Tabs.HISTORY) {
+                        dispatch(addProductToFavorites(item));
+                      } else {
+                        dispatch(removeProductFromFavorites(item));
+                      }
                     }
-                  }
-                }}
-              >
-                <ProductItem
-                  id={item.id}
-                  ecoScore={item.ecoScore}
-                  nutriScore={item.nutriScore}
-                  imageUrl={item.imageUrl}
-                  brandName={item.brandName}
-                  productName={item.productName}
-                  createdDate={item.createdDate}
-                />
-              </ReanimatedSwipeable>
-            )}
+                    swipeableRef.current?.reset();
+                  }}
+                >
+                  <ProductItem
+                    id={item.id}
+                    ecoScore={item.ecoScore}
+                    nutriScore={item.nutriScore}
+                    imageUrl={item.imageUrl}
+                    brandName={item.brandName}
+                    productName={item.productName}
+                    createdDate={item.createdDate}
+                  />
+                </ReanimatedSwipeable>
+              );
+            }}
             keyExtractor={item => item.id}
           />
         </ScreenContainer>
