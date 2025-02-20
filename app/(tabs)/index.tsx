@@ -79,7 +79,7 @@ function SwipeableListItem({ item, activeTab, dispatch }: { item: any; activeTab
         } else if (direction === 'left') {
           dispatch(addProductToFavorites(item));
         }
-        swipeableRef.current.reset();
+        swipeableRef.current?.reset();
       }}
     >
       <ProductItem
