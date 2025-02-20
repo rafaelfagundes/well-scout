@@ -22,7 +22,7 @@ enum Tabs {
 }
 
 function SwipeableListItem({ item, activeTab, dispatch }: { item: any; activeTab: Tabs; dispatch: any; }) {
-  const swipeableRef = useRef(null);
+  const swipeableRef = useRef<ReanimatedSwipeable | null>(null);
 
   const styles = StyleSheet.create({
     removeItem: {
