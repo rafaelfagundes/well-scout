@@ -21,34 +21,65 @@ enum Tabs {
   FAVORITES = 'favorites'
 }
 
-function SwipeableListItem({ item, activeTab, dispatch, styles }: { item: any; activeTab: Tabs; dispatch: any; styles: any; }) {
+function SwipeableListItem({ item, activeTab, dispatch }: { item: any; activeTab: Tabs; dispatch: any; }) {
   const swipeableRef = useRef(null);
+
+  const styles = StyleSheet.create({
+    removeItem: {
+      justifyContent: 'center',
+      alignItems: 'flex-end',
+      flex: 1,
+      backgroundColor: 'red',
+      paddingRight: 20,
+      borderRadius: 20
+    },
+    removeItemText: {
+      color: 'white',
+      maxWidth: 80,
+      textAlign: 'center'
+    },
+    addRemoveItemFromFavorites: {
+      justifyContent: 'center',
+      alignItems: 'flex-start',
+      flex: 1,
+      backgroundColor: '#4CAF50',
+      paddingLeft: 20,
+      borderRadius: 20
+    },
+    addRemoveItemFromFavoritesText: {
+      maxWidth: 80,
+      color: 'white',
+      textAlign: 'center'
+    },
+  });
+
   return (
     <ReanimatedSwipeable
       ref={swipeableRef}
-      renderLeftActions={() => (
+      renderRightActions={() => (
         <View style={styles.removeItem}>
-          <Text style={styles.removeItemText}>Delete</Text>
+          <Text style={styles.removeItemText}>{`Delete${activeTab === Tabs.HISTORY ? ' from History' : ' from Favorites'}`}</Text>
         </View>
       )}
-      renderRightActions={() => (
+      renderLeftActions={activeTab === Tabs.HISTORY ? () => (
         <View style={styles.addRemoveItemFromFavorites}>
           <Text style={styles.addRemoveItemFromFavoritesText}>
-            {activeTab === Tabs.FAVORITES ? 'Remove from Favorites' : 'Add to Favorites'}
+            Add to Favorites
           </Text>
         </View>
-      )}
+      ) : undefined}
       onSwipeableOpen={(direction) => {
-        if (direction === 'left') {
-          dispatch(removeProductFromHistory(item));
-        } else if (direction === 'right') {
+        if (direction === 'right') {
           if (activeTab === Tabs.HISTORY) {
-            dispatch(addProductToFavorites(item));
-          } else {
+            dispatch(removeProductFromHistory(item));
+          }
+          else {
             dispatch(removeProductFromFavorites(item));
           }
+        } else if (direction === 'left') {
+          dispatch(addProductToFavorites(item));
         }
-        swipeableRef.current?.reset();
+        swipeableRef.current.reset();
       }}
     >
       <ProductItem
@@ -99,31 +130,7 @@ export default function ProductsScreen() {
   const styles = StyleSheet.create({
     separator: {
       height: 10,
-    },
-    removeItem: {
-      justifyContent: 'center',
-      alignItems: 'flex-start',
-      flex: 1,
-      backgroundColor: 'red',
-      paddingLeft: 20,
-      borderRadius: 20
-    },
-    removeItemText: {
-      color: 'white'
-    },
-    addRemoveItemFromFavorites: {
-      justifyContent: 'center',
-      alignItems: 'flex-end',
-      flex: 1,
-      backgroundColor: activeTab === Tabs.FAVORITES ? 'orange' : '#4CAF50',
-      paddingRight: 20,
-      borderRadius: 20
-    },
-    addRemoveItemFromFavoritesText: {
-      maxWidth: 80,
-      color: 'white',
-      textAlign: 'center'
-    },
+    }
   });
 
   const selectedData = activeTab === Tabs.HISTORY ? history : favorites;
@@ -153,7 +160,7 @@ export default function ProductsScreen() {
             data={filteredData}
             ItemSeparatorComponent={() => <View style={styles.separator} />}
             renderItem={({ item }) => (
-              <SwipeableListItem item={item} activeTab={activeTab} dispatch={dispatch} styles={styles} />
+              <SwipeableListItem item={item} activeTab={activeTab} dispatch={dispatch} />
             )}
             keyExtractor={item => item.id}
           />
