@@ -7,7 +7,7 @@ import { Fonts } from '@/constants/Fonts';
 interface SearchBarProps {
   searchText: string;
   onChangeText: (text: string) => void;
-  onSubmitEditing: () => void;
+  onSubmitEditing?: () => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText, onSubmitEditing }) => {
@@ -31,7 +31,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText, onSubmi
       fontSize: 15
     },
     clearButton: {
-      marginLeft: 8, // Add some spacing
+      marginLeft: 8,
     }
   });
   const [localText, setLocalText] = useState(searchText);
