@@ -65,16 +65,20 @@ export default function SearchScreen() {
       opacity: .85,
     }
   });
-  const searchProducts = async (searchTerms?: string) => {
-    if (query.trim() === "" && searchTerms === undefined) {
+
+  async function searchProducts(searchTerm?: string) {
+    const searchTermType = typeof searchTerm;
+    console.log("searchTerm", searchTermType)
+
+    if (query.trim() === "" && searchTermType !== "string") {
       setResults([]);
       setLoading(false);
       return;
     }
-
     setLoading(true);
     try {
-      const response = await fetch(`https://world.openfoodfacts.org/cgi/search.pl?action=process&search_simple=1&search_terms=${searchTerms ? encodeURIComponent(searchTerms) : encodeURIComponent(query)}&json=1`)
+      const url = `https://world.openfoodfacts.org/cgi/search.pl?action=process&search_simple=1&search_terms=${searchTerm ? encodeURIComponent(searchTerm) : encodeURIComponent(query)}&json=1`
+      const response = await fetch(url)
       const data = await response.json();
       setResults(data.products || []);
     } catch (error) {
