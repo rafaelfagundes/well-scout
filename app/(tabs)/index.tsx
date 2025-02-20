@@ -28,13 +28,13 @@ export default function ProductsScreen() {
   const [searchText, setSearchText] = useState("");
   const [debouncedSearchText, setDebouncedSearchText] = useState("");
   const [showSearch, setShowSearch] = useState(false);
+  const searchBarHeight = useSharedValue(showSearch ? 50 : 0);
+
   const dispatch = useDispatch<AppDispatch>();
 
-  // Load initial state from AsyncStorage on component mount
   useEffect(() => {
     dispatch(initializeProductState());
   }, [dispatch]);
-
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -43,7 +43,6 @@ export default function ProductsScreen() {
     return () => clearTimeout(handler);
   }, [searchText]);
 
-  const searchBarHeight = useSharedValue(showSearch ? 50 : 0);
 
   useEffect(() => {
     searchBarHeight.value = withTiming(showSearch ? 50 : 0, { duration: 200, easing: Easing.inOut(Easing.ease) });
@@ -59,7 +58,9 @@ export default function ProductsScreen() {
       height: 10,
     },
   });
+
   const selectedData = activeTab === Tabs.HISTORY ? history : favorites;
+
   const filteredData = selectedData.filter(item =>
     item.productName.toLowerCase().includes(debouncedSearchText.toLowerCase()) ||
     item.brandName.toLowerCase().includes(debouncedSearchText.toLowerCase())
