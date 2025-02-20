@@ -50,10 +50,15 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     addProductToHistory: (state, action: PayloadAction<ProductItem>) => {
-      if (!state.history.some(product => product.id === action.payload.id)) {
+      const existingIndex = state.history.findIndex(product => product.id === action.payload.id);
+      if (existingIndex !== -1) {
+        // Replace existing product
+        state.history[existingIndex] = action.payload;
+      } else {
+        // Add new product
         state.history.push(action.payload);
-        saveStateToAsyncStorage(state); // Save after modifying state
       }
+      saveStateToAsyncStorage(state); // Save after modifying state
     },
     removeProductFromHistory: (state, action: PayloadAction<ProductItem>) => {
       state.history = state.history.filter(item => item.id !== action.payload.id);
