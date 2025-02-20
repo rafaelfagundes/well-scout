@@ -14,7 +14,6 @@ import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '@/state/store';
 import { removeProductFromHistory, addProductToFavorites, initializeProductState, removeProductFromFavorites } from '@/features/products/productSlice'; // Import initializeProductState
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
-import type { SwipeableMethods } from 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 enum Tabs {
@@ -23,7 +22,7 @@ enum Tabs {
 }
 
 function SwipeableListItem({ item, activeTab, dispatch }: { item: any; activeTab: Tabs; dispatch: any; }) {
-  const swipeableRef = useRef<SwipeableMethods | null>(null);
+  const swipeableRef = useRef(null);
 
   const styles = StyleSheet.create({
     removeItem: {
@@ -80,7 +79,7 @@ function SwipeableListItem({ item, activeTab, dispatch }: { item: any; activeTab
         } else if (direction === 'left') {
           dispatch(addProductToFavorites(item));
         }
-        swipeableRef.current?.reset();
+        (swipeableRef.current as any).reset();
       }}
     >
       <ProductItem
