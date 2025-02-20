@@ -47,6 +47,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText, onSubmi
         autoCorrect={false}
         autoCapitalize="none"
         onSubmitEditing={onSubmitEditing}
+        returnKeyType="search"
       />
       {searchText !== "" && (
         <TouchableOpacity
