@@ -1,23 +1,33 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, FlatList, Text, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, FlatList, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import SearchBar from '@/components/SearchBar';
 import ProductItem from '@/features/products/ProductItem';
 
+const SUGGESTIONS = [
+  "Lay's Sour Cream and Onion Potato Chips",
+  "Hershey's Milk Chocolate Bar",
+  "Coca-Cola Classic",
+  "Kellogg's Frosted Flakes Cereal",
+  "Pringles Original Potato Chips",
+  "Skippy Creamy Peanut Butter",
+  "M&M's Milk Chocolate Candies",
+];
+
 export default function SearchScreen() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false); // Add loading state
+  const [loading, setLoading] = useState(false);
 
   const searchProducts = async () => {
-    if (query.trim() === "") { // Check if the query is empty
-        setResults([]);      // Clear the results
+    if (query.trim() === "") {
+        setResults([]);
         setLoading(false);
-        return;             // Return to prevent the API call
+        return;
     }
 
-    setLoading(true); // Start loading
+    setLoading(true);
     try {
       const response = await fetch(`https://world.openfoodfacts.org/cgi/search.pl?action=process&search_simple=1&search_terms=${encodeURIComponent(query)}&json=1`)
       const data = await response.json();
@@ -25,8 +35,13 @@ export default function SearchScreen() {
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false); // Stop loading in both try and catch
+      setLoading(false);
     }
+  };
+
+  const handleSuggestionPress = (suggestion: string) => {
+    setQuery(suggestion);
+    searchProducts();
   };
 
   return (
@@ -39,8 +54,20 @@ export default function SearchScreen() {
           returnKeyType="search"
         />
         <View style={styles.resultsContainer}>
-          {loading ? ( // Conditionally render ActivityIndicator or FlatList
+          {loading ? (
             <ActivityIndicator size="large" style={styles.activityIndicator} />
+          ) : query.trim() === "" ? (
+            <FlatList
+              data={SUGGESTIONS}
+              keyExtractor={(item) => item}
+              renderItem={({ item }) => (
+                <TouchableOpacity onPress={() => handleSuggestionPress(item)}>
+                  <Text style={styles.suggestionText}>{item}</Text>
+                </TouchableOpacity>
+              )}
+              ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+              contentContainerStyle={styles.listContainer}
+            />
           ) : (
             <FlatList
               data={results}
@@ -74,18 +101,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   resultsContainer: {
-    flex: 1, // Add flex: 1 to allow the content to fill the screen
+    flex: 1,
     marginTop: 10,
   },
   listContainer: {
-    paddingBottom: 10, // Add padding to the bottom of the list
+    paddingBottom: 10,
   },
   resultText: {
     marginBottom: 5,
   },
-  activityIndicator: { // Added style for centering
+  activityIndicator: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
+  suggestionText: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    fontSize: 16,
+  }
 });
