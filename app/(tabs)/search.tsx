@@ -40,8 +40,18 @@ export default function SearchScreen() {
   };
 
   const handleSuggestionPress = (suggestion: string) => {
-    setQuery(suggestion);
-    searchProducts();
+    setQuery((prevQuery) => {
+      // Use the functional form of setQuery to ensure we have the latest value
+      const newQuery = suggestion;
+
+      // Call searchProducts *after* the state has been updated
+      //  We need to do it inside the callback, so it uses the correct, updated value
+      setTimeout(() => {
+          searchProducts();
+      }, 0)
+
+      return newQuery; // Return the new state
+    });
   };
 
   return (
