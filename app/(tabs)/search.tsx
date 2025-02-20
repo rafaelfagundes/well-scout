@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Button, FlatList, Text } from 'react-native';
+import { View, StyleSheet, FlatList, Text } from 'react-native';
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import SearchBar from '@/components/SearchBar';
@@ -22,8 +22,7 @@ export default function SearchScreen() {
   return (
     <BackgroundImage>
       <ScreenContainer scrollView={false}>
-        <SearchBar searchText={query} onChangeText={setQuery} />
-        <Button title="Search" onPress={searchProducts} />
+        <SearchBar searchText={query} onChangeText={setQuery} onSubmitEditing={searchProducts} />
         <FlatList
           data={results}
           keyExtractor={(item) => item.code}
