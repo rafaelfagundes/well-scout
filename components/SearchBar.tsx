@@ -7,9 +7,11 @@ import { Fonts } from '@/constants/Fonts';
 interface SearchBarProps {
   searchText: string;
   onChangeText: (text: string) => void;
+  onSubmitEditing: () => void; // Add this prop
+  returnKeyType: string;       // Add this prop
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText, onSubmitEditing, returnKeyType }) => {
   const colorScheme = useColorScheme();
   const backgroundColor = Colors[colorScheme ?? 'light'].background;
   const styles = StyleSheet.create({
@@ -54,6 +56,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText }) => {
         onChangeText={setLocalText}
         autoCorrect={false}
         autoCapitalize="none"
+        onSubmitEditing={onSubmitEditing}  // Pass the prop down
+        returnKeyType={returnKeyType}      // Pass the prop down
       />
     </View>
   );
