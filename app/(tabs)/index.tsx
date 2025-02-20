@@ -98,9 +98,9 @@ export default function ProductsScreen() {
                 )}
                 onSwipeableOpen={(direction) => {
                   if (direction === 'left') {
-                    dispatch(addProductToFavorites(item));
-                  } else if (direction === 'right') {
                     dispatch(removeProductFromHistory(item));
+                  } else if (direction === 'right') {
+                    dispatch(addProductToFavorites(item));
                   }
                 }}
               >
