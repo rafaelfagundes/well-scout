@@ -22,7 +22,12 @@ export default function SearchScreen() {
   return (
     <BackgroundImage>
       <ScreenContainer scrollView={false}>
-        <SearchBar searchText={query} onChangeText={setQuery} onSubmitEditing={searchProducts} />
+        <SearchBar
+          searchText={query}
+          onChangeText={setQuery}
+          onSubmitEditing={searchProducts}
+          returnKeyType="search"
+        />
         <FlatList
           data={results}
           keyExtractor={(item) => item.code}
