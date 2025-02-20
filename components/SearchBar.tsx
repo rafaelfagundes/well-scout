@@ -16,7 +16,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText, onSubmi
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: backgroundColor + 'D9',
+      backgroundColor: backgroundColor,
       flexDirection: 'row',
       alignItems: 'center',
       height: 40,

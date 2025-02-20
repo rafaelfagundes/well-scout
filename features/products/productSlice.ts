@@ -1,6 +1,8 @@
 import { RootState } from "@/state/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ThunkAction } from '@reduxjs/toolkit';
+import { Action } from 'redux';
 
 export interface ProductItem {
   id: string;
@@ -52,32 +54,30 @@ const productSlice = createSlice({
     addProductToHistory: (state, action: PayloadAction<ProductItem>) => {
       const existingIndex = state.history.findIndex(product => product.id === action.payload.id);
       if (existingIndex !== -1) {
-        // Replace existing product
         state.history[existingIndex] = action.payload;
       } else {
-        // Add new product
         state.history.push(action.payload);
       }
-      saveStateToAsyncStorage(state); // Save after modifying state
+      saveStateToAsyncStorage(state);
     },
     removeProductFromHistory: (state, action: PayloadAction<ProductItem>) => {
       state.history = state.history.filter(item => item.id !== action.payload.id);
-      saveStateToAsyncStorage(state); // Save after modifying state
+      saveStateToAsyncStorage(state);
     },
     addProductToFavorites: (state, action: PayloadAction<ProductItem>) => {
       const existingIndex = state.favorites.findIndex(product => product.id === action.payload.id);
       if (existingIndex === -1) {
         state.favorites.push(action.payload);
-        saveStateToAsyncStorage(state); // Save after modifying state
+        saveStateToAsyncStorage(state);
       }
     },
     removeProductFromFavorites: (state, action: PayloadAction<ProductItem>) => {
       state.favorites = state.favorites.filter(item => item.id !== action.payload.id);
-      saveStateToAsyncStorage(state); // Save after modifying state
+      saveStateToAsyncStorage(state);
     },
     setInitialState: (state, action: PayloadAction<ProductState>) => {
-        state.history = action.payload.history;
-        state.favorites = action.payload.favorites;
+      state.history = action.payload.history;
+      state.favorites = action.payload.favorites;
     }
   }
 });
@@ -85,16 +85,10 @@ const productSlice = createSlice({
 export const { addProductToHistory, removeProductFromHistory, addProductToFavorites, removeProductFromFavorites, setInitialState } = productSlice.actions;
 export const selectProductHistory = (state: RootState) => state.product.history;
 export const selectProductFavorites = (state: RootState) => state.product.favorites;
-
 export default productSlice.reducer;
-
-// Load initial state and dispatch
-import { ThunkAction } from '@reduxjs/toolkit';
-import { Action } from 'redux';
-
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
 
 export const initializeProductState = (): AppThunk<Promise<void>> => async (dispatch) => {
-    const loadedState = await loadStateFromAsyncStorage();
-    dispatch(setInitialState(loadedState));
+  const loadedState = await loadStateFromAsyncStorage();
+  dispatch(setInitialState(loadedState));
 }

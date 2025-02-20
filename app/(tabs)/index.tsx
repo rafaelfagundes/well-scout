@@ -12,7 +12,7 @@ import { ProductsTabs } from '@/features/products/ProductTabs';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing } from 'react-native-reanimated';
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '@/state/store';
-import { removeProductFromHistory, addProductToFavorites, initializeProductState } from '@/features/products/productSlice'; // Import initializeProductState
+import { removeProductFromHistory, addProductToFavorites, initializeProductState, removeProductFromFavorites } from '@/features/products/productSlice'; // Import initializeProductState
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
@@ -57,6 +57,30 @@ export default function ProductsScreen() {
     separator: {
       height: 10,
     },
+    removeItem: {
+      justifyContent: 'center',
+      alignItems: 'flex-start',
+      flex: 1,
+      backgroundColor: 'red',
+      paddingLeft: 20,
+      borderRadius: 20
+    },
+    removeItemText: {
+      color: 'white'
+    },
+    addRemoveItemFromFavorites: {
+      justifyContent: 'center',
+      alignItems: 'flex-end',
+      flex: 1,
+      backgroundColor: activeTab === Tabs.FAVORITES ? 'orange' : '#4CAF50',
+      paddingRight: 20,
+      borderRadius: 20
+    },
+    addRemoveItemFromFavoritesText: {
+      maxWidth: 80,
+      color: 'white',
+      textAlign: 'center'
+    },
   });
 
   const selectedData = activeTab === Tabs.HISTORY ? history : favorites;
@@ -70,6 +94,7 @@ export default function ProductsScreen() {
     icon: <MagnifyingGlass size={32} color={Colors[useColorScheme() ?? 'light'].text} />,
     onPress: () => setShowSearch(!showSearch),
   };
+
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -87,20 +112,24 @@ export default function ProductsScreen() {
             renderItem={({ item }) => (
               <ReanimatedSwipeable
                 renderLeftActions={() => (
-                  <View style={{ justifyContent: 'center', alignItems: 'flex-start', flex: 1, backgroundColor: 'red', paddingLeft: 20, borderRadius: 20 }}>
-                    <Text style={{ color: 'white' }}>Delete</Text>
+                  <View style={styles.removeItem}>
+                    <Text style={styles.removeItemText}>Delete</Text>
                   </View>
                 )}
                 renderRightActions={() => (
-                  <View style={{ justifyContent: 'center', alignItems: 'flex-end', flex: 1, backgroundColor: '#4CAF50', paddingRight: 20, borderRadius: 20 }}>
-                    <Text style={{ color: 'white' }}>Favorite</Text>
+                  <View style={styles.addRemoveItemFromFavorites}>
+                    <Text style={styles.addRemoveItemFromFavoritesText}>{activeTab === Tabs.FAVORITES ? 'Remove from Favorites' : 'Add to Favorites'}</Text>
                   </View>
                 )}
                 onSwipeableOpen={(direction) => {
                   if (direction === 'left') {
                     dispatch(removeProductFromHistory(item));
                   } else if (direction === 'right') {
-                    dispatch(addProductToFavorites(item));
+                    if (activeTab === Tabs.HISTORY) {
+                      dispatch(addProductToFavorites(item));
+                    } else {
+                      dispatch(removeProductFromFavorites(item));
+                    }
                   }
                 }}
               >

@@ -34,7 +34,6 @@ export default function ProductItem({
     card: {
       borderRadius: 20,
       backgroundColor: Colors[colorScheme ?? 'light'].background,
-      opacity: 0.85
     },
     cardContent: {
       padding: 10,

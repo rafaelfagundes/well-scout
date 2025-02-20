@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList, Text, ActivityIndicator, TouchableOpacity, useColorScheme } from 'react-native';
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
@@ -22,6 +22,13 @@ export default function SearchScreen() {
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const colorScheme = useColorScheme();
+
+  useEffect(() => {
+    if (query.trim() === "") {
+      setResults([]);
+      setLoading(false);
+    }
+  }, [query]);
 
   const styles = StyleSheet.create({
     input: {
@@ -68,7 +75,6 @@ export default function SearchScreen() {
 
   async function searchProducts(searchTerm?: string) {
     const searchTermType = typeof searchTerm;
-    console.log("searchTerm", searchTermType)
 
     if (query.trim() === "" && searchTermType !== "string") {
       setResults([]);
@@ -77,7 +83,7 @@ export default function SearchScreen() {
     }
     setLoading(true);
     try {
-      const url = `https://world.openfoodfacts.org/cgi/search.pl?action=process&search_simple=1&search_terms=${searchTerm ? encodeURIComponent(searchTerm) : encodeURIComponent(query)}&json=1`
+      const url = `https://world.openfoodfacts.org/cgi/search.pl?action=process&search_simple=1&search_terms=${encodeURIComponent(searchTerm!)}&json=1`
       const response = await fetch(url)
       const data = await response.json();
       setResults(data.products || []);

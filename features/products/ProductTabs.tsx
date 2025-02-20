@@ -22,7 +22,7 @@ export function ProductsTabs({ activeTab, setActiveTab }: ProductsTabsProps) {
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: backgroundColor + 'D9',
+      backgroundColor: backgroundColor,
       padding: 4,
       borderRadius: 20,
       height: 40,
