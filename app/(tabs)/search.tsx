@@ -11,6 +11,12 @@ export default function SearchScreen() {
   const [loading, setLoading] = useState(false); // Add loading state
 
   const searchProducts = async () => {
+    if (query.trim() === "") { // Check if the query is empty
+        setResults([]);      // Clear the results
+        setLoading(false);
+        return;             // Return to prevent the API call
+    }
+
     setLoading(true); // Start loading
     try {
       const response = await fetch(`https://world.openfoodfacts.org/cgi/search.pl?action=process&search_simple=1&search_terms=${encodeURIComponent(query)}&json=1`)
