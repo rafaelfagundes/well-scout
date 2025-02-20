@@ -196,13 +196,13 @@ export default function ProductsScreen() {
                 <View style={styles.buttonContainer}>
                   <TouchableOpacity 
                     style={styles.emptyButton} 
-                    onPress={() => navigation.navigate('(scan)')}
+                    onPress={() => router.push('/(tabs)/scan')}
                   >
                     <Text style={styles.emptyButtonText}>Scan Product</Text>
                   </TouchableOpacity>
                   <TouchableOpacity 
                     style={styles.emptyButton} 
-                    onPress={() => setShowSearch(true)}
+                    onPress={() => router.push('/(tabs)/search')}
                   >
                     <Text style={styles.emptyButtonText}>Search Items</Text>
                   </TouchableOpacity>
