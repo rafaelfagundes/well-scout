@@ -21,6 +21,49 @@ enum Tabs {
   FAVORITES = 'favorites'
 }
 
+function SwipeableListItem({ item, activeTab, dispatch, styles }: { item: any; activeTab: Tabs; dispatch: any; styles: any; }) {
+  const swipeableRef = useRef(null);
+  return (
+    <ReanimatedSwipeable
+      ref={swipeableRef}
+      renderLeftActions={() => (
+        <View style={styles.removeItem}>
+          <Text style={styles.removeItemText}>Delete</Text>
+        </View>
+      )}
+      renderRightActions={() => (
+        <View style={styles.addRemoveItemFromFavorites}>
+          <Text style={styles.addRemoveItemFromFavoritesText}>
+            {activeTab === Tabs.FAVORITES ? 'Remove from Favorites' : 'Add to Favorites'}
+          </Text>
+        </View>
+      )}
+      onSwipeableOpen={(direction) => {
+        if (direction === 'left') {
+          dispatch(removeProductFromHistory(item));
+        } else if (direction === 'right') {
+          if (activeTab === Tabs.HISTORY) {
+            dispatch(addProductToFavorites(item));
+          } else {
+            dispatch(removeProductFromFavorites(item));
+          }
+        }
+        swipeableRef.current?.reset();
+      }}
+    >
+      <ProductItem
+        id={item.id}
+        ecoScore={item.ecoScore}
+        nutriScore={item.nutriScore}
+        imageUrl={item.imageUrl}
+        brandName={item.brandName}
+        productName={item.productName}
+        createdDate={item.createdDate}
+      />
+    </ReanimatedSwipeable>
+  );
+}
+
 export default function ProductsScreen() {
   const history = useSelector((state: RootState) => state.product.history);
   const favorites = useSelector((state: RootState) => state.product.favorites);
@@ -109,48 +152,9 @@ export default function ProductsScreen() {
           <FlatList
             data={filteredData}
             ItemSeparatorComponent={() => <View style={styles.separator} />}
-            renderItem={({ item }) => {
-              const swipeableRef = useRef(null);
-              return (
-                <ReanimatedSwipeable
-                  ref={swipeableRef}
-                  renderLeftActions={() => (
-                    <View style={styles.removeItem}>
-                      <Text style={styles.removeItemText}>Delete</Text>
-                    </View>
-                  )}
-                  renderRightActions={() => (
-                    <View style={styles.addRemoveItemFromFavorites}>
-                      <Text style={styles.addRemoveItemFromFavoritesText}>
-                        {activeTab === Tabs.FAVORITES ? 'Remove from Favorites' : 'Add to Favorites'}
-                      </Text>
-                    </View>
-                  )}
-                  onSwipeableOpen={(direction) => {
-                    if (direction === 'left') {
-                      dispatch(removeProductFromHistory(item));
-                    } else if (direction === 'right') {
-                      if (activeTab === Tabs.HISTORY) {
-                        dispatch(addProductToFavorites(item));
-                      } else {
-                        dispatch(removeProductFromFavorites(item));
-                      }
-                    }
-                    swipeableRef.current?.reset();
-                  }}
-                >
-                  <ProductItem
-                    id={item.id}
-                    ecoScore={item.ecoScore}
-                    nutriScore={item.nutriScore}
-                    imageUrl={item.imageUrl}
-                    brandName={item.brandName}
-                    productName={item.productName}
-                    createdDate={item.createdDate}
-                  />
-                </ReanimatedSwipeable>
-              );
-            }}
+            renderItem={({ item }) => (
+              <SwipeableListItem item={item} activeTab={activeTab} dispatch={dispatch} styles={styles} />
+            )}
             keyExtractor={item => item.id}
           />
         </ScreenContainer>
