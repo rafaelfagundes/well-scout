@@ -30,7 +30,7 @@ const initialState: ProductState = {
       imageUrl: 'https://images.unsplash.com/photo-1528750596806-ff12e21cda04?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       brandName: 'Heinz',
       productName: 'Ketchup',
-      createdDate: new Date()
+      createdDate: new Date().toISOString()
     },
     {
       id: "123456789",
@@ -39,7 +39,7 @@ const initialState: ProductState = {
       imageUrl: 'https://images.unsplash.com/photo-1519996529931-28324d5a630e?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       brandName: 'Organic Valley',
       productName: 'Milk',
-      createdDate: new Date()
+      createdDate: new Date().toISOString()
     },
     {
       id: "987654321",
@@ -48,7 +48,7 @@ const initialState: ProductState = {
       imageUrl: 'https://images.unsplash.com/photo-1621057621391-7ed446a24b41?q=80&w=3214&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       brandName: 'Nature Valley',
       productName: 'Granola Bars',
-      createdDate: new Date()
+      createdDate: new Date().toISOString()
     },
     {
       id: "456789123",
@@ -57,7 +57,7 @@ const initialState: ProductState = {
       imageUrl: 'https://images.unsplash.com/photo-1600952841320-db92ec4047ca?q=80&w=3125&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       brandName: 'Elma Chips',
       productName: 'Potato Chips',
-      createdDate: new Date()
+      createdDate: new Date().toISOString()
     },
     {
       id: "789123456",
@@ -66,7 +66,7 @@ const initialState: ProductState = {
       imageUrl: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       brandName: 'Fresh Produce',
       productName: 'Apples',
-      createdDate: new Date()
+      createdDate: new Date().toISOString()
     },
     {
       id: "321654987",
@@ -75,7 +75,7 @@ const initialState: ProductState = {
       imageUrl: 'https://images.unsplash.com/photo-1589828910786-1ca6da0c7682?q=80&w=2704&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       brandName: 'Green Valley',
       productName: 'Organic Yogurt',
-      createdDate: new Date()
+      createdDate: new Date().toISOString()
     },
     {
       id: "654987321",
@@ -84,7 +84,7 @@ const initialState: ProductState = {
       imageUrl: 'https://images.unsplash.com/photo-1624684244440-1130c3b65783?q=80&w=3085&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       brandName: 'Crunchy Co',
       productName: 'Peanut Butter',
-      createdDate: new Date()
+      createdDate: new Date().toISOString()
     },
     {
       id: "147258369",
@@ -93,7 +93,7 @@ const initialState: ProductState = {
       imageUrl: 'https://images.unsplash.com/photo-1611250282006-4484dd3fba6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       brandName: 'Sweet Treats',
       productName: 'Chocolate Bar',
-      createdDate: new Date()
+      createdDate: new Date().toISOString()
     },
     {
       id: "258369147",
@@ -102,7 +102,7 @@ const initialState: ProductState = {
       imageUrl: 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       brandName: 'Mediterranean Delight',
       productName: 'Olive Oil',
-      createdDate: new Date()
+      createdDate: new Date().toISOString()
     },
     {
       id: "369147258",
@@ -111,7 +111,7 @@ const initialState: ProductState = {
       imageUrl: 'https://images.unsplash.com/photo-1591959376511-a48af62889a3?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       brandName: 'Pure Spring',
       productName: 'Mineral Water',
-      createdDate: new Date()
+      createdDate: new Date().toISOString()
     }
   ],
   favorites: [
@@ -122,7 +122,7 @@ const initialState: ProductState = {
       imageUrl: 'https://images.unsplash.com/photo-1528750596806-ff12e21cda04?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       brandName: 'Heinz',
       productName: 'Ketchup',
-      createdDate: new Date()
+      createdDate: new Date().toISOString()
     },
     {
       id: "123456789",
@@ -131,7 +131,7 @@ const initialState: ProductState = {
       imageUrl: 'https://images.unsplash.com/photo-1519996529931-28324d5a630e?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       brandName: 'Organic Valley',
       productName: 'Milk',
-      createdDate: new Date()
+      createdDate: new Date().toISOString()
     },
   ]
 }

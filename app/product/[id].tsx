@@ -14,7 +14,7 @@ export default function Product() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`https://world.openfoodfacts.org/api/v3/product/${id}.json`);
+        const response = await fetch(`https://world.openfoodfacts.org/api/v3/product/${id}.json?product_type=all`);
         const data = await response.json();
         setProduct(data);
         if (data.product) {

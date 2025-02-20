@@ -19,6 +19,9 @@ export default function RootLayout() {
     SansationBold: require('../assets/fonts/Sansation_Bold.ttf'),
     SansationLight: require('../assets/fonts/Sansation_Light.ttf'),
     Sansation: require('../assets/fonts/Sansation_Regular.ttf'),
+    Din1451: require('../assets/fonts/din1451alt.ttf'),
+    Din1451G: require('../assets/fonts/din1451alt G.ttf'),
+    Din1451B: require('../assets/fonts/DIN1451-36breit.ttf'),
   });
 
   useEffect(() => {

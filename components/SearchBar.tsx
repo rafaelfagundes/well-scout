@@ -8,10 +8,9 @@ interface SearchBarProps {
   searchText: string;
   onChangeText: (text: string) => void;
   onSubmitEditing: () => void;
-  returnKeyType: string;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText, onSubmitEditing, returnKeyType }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText, onSubmitEditing }) => {
   const colorScheme = useColorScheme();
   const backgroundColor = Colors[colorScheme ?? 'light'].background;
   const styles = StyleSheet.create({
@@ -52,7 +51,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText, onSubmi
     <View style={styles.container}>
       <MagnifyingGlass size={24} color={Colors[colorScheme ?? 'light'].text} style={{ marginRight: 8 }} />
       <TextInput
-        autoFocus
         style={styles.input}
         placeholder="Search"
         value={localText}
@@ -60,9 +58,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText, onSubmi
         autoCorrect={false}
         autoCapitalize="none"
         onSubmitEditing={onSubmitEditing}
-        returnKeyType={returnKeyType}
       />
-      {/* Conditionally render the clear button */}
       {localText !== "" && (
         <TouchableOpacity
           style={styles.clearButton}
@@ -71,7 +67,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchText, onChangeText, onSubmi
             onChangeText('');
           }}
         >
-          <XCircle size={24} weight="fill" color={Colors[colorScheme ?? 'light'].text} />
+          <XCircle size={24} weight="fill" color={Colors[colorScheme ?? 'light'].text + '66'} />
         </TouchableOpacity>
       )}
     </View>

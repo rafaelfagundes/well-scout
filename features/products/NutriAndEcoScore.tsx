@@ -77,12 +77,21 @@ function EcoScore({ ecoScore }: { ecoScore: string }) {
     }
   })
 
+  function getEcoScore(ecoScore: string) {
+    if (['a', 'b', 'c', 'd', 'e'].includes(ecoScore)) {
+      return ecoScore.toUpperCase()
+    }
+    else {
+      return 'N/A'
+    }
+  }
+
   return <View style={styles.item}>
     <View style={styles.icon}>
       <Tree size={18} color="#FFF" weight='fill' />
     </View>
     <View style={styles.textHolder}>
-      <Text style={styles.text}>{ecoScore.toUpperCase()}</Text>
+      <Text style={styles.text}>{getEcoScore(ecoScore)}</Text>
     </View>
   </View>
 }
