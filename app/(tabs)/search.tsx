@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Button, FlatList, Text } from 'react-native';
+import { View, StyleSheet, Button, FlatList, Text } from 'react-native';
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import SearchBar from '@/components/SearchBar';
@@ -11,7 +11,7 @@ export default function SearchScreen() {
 
   const searchProducts = async () => {
     try {
-      const response = await fetch(`https://world.openfoodfacts.org/api/v2/search?search_terms=${encodeURIComponent(query)}&json=1`);
+      const response = await fetch(`https://world.openfoodfacts.org/cgi/search.pl?action=process&search_simple=1&search_terms=${encodeURIComponent(query)}&json=1`)
       const data = await response.json();
       setResults(data.products || []);
     } catch (error) {
@@ -21,22 +21,20 @@ export default function SearchScreen() {
 
   return (
     <BackgroundImage>
-      <ScreenContainer>
+      <ScreenContainer scrollView={false}>
         <SearchBar searchText={query} onChangeText={setQuery} />
         <Button title="Search" onPress={searchProducts} />
-        <FlatList 
+        <FlatList
           data={results}
-          keyExtractor={(item, index) => `${index}`}
+          keyExtractor={(item) => item.code}
           renderItem={({ item }) => (
-            <ProductItem 
+            <ProductItem
               id={item.id || item.code || String(item._id)}
-              imageUrl={item.image_url || "https://via.placeholder.com/70"}
-              productName={item.product_name}
+              imageUrl={item.image_front_url || item.image_url || "https://via.placeholder.com/70"}
+              productName={item.abbreviated_product_name || item.product_name_en || item.product_name}
               brandName={item.brands || "Unknown"}
-              ecoScore={item.ecoscore || "N/A"}
-              nutriScore={item.nutriscore || "N/A"}
-              createdDate={item.created_date}
-              touchable={false}
+              ecoScore={item.ecoscore_grade || "N/A"}
+              nutriScore={item.nutriscore_grade || "N/A"}
             />
           )}
           ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
