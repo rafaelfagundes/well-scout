@@ -99,7 +99,7 @@ export default function SearchScreen() {
         <SearchBar
           searchText={query}
           onChangeText={setQuery}
-          onSubmitEditing={searchProducts}
+          onSubmitEditing={() => searchProducts(query)}
         />
         <View style={styles.resultsContainer}>
           {loading ? (
