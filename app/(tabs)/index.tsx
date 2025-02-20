@@ -11,6 +11,7 @@ import { Colors } from '@/constants/Colors';
 import { ProductsTabs } from '@/features/products/ProductTabs';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing } from 'react-native-reanimated';
 import { useDispatch } from 'react-redux';
+import type { AppDispatch } from '@/state/store';
 import { removeProductFromHistory, addProductToFavorites, initializeProductState } from '@/features/products/productSlice'; // Import initializeProductState
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -27,7 +28,7 @@ export default function ProductsScreen() {
   const [searchText, setSearchText] = useState("");
   const [debouncedSearchText, setDebouncedSearchText] = useState("");
   const [showSearch, setShowSearch] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   // Load initial state from AsyncStorage on component mount
   useEffect(() => {

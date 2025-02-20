@@ -88,9 +88,9 @@ export default productSlice.reducer;
 
 // Load initial state and dispatch
 import { ThunkAction } from '@reduxjs/toolkit';
-import { AnyAction } from 'redux';
+import { Action } from 'redux';
 
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AnyAction>;
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
 
 export const initializeProductState = (): AppThunk<Promise<void>> => async (dispatch) => {
     const loadedState = await loadStateFromAsyncStorage();
