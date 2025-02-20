@@ -1,4 +1,5 @@
-import { StyleSheet, FlatList, View, Text, useColorScheme } from 'react-native';
+import { StyleSheet, FlatList, View, Text, useColorScheme, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { MagnifyingGlass } from 'phosphor-react-native';
 import SearchBar from '@/components/SearchBar';
 import ScreenContainer from '@/components/ui/ScreenContainer';
@@ -130,7 +131,33 @@ export default function ProductsScreen() {
   const styles = StyleSheet.create({
     separator: {
       height: 10,
-    }
+    },
+    emptyContainer: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 20,
+    },
+    emptyText: {
+      fontSize: 16,
+      color: Colors[useColorScheme() ?? 'light'].text,
+      textAlign: 'center',
+      marginBottom: 20,
+    },
+    buttonContainer: {
+      flexDirection: 'row',
+      gap: 10,
+    },
+    emptyButton: {
+      backgroundColor: Colors[useColorScheme() ?? 'light'].tint,
+      paddingHorizontal: 20,
+      paddingVertical: 10,
+      borderRadius: 8,
+    },
+    emptyButtonText: {
+      color: 'white',
+      fontSize: 14,
+    },
   });
 
   const selectedData = activeTab === Tabs.HISTORY ? history : favorites;
@@ -163,6 +190,25 @@ export default function ProductsScreen() {
               <SwipeableListItem item={item} activeTab={activeTab} dispatch={dispatch} />
             )}
             keyExtractor={item => item.id}
+            ListEmptyComponent={
+              <View style={styles.emptyContainer}>
+                <Text style={styles.emptyText}>No items found. Scan a product or search using the search bar above.</Text>
+                <View style={styles.buttonContainer}>
+                  <TouchableOpacity 
+                    style={styles.emptyButton} 
+                    onPress={() => navigation.navigate('(scan)')}
+                  >
+                    <Text style={styles.emptyButtonText}>Scan Product</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity 
+                    style={styles.emptyButton} 
+                    onPress={() => setShowSearch(true)}
+                  >
+                    <Text style={styles.emptyButtonText}>Search Items</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            }
           />
         </ScreenContainer>
       </BackgroundImage>
