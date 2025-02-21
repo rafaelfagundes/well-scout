@@ -131,11 +131,16 @@ const RatingBar = ({ ratings }: RatingBarProps) => {
       height: '100%',
     },
     scoreContainer: {
-      marginTop: 10,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
       alignItems: 'center',
+      marginTop: 20,
+      backgroundColor: colors.background,
+      borderRadius: 20,
+      paddingVertical: 10,
+      paddingHorizontal: 15,
     },
     scoreText: {
-      marginTop: 4,
       fontSize: 16,
       fontWeight: 'bold',
       color: colors.text,
@@ -143,10 +148,8 @@ const RatingBar = ({ ratings }: RatingBarProps) => {
     },
     phraseText: {
       fontSize: 14,
-      marginTop: 6,
       color: colors.text,
-      textAlign: 'center',
-      marginHorizontal: 10,
+      textAlign: 'right',
       fontFamily: Fonts.sansSerif,
     },
   });
