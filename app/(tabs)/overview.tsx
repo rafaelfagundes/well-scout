@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
 import ProductListByRating from '@/features/overview/ProductListByRating';
 import { ProductItem } from '@/features/products/productSlice';
+import ProductList from '@/features/overview/ProductList';
 
 function filterProducts(products: any[], activeTab: Tabs) {
   switch (activeTab) {
@@ -62,7 +63,8 @@ export default function OverviewScreen() {
         <View style={{ height: 10 }} />
         {activeTab === Tabs.FOOD && <RatingBar ratings={ratings} />}
         <View style={{ height: 10 }} />
-        <ProductListByRating productsByRating={productsByRating} />
+        {activeTab === Tabs.FOOD && <ProductListByRating productsByRating={productsByRating} />}
+        {activeTab !== Tabs.FOOD && <ProductList products={filteredProducts} />}
       </ScreenContainer>
     </BackgroundImage>
   );
