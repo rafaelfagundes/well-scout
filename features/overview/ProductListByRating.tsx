@@ -4,6 +4,7 @@ import { Colors } from '@/constants/Colors'
 import { ProductItem as ProductItemType } from '../products/productSlice'
 import ProductItem from '../products/ProductItem'
 import { Fonts } from '@/constants/Fonts'
+import { EmptyList } from '@/components/ui/EmptyList'
 
 interface ProductListByRatingProps {
   productsByRating: {
@@ -68,6 +69,7 @@ const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => 
           </View>
         )}
         ItemSeparatorComponent={() => <View style={{ height: 6 }} />}
+        ListEmptyComponent={<EmptyList title="No rating products" text="There are no rating products available." />}
       />
     </View>
   )
