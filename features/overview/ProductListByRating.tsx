@@ -1,4 +1,4 @@
-import { StyleSheet, Text, useColorScheme, View } from 'react-native'
+import { StyleSheet, Text, useColorScheme, SectionList, View } from 'react-native'
 import React from 'react'
 import { Colors } from '@/constants/Colors'
 import { ProductItem as ProductItemType } from '../products/productSlice'
@@ -19,19 +19,32 @@ const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => 
   const colors = Colors[colorScheme ?? 'light']
   const styles = StyleSheet.create({})
 
+  const sections = Object.entries(productsByRating).map(([rating, data]) => ({
+    title: rating,
+    data,
+  }));
+
   return (
     <View>
       <Text>Product List By Rating</Text>
-      {Object.keys(productsByRating).map(rating => (
-        <View key={rating}>
-          <Text>{rating}</Text>
-          <View>
-            {productsByRating[rating].map((product: ProductItemType) => (
-              <ProductItem key={product.id} imageUrl={product.imageUrl} productName={product.productName} brandName={product.brandName} nutriScore={product.nutriScore} ecoScore={product.ecoScore} id={product.id} touchable={false} />
-            ))}
-          </View>
-        </View>
-      ))}
+      <SectionList
+        sections={sections}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }: { item: ProductItemType }) => (
+          <ProductItem
+            imageUrl={item.imageUrl}
+            productName={item.productName}
+            brandName={item.brandName}
+            nutriScore={item.nutriScore}
+            ecoScore={item.ecoScore}
+            id={item.id}
+            touchable={false}
+          />
+        )}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text>{title}</Text>
+        )}
+      />
     </View>
   )
 }
