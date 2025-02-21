@@ -136,7 +136,7 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
             </View>
             {productInfo.ingredients.length > 0 ? (
               productInfo.ingredients.map((ing, index) => (
-                <View key={index} style={styles.ingredientItem}>
+                <View key={index} style={[styles.ingredientItem, index === productInfo.ingredients.length - 1 && { borderBottomWidth: 0 }]}>
                   <Text style={styles.text}>{capitalizeAll(ing.text)}</Text>
                   <View style={{ flexDirection: 'row' }}>
                     {ing.vegan === 'yes' && <Text style={styles.veganTag}>Vegan</Text>}
@@ -223,7 +223,7 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
             </View>
             {productInfo.additives.length > 0 ? (
               productInfo.additives.map((additive, index) => (
-                <Text key={index} style={styles.listItem}>{additive}</Text>
+                <Text key={index} style={[styles.listItem, index === productInfo.additives.length - 1 && { borderBottomWidth: 0 }]}>{additive}</Text>
               ))
             ) : (
               <Text style={styles.listItem}>No additives listed</Text>
@@ -236,7 +236,7 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
             </View>
             {productInfo.allergens.length > 0 ? (
               productInfo.allergens.map((allergen, index) => (
-                <Text key={index} style={styles.listItem}>{removeDashes(allergen)}</Text>
+                <Text key={index} style={[styles.listItem, index === productInfo.allergens.length - 1 && { borderBottomWidth: 0 }]}>{removeDashes(allergen)}</Text>
               ))
             ) : (
               <Text style={styles.listItem}>No allergens listed</Text>
@@ -249,7 +249,7 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
             </View>
             {productInfo.packaging.length > 0 ? (
               productInfo.packaging.map((pack, index) => (
-                <Text key={index} style={styles.listItem}>{pack}</Text>
+                <Text key={index} style={[styles.listItem, index === productInfo.packaging.length - 1 && { borderBottomWidth: 0 }]}>{pack}</Text>
               ))
             ) : (
               <Text style={styles.listItem}>No packaging information</Text>
@@ -262,7 +262,7 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
             </View>
             {productInfo.manufacturingPlaces.length > 0 ? (
               productInfo.manufacturingPlaces.map((place, index) => (
-                <Text key={index} style={styles.listItem}>{place}</Text>
+                <Text key={index} style={[styles.listItem, index === productInfo.manufacturingPlaces.length - 1 && { borderBottomWidth: 0 }]}>{place}</Text>
               ))
             ) : (
               <Text style={styles.listItem}>No manufacturing places listed</Text>
@@ -275,7 +275,7 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
             </View>
             {productInfo.categories.length > 0 ? (
               productInfo.categories.map((category, index) => (
-                <Text key={index} style={styles.listItem}>{removeDashes(category)}</Text>
+                <Text key={index} style={[styles.listItem, index === productInfo.categories.length - 1 && { borderBottomWidth: 0 }]}>{removeDashes(category)}</Text>
               ))
             ) : (
               <Text style={styles.listItem}>No categories listed</Text>
