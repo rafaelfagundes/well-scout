@@ -26,7 +26,10 @@ export default function ProductHeader({
 
   return (
     <View style={styles.container}>
-      <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="contain" />
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: imageUrl }} style={[styles.image, styles.blurredImage]} resizeMode="cover" blurRadius={20} />
+        <Image source={{ uri: imageUrl }} style={[styles.image, styles.foregroundImage]} resizeMode="contain" />
+      </View>
       <View style={styles.textContainer}>
         <Text style={[styles.brand, { color: colors.text }]}>{brandName}</Text>
         <Text style={[styles.productName, { color: colors.text }]}>{productName}</Text>
@@ -68,5 +71,22 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontStyle: 'italic',
     marginTop: 2
+  },
+  imageContainer: {
+    width: 200,
+    height: 200,
+    position: 'relative',
+    marginBottom: 16,
+  },
+  blurredImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: 200,
+    height: 200,
+  },
+  foregroundImage: {
+    width: 200,
+    height: 200,
   }
 });
