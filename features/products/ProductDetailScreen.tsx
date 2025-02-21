@@ -2,7 +2,7 @@ import { StyleSheet, useColorScheme, View, ScrollView, Text } from 'react-native
 import React from 'react';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { Colors } from '@/constants/Colors';
-import { extractProductInfo } from './Product'; // Adjusted import path
+import { extractProductInfo, ProductInfo } from './Product';
 import { Carrot, Orange, Flask, ShieldWarning, Cube, Factory, Tag } from 'phosphor-react-native';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import { capitalizeAll, removeDashes } from '@/lib/text';
@@ -10,7 +10,7 @@ import { Fonts } from '@/constants/Fonts';
 import ProductHeader from './ProductHeader';
 
 interface ProductDetailsScreen {
-  product: any;
+  product: ProductInfo;
 }
 
 const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
@@ -30,7 +30,9 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
       borderRadius: 20,
       borderWidth: 0,
       borderColor: Colors[colorScheme ?? 'light'].text,
-      padding: 16,
+      paddingHorizontal: 16,
+      paddingTop: 16,
+      paddingBottom: 8,
       marginBottom: 16,
     },
     sectionTitleContainer: {
@@ -112,6 +114,10 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
     text: {
       fontFamily: Fonts.sansSerif,
       color: Colors[colorScheme ?? 'light'].text,
+    },
+    noBorderNoPadding: {
+      borderBottomWidth: 0,
+      paddingBottom: 0,
     }
   });
 
@@ -121,7 +127,7 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <Animated.View entering={FadeInUp.duration(500)}>
             <ProductHeader
-              imageUrl={product.product.image_front_url || ''}
+              imageUrl={productInfo.image}
               productName={productInfo.productName}
               brandName={productInfo.brand}
               nutriScore={productInfo.nutriscore}
@@ -136,7 +142,7 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
             </View>
             {productInfo.ingredients.length > 0 ? (
               productInfo.ingredients.map((ing, index) => (
-                <View key={index} style={[styles.ingredientItem, index === productInfo.ingredients.length - 1 && { borderBottomWidth: 0 }]}>
+                <View key={index} style={[styles.ingredientItem, index === productInfo.ingredients.length - 1 && { borderBottomWidth: 0, paddingBottom: 4 }]}>
                   <Text style={styles.text}>{capitalizeAll(ing.text)}</Text>
                   <View style={{ flexDirection: 'row' }}>
                     {ing.vegan === 'yes' && <Text style={styles.veganTag}>Vegan</Text>}
@@ -145,7 +151,7 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
                 </View>
               ))
             ) : (
-              <Text style={styles.listItem}>No ingredients listed</Text>
+              <Text style={[styles.listItem, styles.noBorderNoPadding]}>No ingredients listed</Text>
             )}
           </Animated.View>
           <Animated.View style={styles.section} entering={FadeInUp.duration(500).delay(200)}>
@@ -223,10 +229,10 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
             </View>
             {productInfo.additives.length > 0 ? (
               productInfo.additives.map((additive, index) => (
-                <Text key={index} style={[styles.listItem, index === productInfo.additives.length - 1 && { borderBottomWidth: 0 }]}>{additive}</Text>
+                <Text key={index} style={[styles.listItem, index === productInfo.additives.length - 1 && styles.noBorderNoPadding]}>{additive}</Text>
               ))
             ) : (
-              <Text style={styles.listItem}>No additives listed</Text>
+              <Text style={[styles.listItem, styles.noBorderNoPadding]}>No additives listed</Text>
             )}
           </Animated.View>
           <Animated.View style={styles.section} entering={FadeInUp.duration(500).delay(400)}>
@@ -236,10 +242,10 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
             </View>
             {productInfo.allergens.length > 0 ? (
               productInfo.allergens.map((allergen, index) => (
-                <Text key={index} style={[styles.listItem, index === productInfo.allergens.length - 1 && { borderBottomWidth: 0 }]}>{removeDashes(allergen)}</Text>
+                <Text key={index} style={[styles.listItem, index === productInfo.allergens.length - 1 && styles.noBorderNoPadding]}>{removeDashes(allergen)}</Text>
               ))
             ) : (
-              <Text style={styles.listItem}>No allergens listed</Text>
+              <Text style={[styles.listItem, styles.noBorderNoPadding]}>No allergens listed</Text>
             )}
           </Animated.View>
           <Animated.View style={styles.section} entering={FadeInUp.duration(500).delay(500)}>
@@ -249,10 +255,10 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
             </View>
             {productInfo.packaging.length > 0 ? (
               productInfo.packaging.map((pack, index) => (
-                <Text key={index} style={[styles.listItem, index === productInfo.packaging.length - 1 && { borderBottomWidth: 0 }]}>{pack}</Text>
+                <Text key={index} style={[styles.listItem, index === productInfo.packaging.length - 1 && styles.noBorderNoPadding]}>{pack}</Text>
               ))
             ) : (
-              <Text style={styles.listItem}>No packaging information</Text>
+              <Text style={[styles.listItem, styles.noBorderNoPadding]}>No packaging information</Text>
             )}
           </Animated.View>
           <Animated.View style={styles.section} entering={FadeInUp.duration(500).delay(600)}>
@@ -262,10 +268,10 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
             </View>
             {productInfo.manufacturingPlaces.length > 0 ? (
               productInfo.manufacturingPlaces.map((place, index) => (
-                <Text key={index} style={[styles.listItem, index === productInfo.manufacturingPlaces.length - 1 && { borderBottomWidth: 0 }]}>{place}</Text>
+                <Text key={index} style={[styles.listItem, index === productInfo.manufacturingPlaces.length - 1 && styles.noBorderNoPadding]}>{place}</Text>
               ))
             ) : (
-              <Text style={styles.listItem}>No manufacturing places listed</Text>
+              <Text style={[styles.listItem, styles.noBorderNoPadding]}>No manufacturing places listed</Text>
             )}
           </Animated.View>
           <Animated.View style={styles.section} entering={FadeInUp.duration(500).delay(700)}>
@@ -275,10 +281,10 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
             </View>
             {productInfo.categories.length > 0 ? (
               productInfo.categories.map((category, index) => (
-                <Text key={index} style={[styles.listItem, index === productInfo.categories.length - 1 && { borderBottomWidth: 0 }]}>{removeDashes(category)}</Text>
+                <Text key={index} style={[styles.listItem, index === productInfo.categories.length - 1 && styles.noBorderNoPadding]}>{removeDashes(category)}</Text>
               ))
             ) : (
-              <Text style={styles.listItem}>No categories listed</Text>
+              <Text style={[styles.listItem, styles.noBorderNoPadding]}>No categories listed</Text>
             )}
           </Animated.View>
         </ScrollView>
