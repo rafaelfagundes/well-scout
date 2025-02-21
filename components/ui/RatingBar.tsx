@@ -75,14 +75,13 @@ const RatingBar = ({ ratings }: RatingBarProps) => {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
 
-  // Colors for each rating category
   const getColor = (key: string) => {
     switch (key) {
-      case 'a': return '#095256'; // Dark teal
-      case 'b': return '#00DF82'; // Bright green
-      case 'c': return '#E7D395'; // Light yellow
-      case 'd': return '#FE654F'; // Orange-red
-      case 'e': return '#81171B'; // Dark red
+      case 'a': return colors.ratings.a; // Dark teal
+      case 'b': return colors.ratings.b; // Bright green
+      case 'c': return colors.ratings.c; // Light yellow
+      case 'd': return colors.ratings.d; // Orange-red
+      case 'e': return colors.ratings.e; // Dark red
       default: return '#000';     // Black
     }
   };
@@ -124,7 +123,7 @@ const RatingBar = ({ ratings }: RatingBarProps) => {
       borderRadius: 20,
       marginTop: 20,
       overflow: 'hidden',
-      borderWidth: 2,
+      borderWidth: 4,
       borderColor: colors.background,
     },
     segment: {
@@ -164,7 +163,7 @@ const RatingBar = ({ ratings }: RatingBarProps) => {
         ))}
       </View>
       <View style={styles.scoreContainer}>
-        <Text style={styles.scoreText}>Score: {Math.round(score)}</Text>
+        <Text style={styles.scoreText}>Score: {Math.round(score)} / 100</Text>
         <Text style={styles.phraseText}>{phrase}</Text>
       </View>
     </View>

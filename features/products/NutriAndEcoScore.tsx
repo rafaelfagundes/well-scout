@@ -1,7 +1,8 @@
+import { Colors } from '@/constants/Colors';
 import { Fonts } from '@/constants/Fonts';
 import { Leaf, Plant, Tree, TreeEvergreen } from 'phosphor-react-native';
 import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, useColorScheme } from 'react-native'
 
 interface NutriAndEcoScoreProps {
   nutriScore: string;
@@ -39,10 +40,11 @@ const styles = StyleSheet.create({
   ecoScore: {}
 })
 
-export default NutriAndEcoScore
+export default NutriAndEcoScore;
 
 function EcoScore({ ecoScore }: { ecoScore: string }) {
-  const color = getBackgroundColor(ecoScore)
+  const colors = Colors[useColorScheme() ?? 'light'];
+  const color = colors.ratings[ecoScore]
 
   const styles = StyleSheet.create({
     item: {
@@ -97,7 +99,8 @@ function EcoScore({ ecoScore }: { ecoScore: string }) {
 }
 
 function NutriScore({ nutriScore, isScore = false, isFirst = false, isLast = false }: { nutriScore: string, isScore?: boolean, isFirst?: boolean, isLast?: boolean }) {
-  const color = getBackgroundColor(nutriScore);
+  const colors = Colors[useColorScheme() ?? 'light'];
+  const color = colors.ratings[nutriScore]
 
   const styles = StyleSheet.create({
     item: {
