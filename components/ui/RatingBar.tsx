@@ -139,6 +139,11 @@ const RatingBar = ({ ratings }: RatingBarProps) => {
       borderRadius: 20,
       paddingVertical: 10,
       paddingHorizontal: 15,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
     },
     scoreText: {
       fontSize: 16,
@@ -151,6 +156,7 @@ const RatingBar = ({ ratings }: RatingBarProps) => {
       color: colors.text,
       textAlign: 'right',
       fontFamily: Fonts.sansSerif,
+      fontStyle: 'italic',
     },
   });
 
