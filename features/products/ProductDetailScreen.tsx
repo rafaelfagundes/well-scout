@@ -161,54 +161,54 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
             </View>
             <View style={styles.nutrimentRow}>
               <Text style={styles.nutrimentLabel}>Fat</Text>
-              <Text style={styles.nutrimentValue}>{productInfo.nutriments.fat || 0} g</Text>
+              <Text style={styles.nutrimentValue}>{(productInfo.nutriments.fat || 0) + " g"}</Text>
             </View>
             <View style={styles.nutrimentRow}>
               <Text style={styles.nutrimentLabel}>Saturated Fat</Text>
-              <Text style={styles.nutrimentValue}>{productInfo.nutriments.saturatedFat || 0} g</Text>
+              <Text style={styles.nutrimentValue}>{(productInfo.nutriments.saturatedFat || 0) + " g"}</Text>
             </View>
             <View style={styles.nutrimentRow}>
               <Text style={styles.nutrimentLabel}>Sugars</Text>
-              <Text style={styles.nutrimentValue}>{productInfo.nutriments.sugars || 0} g</Text>
+              <Text style={styles.nutrimentValue}>{(productInfo.nutriments.sugars || 0) + " g"}</Text>
             </View>
             <View style={styles.nutrimentRow}>
               <Text style={styles.nutrimentLabel}>Salt</Text>
-              <Text style={styles.nutrimentValue}>{productInfo.nutriments.salt || 0} g</Text>
+              <Text style={styles.nutrimentValue}>{(productInfo.nutriments.salt || 0) + " g"}</Text>
             </View>
             {productInfo.nutriments.energyKj && (
               <View style={styles.nutrimentRow}>
                 <Text style={styles.nutrimentLabel}>Energy (kJ)</Text>
-                <Text style={styles.nutrimentValue}>{productInfo.nutriments.energyKj} kJ</Text>
+                <Text style={styles.nutrimentValue}>{productInfo.nutriments.energyKj + " kJ"}</Text>
               </View>
             )}
             {productInfo.nutriments.energyKcal && (
               <View style={styles.nutrimentRow}>
                 <Text style={styles.nutrimentLabel}>Energy (kcal)</Text>
-                <Text style={styles.nutrimentValue}>{productInfo.nutriments.energyKcal} kcal</Text>
+                <Text style={styles.nutrimentValue}>{productInfo.nutriments.energyKcal + " kcal"}</Text>
               </View>
             )}
             {productInfo.nutriments.carbohydrates && (
               <View style={styles.nutrimentRow}>
                 <Text style={styles.nutrimentLabel}>Carbohydrates</Text>
-                <Text style={styles.nutrimentValue}>{productInfo.nutriments.carbohydrates} g</Text>
+                <Text style={styles.nutrimentValue}>{productInfo.nutriments.carbohydrates + " g"}</Text>
               </View>
             )}
             {productInfo.nutriments.proteins && (
               <View style={styles.nutrimentRow}>
                 <Text style={styles.nutrimentLabel}>Proteins</Text>
-                <Text style={styles.nutrimentValue}>{productInfo.nutriments.proteins} g</Text>
+                <Text style={styles.nutrimentValue}>{productInfo.nutriments.proteins + " g"}</Text>
               </View>
             )}
             {productInfo.nutriments.fiber && (
               <View style={styles.nutrimentRow}>
                 <Text style={styles.nutrimentLabel}>Fiber</Text>
-                <Text style={styles.nutrimentValue}>{productInfo.nutriments.fiber} g</Text>
+                <Text style={styles.nutrimentValue}>{productInfo.nutriments.fiber + " g"}</Text>
               </View>
             )}
             {productInfo.nutriments.sodium && (
               <View style={styles.nutrimentRow}>
                 <Text style={styles.nutrimentLabel}>Sodium</Text>
-                <Text style={styles.nutrimentValue}>{productInfo.nutriments.sodium} g</Text>
+                <Text style={styles.nutrimentValue}>{productInfo.nutriments.sodium + " g"}</Text>
               </View>
             )}
             {productInfo.servingSize && (
