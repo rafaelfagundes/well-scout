@@ -11,6 +11,7 @@ export interface ProductItem {
   imageUrl: string;
   brandName: string;
   productName: string;
+  productType: "food" | "beauty" | "pet" | "other";
   createdDate: string;
 }
 

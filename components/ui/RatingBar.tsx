@@ -118,13 +118,17 @@ const RatingBar = ({ ratings }: RatingBarProps) => {
   // Styles
   const styles = StyleSheet.create({
     container: {
-      flexDirection: 'row',
-      height: 40,
-      width: SCREEN_WIDTH,
+      padding: 4,
+      backgroundColor: colors.background,
       borderRadius: 20,
-      marginTop: 20,
       overflow: 'hidden',
-      borderWidth: 4,
+    },
+    barContainer: {
+      flexDirection: 'row',
+      height: 30,
+      overflow: 'hidden',
+      borderTopLeftRadius: 16,
+      borderTopRightRadius: 16,
       borderColor: colors.background,
     },
     segment: {
@@ -133,36 +137,35 @@ const RatingBar = ({ ratings }: RatingBarProps) => {
     scoreContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      alignItems: 'center',
-      marginTop: 20,
+      alignItems: 'flex-start',
       backgroundColor: colors.background,
-      borderRadius: 20,
       paddingVertical: 10,
       paddingHorizontal: 15,
-      shadowColor: "#000",
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
     },
     scoreText: {
-      fontSize: 16,
+      fontSize: 14,
       fontWeight: 'bold',
       color: colors.text,
       fontFamily: Fonts.sansSerif,
     },
+    scoreTextTitle: {
+      fontSize: 12,
+      color: colors.text,
+      fontFamily: Fonts.sansSerif,
+      textAlign: 'center',
+    },
     phraseText: {
       fontSize: 14,
       color: colors.text,
-      textAlign: 'right',
       fontFamily: Fonts.sansSerif,
-      fontStyle: 'italic',
+      paddingHorizontal: 16,
+      flex: 1,
     },
   });
 
   return (
-    <View>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <View style={styles.barContainer}>
         {segments.map((segment, index) => (
           <View
             key={index}
@@ -177,7 +180,10 @@ const RatingBar = ({ ratings }: RatingBarProps) => {
         ))}
       </View>
       <View style={styles.scoreContainer}>
-        <Text style={styles.scoreText}>Score: {Math.round(score)} / 100</Text>
+        <View>
+          <Text style={styles.scoreTextTitle}>Score</Text>
+          <Text style={styles.scoreText}>{Math.round(score)} / 100</Text>
+        </View>
         <Text style={styles.phraseText}>{phrase}</Text>
       </View>
     </View>

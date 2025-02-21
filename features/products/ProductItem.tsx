@@ -15,6 +15,7 @@ interface ProductItemProps {
   nutriScore: string;
   createdDate?: string;
   touchable?: boolean;
+  hideRating?: boolean;
 }
 
 export default function ProductItem({
@@ -25,11 +26,14 @@ export default function ProductItem({
   ecoScore,
   nutriScore,
   createdDate,
-  touchable = true
+  touchable = true,
+  hideRating = false
 }: ProductItemProps) {
 
   const colorScheme = useColorScheme()
   const colors = Colors[colorScheme ?? 'light']
+
+  const imageSize = hideRating ? 36 : 70;
 
   const styles = StyleSheet.create({
     card: {
@@ -49,8 +53,8 @@ export default function ProductItem({
       flex: 1,
     },
     imageContainer: {
-      width: 70,
-      height: 70,
+      width: imageSize,
+      height: imageSize,
       borderRadius: 12,
       overflow: 'hidden',
       marginRight: 10,
@@ -108,7 +112,7 @@ export default function ProductItem({
                   <Text style={styles.brandName} numberOfLines={1} ellipsizeMode="tail">{brandName}</Text>
                   <Text style={styles.productName} numberOfLines={1} ellipsizeMode="tail">{productName}</Text>
                 </View>
-                <NutriAndEcoScore nutriScore={nutriScore} ecoScore={ecoScore}></NutriAndEcoScore>
+                {!hideRating && <NutriAndEcoScore nutriScore={nutriScore} ecoScore={ecoScore}></NutriAndEcoScore>}
               </View>
             </View>
             {createdDate && <View style={styles.timeContainer}>

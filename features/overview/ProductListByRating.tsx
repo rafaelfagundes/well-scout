@@ -25,7 +25,7 @@ const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => 
       paddingHorizontal: 16,
       height: 24,
       borderRadius: 12,
-      marginBottom: 10,
+      marginBottom: 6,
       justifyContent: 'center',
     },
     sectionHeaderText: {
@@ -67,7 +67,7 @@ const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => 
             </View>
           </View>
         )}
-        ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+        ItemSeparatorComponent={() => <View style={{ height: 6 }} />}
       />
     </View>
   )
