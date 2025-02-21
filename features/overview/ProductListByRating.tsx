@@ -26,7 +26,6 @@ const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => 
 
   return (
     <View>
-      <Text>Product List By Rating</Text>
       <SectionList
         sections={sections}
         keyExtractor={(item) => item.id}
