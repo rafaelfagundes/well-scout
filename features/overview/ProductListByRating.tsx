@@ -18,18 +18,19 @@ interface ProductListByRatingProps {
 const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => {
   const colorScheme = useColorScheme()
   const colors = Colors[colorScheme ?? 'light']
+
   const styles = StyleSheet.create({
     sectionHeaderContainer: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.tint,
       paddingHorizontal: 16,
       height: 24,
       borderRadius: 12,
-      marginVertical: 8,
+      marginBottom: 10,
       justifyContent: 'center',
     },
     sectionHeaderText: {
       fontSize: 14,
-      color: colors.text,
+      color: colors.invertedText,
       fontFamily: Fonts.sansSerif,
     },
   })
@@ -39,6 +40,7 @@ const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => 
     .map(([rating, data]) => ({
       title: rating,
       data,
+      color: colors.ratings[rating as keyof typeof colors.ratings],
     }));
 
   return (
@@ -54,11 +56,11 @@ const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => 
             nutriScore={item.nutriScore}
             ecoScore={item.ecoScore}
             id={item.id}
-            touchable={false}
+            hideRating={true}
           />
         )}
-        renderSectionHeader={({ section: { title } }) => (
-          <View style={styles.sectionHeaderContainer}>
+        renderSectionHeader={({ section: { title, color } }) => (
+          <View style={{ ...styles.sectionHeaderContainer, ...{ backgroundColor: color } }}>
             <Text style={styles.sectionHeaderText}>{title.toUpperCase()} rating products</Text>
           </View>
         )}
