@@ -37,10 +37,11 @@ const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => 
 
   const sections = Object.entries(productsByRating)
     .filter(([rating, data]) => Array.isArray(data) && data.length > 0)
-    .map(([rating, data]) => ({
+    .map(([rating, data], index) => ({
       title: rating,
       data,
       color: colors.ratings[rating as keyof typeof colors.ratings],
+      sectionIndex: index,
     }));
 
   return (
@@ -59,9 +60,11 @@ const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => 
             hideRating={true}
           />
         )}
-        renderSectionHeader={({ section: { title, color } }) => (
-          <View style={{ ...styles.sectionHeaderContainer, ...{ backgroundColor: color } }}>
-            <Text style={styles.sectionHeaderText}>{title.toUpperCase()} rating products</Text>
+        renderSectionHeader={({ section: { title, color, sectionIndex } }) => (
+          <View style={{ marginTop: sectionIndex > 0 ? 10 : 0 }}>
+            <View style={{ ...styles.sectionHeaderContainer, backgroundColor: color }}>
+              <Text style={styles.sectionHeaderText}>{title.toUpperCase()} rating products</Text>
+            </View>
           </View>
         )}
         ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
