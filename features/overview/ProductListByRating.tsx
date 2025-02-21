@@ -5,6 +5,8 @@ import { ProductItem as ProductItemType } from '../products/productSlice'
 import ProductItem from '../products/ProductItem'
 import { Fonts } from '@/constants/Fonts'
 import { EmptyList } from '@/components/ui/EmptyList'
+import { Barcode, MagnifyingGlass } from 'phosphor-react-native'
+import { useRouter } from 'expo-router'
 
 interface ProductListByRatingProps {
   productsByRating: {
@@ -29,6 +31,20 @@ const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => 
       marginBottom: 6,
       justifyContent: 'center',
     },
+  })
+
+  const router = useRouter()
+  const emptyActionButtons = [
+    {
+      icon: <Barcode size={32} color={Colors[useColorScheme() ?? 'light'].text} />,
+      onPress: () => router.push('/(tabs)/scan'),
+      text: 'Scan Product'
+    },
+    {
+      icon: <MagnifyingGlass size={32} color={Colors[useColorScheme() ?? 'light'].text} />,
+      onPress: () => router.push('/(tabs)/search'),
+      text: 'Search Items'
+    }
     sectionHeaderText: {
       fontSize: 14,
       color: colors.invertedText,
@@ -69,7 +85,7 @@ const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => 
           </View>
         )}
         ItemSeparatorComponent={() => <View style={{ height: 6 }} />}
-        ListEmptyComponent={<EmptyList title="No rating products" text="There are no rating products available." />}
+        ListEmptyComponent={<EmptyList title="No rating products" text="There are no rating products available." buttons={emptyActionButtons} />}
       />
     </View>
   )
