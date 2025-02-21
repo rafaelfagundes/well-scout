@@ -1,7 +1,6 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import ScreenContainer from '@/components/ui/ScreenContainer';
-import { Text } from 'react-native'
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import { CategoryTabs, Tabs } from '@/features/overview/CategoryTabs';
 import { useState } from 'react';

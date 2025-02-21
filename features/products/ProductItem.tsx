@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, useColorScheme, TouchableOpacity, Dimensions, Pressable } from 'react-native';
+import { View, Text, Image, StyleSheet, useColorScheme, Dimensions, Pressable } from 'react-native';
 import { Link } from 'expo-router';
 import { Clock } from 'phosphor-react-native';
 import { Fonts } from '@/constants/Fonts';

@@ -1,6 +1,6 @@
 import { Colors } from '@/constants/Colors';
 import { Fonts } from '@/constants/Fonts';
-import { Leaf, Plant, Tree, TreeEvergreen } from 'phosphor-react-native';
+import { Tree } from 'phosphor-react-native';
 import React from 'react'
 import { Text, View, StyleSheet, useColorScheme } from 'react-native'
 

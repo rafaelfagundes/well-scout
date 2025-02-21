@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Alert, SafeAreaView, TouchableOpacity, useColorScheme } from 'react-native';
+import { StyleSheet, View, Text, Alert, useColorScheme } from 'react-native';
 import { Camera, useCameraDevice, useCameraPermission, useCodeScanner } from 'react-native-vision-camera';
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'expo-router';
@@ -8,8 +8,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
-import Logo from '@/components/ui/Logo';
-import { Flashlight, Info, UserCircleGear } from 'phosphor-react-native';
+import { Flashlight } from 'phosphor-react-native';
 import { Colors } from '@/constants/Colors';
 
 export default function ScanScreen() {
