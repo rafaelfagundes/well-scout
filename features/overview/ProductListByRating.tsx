@@ -17,7 +17,18 @@ interface ProductListByRatingProps {
 const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => {
   const colorScheme = useColorScheme()
   const colors = Colors[colorScheme ?? 'light']
-  const styles = StyleSheet.create({})
+  const styles = StyleSheet.create({
+    sectionHeaderContainer: {
+      backgroundColor: colors.background,
+      paddingVertical: 8,
+      paddingHorizontal: 16,
+    },
+    sectionHeaderText: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: colors.text,
+    },
+  })
 
   const sections = Object.entries(productsByRating).map(([rating, data]) => ({
     title: rating,
@@ -41,7 +52,9 @@ const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => 
           />
         )}
         renderSectionHeader={({ section: { title } }) => (
-          <Text>{title}</Text>
+          <View style={styles.sectionHeaderContainer}>
+            <Text style={styles.sectionHeaderText}>{title}</Text>
+          </View>
         )}
       />
     </View>
