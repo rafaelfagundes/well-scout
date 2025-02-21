@@ -1,4 +1,5 @@
 import { Colors } from '@/constants/Colors';
+import { Fonts } from '@/constants/Fonts';
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, useColorScheme } from 'react-native';
 
@@ -118,7 +119,7 @@ const RatingBar = ({ ratings }: RatingBarProps) => {
   const styles = StyleSheet.create({
     container: {
       flexDirection: 'row',
-      height: 60,
+      height: 40,
       width: SCREEN_WIDTH,
       borderRadius: 20,
       marginTop: 20,
@@ -134,17 +135,19 @@ const RatingBar = ({ ratings }: RatingBarProps) => {
       alignItems: 'center',
     },
     scoreText: {
-      marginTop: 10,
-      fontSize: 18,
+      marginTop: 4,
+      fontSize: 16,
       fontWeight: 'bold',
       color: colors.text,
+      fontFamily: Fonts.sansSerif,
     },
     phraseText: {
-      fontSize: 16,
-      marginTop: 8,
+      fontSize: 14,
+      marginTop: 6,
       color: colors.text,
       textAlign: 'center',
-      marginHorizontal: 10
+      marginHorizontal: 10,
+      fontFamily: Fonts.sansSerif,
     },
   });
 
