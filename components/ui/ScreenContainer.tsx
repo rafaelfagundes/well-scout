@@ -28,7 +28,7 @@ export default function ScreenContainer({ children, scrollView = true, horizonta
     if (extraButtons.length === 0) {
       return 32
     }
-    else return extraButtons.length >= 1 ? 74 * extraButtons.length : 32
+    else return extraButtons.length >= 1 ? 84 * extraButtons.length : 32
   }
 
   const styles = StyleSheet.create({

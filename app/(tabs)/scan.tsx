@@ -116,38 +116,30 @@ export default function ScanScreen() {
     );
   }
 
+  const extraToolbarButton = {
+    icon: <Flashlight size={32} color={colors.text} weight={enableTorch ? 'fill' : 'regular'} />,
+    onPress: () => setEnableTorch(!enableTorch),
+  };
+
   return (
     <BackgroundImage>
-      <SafeAreaView style={{ flex: 1 }}>
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <Logo />
-            <View style={styles.headerButtons}>
-              <TouchableOpacity onPress={() => setEnableTorch(!enableTorch)}>
-                <Flashlight size={32} color={colors.text} weight={enableTorch ? 'fill' : 'regular'} />
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <UserCircleGear size={32} color={colors.text} />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.cameraContainer}>
-            {device && <Camera
-              style={styles.cameraView}
-              codeScanner={codeScanner}
-              device={device}
-              isActive={true}
-              torch={enableTorch ? 'on' : 'off'}
-              zoom={2}
-            />}
-          </View>
-          {scanned && (
-            <Text style={styles.text} onPress={() => setScanned(false)}>
-              Tap to Scan Again
-            </Text>
-          )}
+      <ScreenContainer scrollView={false} extraButtons={[extraToolbarButton]}>
+        <View style={styles.cameraContainer}>
+          {device && <Camera
+            style={styles.cameraView}
+            codeScanner={codeScanner}
+            device={device}
+            isActive={true}
+            torch={enableTorch ? 'on' : 'off'}
+            zoom={2}
+          />}
         </View>
-      </SafeAreaView>
+        {scanned && (
+          <Text style={styles.text} onPress={() => setScanned(false)}>
+            Tap to Scan Again
+          </Text>
+        )}
+      </ScreenContainer>
     </BackgroundImage>
   );
 }
