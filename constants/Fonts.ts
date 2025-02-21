@@ -1,6 +1,5 @@
 export const Fonts = {
-  // sansSerif: 'Sansation',
-  sansSerif: 'Din1451',
+  sansSerif: 'Sansation',
   serif: '',
   monospaced: 'SpaceMono'
 }

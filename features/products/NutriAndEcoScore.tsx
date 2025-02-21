@@ -31,20 +31,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 30,
     gap: 10,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%'
   },
   nutriScore: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
   },
-  ecoScore: {}
+  ecoScore: {
+    marginRight: 5
+  }
 })
 
 export default NutriAndEcoScore;
 
 function EcoScore({ ecoScore }: { ecoScore: string }) {
   const colors = Colors[useColorScheme() ?? 'light'];
-  const color = colors.ratings[ecoScore]
+  const color = colors.ratings[ecoScore as keyof typeof colors.ratings]
 
   const styles = StyleSheet.create({
     item: {
@@ -57,24 +62,24 @@ function EcoScore({ ecoScore }: { ecoScore: string }) {
       borderRadius: 15,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: color,
+      backgroundColor: color ?? colors.text,
       zIndex: 100
     },
     textHolder: {
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: color,
+      backgroundColor: color ?? colors.text,
       borderTopRightRadius: 10,
       borderBottomRightRadius: 10,
       paddingLeft: 20,
       paddingRight: 10,
       marginLeft: -15,
-      height: 18
+      height: 16
     },
     text: {
       fontFamily: Fonts.sansSerif,
       fontWeight: 700,
-      color: '#FFF',
+      color: colors.invertedText,
       fontSize: 12,
     }
   })
@@ -90,7 +95,7 @@ function EcoScore({ ecoScore }: { ecoScore: string }) {
 
   return <View style={styles.item}>
     <View style={styles.icon}>
-      <Tree size={18} color="#FFF" weight='fill' />
+      <Tree size={16} color={colors.invertedText} weight='fill' />
     </View>
     <View style={styles.textHolder}>
       <Text style={styles.text}>{getEcoScore(ecoScore)}</Text>
@@ -100,7 +105,7 @@ function EcoScore({ ecoScore }: { ecoScore: string }) {
 
 function NutriScore({ nutriScore, isScore = false, isFirst = false, isLast = false }: { nutriScore: string, isScore?: boolean, isFirst?: boolean, isLast?: boolean }) {
   const colors = Colors[useColorScheme() ?? 'light'];
-  const color = colors.ratings[nutriScore]
+  const color = colors.ratings[nutriScore as keyof typeof colors.ratings]
 
   const styles = StyleSheet.create({
     item: {
@@ -119,7 +124,7 @@ function NutriScore({ nutriScore, isScore = false, isFirst = false, isLast = fal
       paddingLeft: isFirst && !isScore ? 4 : 0,
     },
     ratingLetter: {
-      color: '#FFF',
+      color: colors.invertedText,
       fontFamily: Fonts.sansSerif,
       fontWeight: 700,
       fontSize: 12
@@ -133,29 +138,3 @@ function NutriScore({ nutriScore, isScore = false, isFirst = false, isLast = fal
   )
 }
 
-function getBackgroundColor(score: string) {
-  let color: string;
-
-  switch (score) {
-    case 'a':
-      color = '#095256'
-      break;
-    case 'b':
-      color = '#00DF82'
-      break;
-    case 'c':
-      color = '#E7D395'
-      break;
-    case 'd':
-      color = '#FE654F'
-      break;
-    case 'e':
-      color = '#81171B'
-      break;
-    default:
-      color = '#000';
-      break;
-  }
-
-  return color;
-}

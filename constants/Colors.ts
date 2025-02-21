@@ -16,24 +16,25 @@ const inactiveTabBarItemLight = '#09525675';
 
 const ratingColors = {
   light: {
-    a: '#095256',
-    b: '#00DF82',
+    a: '#0C9157',
+    b: '#2CB091',
     c: '#E7D395',
     d: '#FE654F',
     e: '#81171B',
   },
   dark: {
-    a: '#095256',
-    b: '#00DF82',
-    c: '#E7D395',
-    d: '#FE654F',
-    e: '#81171B',
+    a: '#13B95B',
+    b: '#B0DB43',
+    c: '#FFF07C',
+    d: '#F56D60',
+    e: '#E3383B',
   }
 }
 
 export const Colors = {
   light: {
     text: '#095256',
+    invertedText: "#FFFFFF",
     background: '#FFFFFF',
     tint: tintColorLight,
     tintConstrast: tintConstrastColorLight,
@@ -46,6 +47,7 @@ export const Colors = {
   },
   dark: {
     text: '#ECEDEE',
+    invertedText: "#151718",
     background: '#151718',
     tint: tintColorDark,
     tintConstrast: tintConstrastColorDark,

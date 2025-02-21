@@ -17,9 +17,13 @@ interface EmptyListProps {
 }
 
 export function EmptyList({ title, text, buttons, icon }: EmptyListProps) {
+  const colorScheme = useColorScheme()
+  const colors = Colors[colorScheme ?? 'light']
+
   if (!icon) {
-    icon = <Empty size={64} color={Colors[useColorScheme() ?? 'light'].text} />;
+    icon = <Empty size={64} color={colors.text} />;
   }
+
   const styles = StyleSheet.create(
     {
       emptyContainer: {
@@ -30,14 +34,14 @@ export function EmptyList({ title, text, buttons, icon }: EmptyListProps) {
       },
       emptyText: {
         fontSize: 16,
-        color: Colors[useColorScheme() ?? 'light'].text,
+        color: colors.text,
         textAlign: 'center',
         marginBottom: 20,
         fontFamily: Fonts.sansSerif,
       },
       emptyTitle: {
         fontSize: 22,
-        color: Colors[useColorScheme() ?? 'light'].text,
+        color: colors.text,
         textAlign: 'center',
         marginBottom: 10,
         marginTop: 20,
@@ -52,7 +56,7 @@ export function EmptyList({ title, text, buttons, icon }: EmptyListProps) {
       emptyButton: {
         flex: 1,
         maxWidth: Dimensions.get('window').width / 2 - 20,
-        backgroundColor: Colors[useColorScheme() ?? 'light'].background,
+        backgroundColor: colors.background,
         paddingHorizontal: 20,
         paddingVertical: 10,
         borderRadius: 8,
@@ -61,7 +65,7 @@ export function EmptyList({ title, text, buttons, icon }: EmptyListProps) {
         gap: 8
       },
       emptyButtonText: {
-        color: 'white',
+        color: colors.text,
         fontSize: 16,
         fontFamily: Fonts.sansSerif,
       },

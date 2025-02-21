@@ -41,7 +41,7 @@ export function CategoryTabs({ activeTab, setActiveTab }: ProductsTabsProps) {
     },
     tabText: {
       fontFamily: Fonts.sansSerif,
-      fontSize: 16,
+      fontSize: 15,
       textAlign: 'center',
       fontWeight: '600',
     },

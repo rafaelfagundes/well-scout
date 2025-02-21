@@ -29,11 +29,12 @@ export default function ProductItem({
 }: ProductItemProps) {
 
   const colorScheme = useColorScheme()
+  const colors = Colors[colorScheme ?? 'light']
 
   const styles = StyleSheet.create({
     card: {
       borderRadius: 20,
-      backgroundColor: Colors[colorScheme ?? 'light'].background,
+      backgroundColor: colors.background,
     },
     cardContent: {
       padding: 10,
@@ -52,8 +53,8 @@ export default function ProductItem({
       height: 70,
       borderRadius: 12,
       overflow: 'hidden',
-      backgroundColor: '#8B2323',
       marginRight: 10,
+      backgroundColor: colors.background,
     },
     image: {
       width: '100%',
@@ -61,33 +62,36 @@ export default function ProductItem({
     },
     infoContainer: {
       justifyContent: 'space-between',
+      width: '100%',
+      minWidth: Dimensions.get('screen').width - 134,
+      maxWidth: Dimensions.get('screen').width - 134,
     },
     productName: {
       color: Colors[colorScheme ?? 'light'].text,
       fontFamily: Fonts.sansSerif,
-      fontSize: 17,
+      fontSize: 15,
       fontWeight: '700',
-      maxWidth: Dimensions.get('screen').width - 130,
     },
     brandName: {
       color: Colors[colorScheme ?? 'light'].text,
       fontFamily: Fonts.sansSerif,
       fontSize: 13,
-      marginBottom: 2,
-      opacity: .85,
+      marginBottom: 4,
+      opacity: .70,
       maxWidth: Dimensions.get('screen').width - 250,
     },
     timeContainer: {
       flexDirection: 'row',
       alignItems: 'center',
       gap: 2,
-      marginRight: 6,
+      marginRight: 8,
       marginTop: 1,
     },
     timeText: {
       fontFamily: Fonts.sansSerif,
       fontSize: 11,
-      color: Colors[colorScheme ?? 'light'].text,
+      color: colors.text,
+      opacity: .70,
     },
   });
   return (

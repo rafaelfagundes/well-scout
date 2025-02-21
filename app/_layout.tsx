@@ -22,6 +22,8 @@ export default function RootLayout() {
     Din1451: require('../assets/fonts/din1451alt.ttf'),
     Din1451G: require('../assets/fonts/din1451alt G.ttf'),
     Din1451B: require('../assets/fonts/DIN1451-36breit.ttf'),
+    StyreneA: require('../assets/fonts/StyreneA-Regular.ttf'),
+    StyreneAMedium: require('../assets/fonts/StyreneA-Medium.ttf'),
   });
 
   useEffect(() => {

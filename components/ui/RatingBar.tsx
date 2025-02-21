@@ -103,7 +103,7 @@ const RatingBar = ({ ratings }: RatingBarProps) => {
   let total_count = 0;
   for (const key of segmentOrder) {
     const count = ratings[key] || 0;
-    weighted_sum += count * weights[key];
+    weighted_sum += count * weights[key as keyof typeof weights];
     total_count += count;
   }
   let score = 0;
@@ -134,15 +134,17 @@ const RatingBar = ({ ratings }: RatingBarProps) => {
       alignItems: 'center',
     },
     scoreText: {
+      marginTop: 10,
       fontSize: 18,
       fontWeight: 'bold',
       color: colors.text,
     },
     phraseText: {
       fontSize: 16,
-      marginTop: 5,
+      marginTop: 8,
       color: colors.text,
       textAlign: 'center',
+      marginHorizontal: 10
     },
   });
 
