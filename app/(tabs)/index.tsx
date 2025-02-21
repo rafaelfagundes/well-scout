@@ -144,7 +144,7 @@ export default function ProductsScreen() {
     item.brandName.toLowerCase().includes(debouncedSearchText.toLowerCase())
   );
 
-  const extraButton = {
+  const extraToolbarButton = {
     icon: <MagnifyingGlass size={32} color={Colors[useColorScheme() ?? 'light'].text} />,
     onPress: () => setShowSearch(!showSearch),
   };
@@ -177,7 +177,7 @@ export default function ProductsScreen() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BackgroundImage>
-        <ScreenContainer scrollView={false} extraButtons={[extraButton]}>
+        <ScreenContainer scrollView={false} extraButtons={[extraToolbarButton]}>
           <Animated.View style={[{ overflow: "hidden" }, animatedSearchBarStyle]}>
             <SearchBar searchText={searchText} onChangeText={setSearchText} />
             <View style={{ height: 10 }} />
