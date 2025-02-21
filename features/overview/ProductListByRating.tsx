@@ -30,13 +30,15 @@ const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => 
     },
   })
 
-  const sections = Object.entries(productsByRating).map(([rating, data]) => ({
-    title: rating,
-    data,
-  }));
+  const sections = Object.entries(productsByRating)
+    .filter(([rating, data]) => Array.isArray(data) && data.length > 0)
+    .map(([rating, data]) => ({
+      title: rating,
+      data,
+    }));
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <SectionList
         sections={sections}
         keyExtractor={(item) => item.id}
