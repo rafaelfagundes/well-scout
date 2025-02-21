@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import { CategoryTabs, Tabs } from '@/features/overview/CategoryTabs';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import RatingBar from '@/components/ui/RatingBar';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
@@ -32,29 +32,30 @@ export default function OverviewScreen() {
   const [activeTab, setActiveTab] = useState(Tabs.FOOD);
   const products = useSelector((state: RootState) => state.product.history);
 
-  const filteredProducts = filterProducts(products, activeTab);
+  const filteredProducts = useMemo(() => filterProducts(products, activeTab), [products, activeTab]);
 
-  const productsByRatingA = getProductsByRating(filteredProducts, 'a');
-  const productsByRatingB = getProductsByRating(filteredProducts, 'b');
-  const productsByRatingC = getProductsByRating(filteredProducts, 'c');
-  const productsByRatingD = getProductsByRating(filteredProducts, 'd');
-  const productsByRatingE = getProductsByRating(filteredProducts, 'e');
-
-  const ratings = {
-    a: productsByRatingA.length,
-    b: productsByRatingB.length,
-    c: productsByRatingC.length,
-    d: productsByRatingD.length,
-    e: productsByRatingE.length,
-  };
-
-  const productsByRating = {
-    e: productsByRatingE,
-    d: productsByRatingD,
-    c: productsByRatingC,
-    b: productsByRatingB,
-    a: productsByRatingA,
-  };
+  const { ratings, productsByRating } = useMemo(() => {
+    const productsByRatingA = getProductsByRating(filteredProducts, 'a');
+    const productsByRatingB = getProductsByRating(filteredProducts, 'b');
+    const productsByRatingC = getProductsByRating(filteredProducts, 'c');
+    const productsByRatingD = getProductsByRating(filteredProducts, 'd');
+    const productsByRatingE = getProductsByRating(filteredProducts, 'e');
+    const ratings = {
+      a: productsByRatingA.length,
+      b: productsByRatingB.length,
+      c: productsByRatingC.length,
+      d: productsByRatingD.length,
+      e: productsByRatingE.length,
+    };
+    const productsByRating = {
+      e: productsByRatingE,
+      d: productsByRatingD,
+      c: productsByRatingC,
+      b: productsByRatingB,
+      a: productsByRatingA,
+    };
+    return { ratings, productsByRating };
+  }, [filteredProducts]);
 
   return (
     <BackgroundImage>
