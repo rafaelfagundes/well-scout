@@ -62,6 +62,7 @@ const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => 
             <Text style={styles.sectionHeaderText}>{title.toUpperCase()} rating products</Text>
           </View>
         )}
+        ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
       />
     </View>
   )
