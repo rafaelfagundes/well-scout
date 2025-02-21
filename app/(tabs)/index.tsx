@@ -1,6 +1,6 @@
-import { StyleSheet, FlatList, View, Text, useColorScheme, TouchableOpacity } from 'react-native';
+import { StyleSheet, FlatList, View, Text, useColorScheme } from 'react-native';
 import { useRouter } from 'expo-router';
-import { MagnifyingGlass } from 'phosphor-react-native';
+import { ArrowCounterClockwise, Barcode, Clock, HeartBreak, MagnifyingGlass } from 'phosphor-react-native';
 import SearchBar from '@/components/SearchBar';
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
@@ -16,6 +16,8 @@ import type { AppDispatch } from '@/state/store';
 import { removeProductFromHistory, addProductToFavorites, initializeProductState, removeProductFromFavorites } from '@/features/products/productSlice'; // Import initializeProductState
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { EmptyList, EmptyListButton } from '@/components/ui/EmptyList';
+
 
 enum Tabs {
   HISTORY = 'history',
@@ -133,32 +135,6 @@ export default function ProductsScreen() {
     separator: {
       height: 10,
     },
-    emptyContainer: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: 20,
-    },
-    emptyText: {
-      fontSize: 16,
-      color: Colors[useColorScheme() ?? 'light'].text,
-      textAlign: 'center',
-      marginBottom: 20,
-    },
-    buttonContainer: {
-      flexDirection: 'row',
-      gap: 10,
-    },
-    emptyButton: {
-      backgroundColor: Colors[useColorScheme() ?? 'light'].tint,
-      paddingHorizontal: 20,
-      paddingVertical: 10,
-      borderRadius: 8,
-    },
-    emptyButtonText: {
-      color: 'white',
-      fontSize: 14,
-    },
   });
 
   const selectedData = activeTab === Tabs.HISTORY ? history : favorites;
@@ -173,6 +149,30 @@ export default function ProductsScreen() {
     onPress: () => setShowSearch(!showSearch),
   };
 
+  const emptyActionButtonsHistory: EmptyListButton[] = [
+    {
+      icon: <Barcode size={32} color={Colors[useColorScheme() ?? 'light'].text} />,
+      onPress: () => router.push('/(tabs)/scan'),
+      text: 'Scan Product'
+    },
+    {
+      icon: <MagnifyingGlass size={32} color={Colors[useColorScheme() ?? 'light'].text} />,
+      onPress: () => router.push('/(tabs)/search'),
+      text: 'Search Items'
+    }
+  ];
+
+  const historyEmptyIcon = <ArrowCounterClockwise size={64} color={Colors[useColorScheme() ?? 'light'].text} />;
+
+  const emptyActionButtonsFavorites: EmptyListButton[] = [
+    {
+      icon: <Clock size={32} color={Colors[useColorScheme() ?? 'light'].text} />,
+      onPress: () => setActiveTab(Tabs.HISTORY),
+      text: 'Go to history'
+    }
+  ];
+
+  const favoriteEmptyIcon = <HeartBreak size={64} color={Colors[useColorScheme() ?? 'light'].text} />;
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -192,27 +192,13 @@ export default function ProductsScreen() {
             )}
             keyExtractor={item => item.id}
             ListEmptyComponent={
-              <View style={styles.emptyContainer}>
-                <Text style={styles.emptyText}>No items found. Scan a product or search using the search bar above.</Text>
-                <View style={styles.buttonContainer}>
-                  <TouchableOpacity 
-                    style={styles.emptyButton} 
-                    onPress={() => router.push('/(tabs)/scan')}
-                  >
-                    <Text style={styles.emptyButtonText}>Scan Product</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity 
-                    style={styles.emptyButton} 
-                    onPress={() => router.push('/(tabs)/search')}
-                  >
-                    <Text style={styles.emptyButtonText}>Search Items</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
+              activeTab === Tabs.HISTORY ? <EmptyList icon={historyEmptyIcon} title='No items in history' text='Scan a product or search for a specific item.' buttons={emptyActionButtonsHistory} />
+                : <EmptyList icon={favoriteEmptyIcon} title='No favorites' text='Go to history and add some favorite items.' buttons={emptyActionButtonsFavorites} />
             }
           />
         </ScreenContainer>
       </BackgroundImage>
     </GestureHandlerRootView>
   );
+
 }

@@ -40,7 +40,7 @@ export function ProductsTabs({ activeTab, setActiveTab }: ProductsTabsProps) {
     },
     tabText: {
       fontFamily: Fonts.sansSerif,
-      fontSize: 14,
+      fontSize: 16,
       textAlign: 'center',
       fontWeight: '600',
     },
