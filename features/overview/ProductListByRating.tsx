@@ -3,6 +3,7 @@ import React from 'react'
 import { Colors } from '@/constants/Colors'
 import { ProductItem as ProductItemType } from '../products/productSlice'
 import ProductItem from '../products/ProductItem'
+import { Fonts } from '@/constants/Fonts'
 
 interface ProductListByRatingProps {
   productsByRating: {
@@ -20,13 +21,16 @@ const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => 
   const styles = StyleSheet.create({
     sectionHeaderContainer: {
       backgroundColor: colors.background,
-      paddingVertical: 8,
       paddingHorizontal: 16,
+      height: 24,
+      borderRadius: 12,
+      marginVertical: 8,
+      justifyContent: 'center',
     },
     sectionHeaderText: {
-      fontSize: 18,
-      fontWeight: 'bold',
+      fontSize: 14,
       color: colors.text,
+      fontFamily: Fonts.sansSerif,
     },
   })
 
@@ -55,7 +59,7 @@ const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => 
         )}
         renderSectionHeader={({ section: { title } }) => (
           <View style={styles.sectionHeaderContainer}>
-            <Text style={styles.sectionHeaderText}>{title}</Text>
+            <Text style={styles.sectionHeaderText}>{title.toUpperCase()} rating products</Text>
           </View>
         )}
       />
