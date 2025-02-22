@@ -10,22 +10,28 @@ export default function Product() {
   const dispatch = useDispatch();
   const [product, setProduct] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  const [extraInformation, setExtraInformation] = useState<any>(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`https://world.openfoodfacts.org/api/v3/product/${id}.json?product_type=all`);
-        const data = await response.json();
-        setProduct(data);
-        if (data.product) {
+        const [productResponse, extraResponse] = await Promise.all([
+          fetch(`https://world.openfoodfacts.org/api/v3/product/${id}.json?product_type=all`),
+          fetch(`https://world.openfoodfacts.org/api/v3/product/${id}?product_type=all&fields=knowledge_panels`)
+        ]);
+        const productData = await productResponse.json();
+        const extraData = await extraResponse.json();
+        setProduct(productData);
+        setExtraInformation(extraData);
+        if (productData.product) {
           dispatch(addProductToHistory({
-            imageUrl: data.product.image_front_url,
-            productName: data.product.product_name,
-            brandName: data.product.brands,
-            nutriScore: data.product.nutriscore_grade,
-            ecoScore: data.product.ecoscore_grade,
-            id: data.code,
-            productType: data.product.product_type,
+            imageUrl: productData.product.image_front_url,
+            productName: productData.product.product_name,
+            brandName: productData.product.brands,
+            nutriScore: productData.product.nutriscore_grade,
+            ecoScore: productData.product.ecoscore_grade,
+            id: productData.code,
+            productType: productData.product.product_type,
             createdDate: new Date().toISOString()
           }));
         }
@@ -47,7 +53,7 @@ export default function Product() {
     </>
   }
 
-  if (!product) {
+  if (!product || !extraInformation) {
     return <>
       <Stack.Screen options={{ title: 'Loading...', headerBackTitle }} />
       <LoadingView />
@@ -64,7 +70,7 @@ export default function Product() {
   return (
     <>
       <Stack.Screen options={{ title: product.product?.product_name ?? "Unkown Product", headerBackTitle }} />
-      <ProductDetailScreen product={product}></ProductDetailScreen>
+      <ProductDetailScreen product={product} extraInformation={extraInformation}></ProductDetailScreen>
     </>
   );
 }
