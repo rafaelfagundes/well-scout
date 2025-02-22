@@ -13,7 +13,7 @@ import { ProductsTabs } from '@/features/products/ProductTabs';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing } from 'react-native-reanimated';
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '@/state/store';
-import { removeProductFromHistory, addProductToFavorites, initializeProductState, removeProductFromFavorites } from '@/features/products/productSlice'; // Import initializeProductState
+import { removeProductFromHistory, addProductToFavorites, initializeProductState, removeProductFromFavorites, resetStorage } from '@/features/products/productSlice';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { EmptyList, EmptyListButton } from '@/components/ui/EmptyList';
@@ -112,6 +112,8 @@ export default function ProductsScreen() {
 
   useEffect(() => {
     dispatch(initializeProductState());
+    // reset state (uncomment to reset state)
+    // dispatch(resetStorage());
   }, [dispatch]);
 
   useEffect(() => {

@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ThunkAction } from '@reduxjs/toolkit';
 import { Action } from 'redux';
+import { ExtraInformation, ProductInfo } from "./Product";
 
 export interface ProductItem {
   id: string;
@@ -11,8 +12,11 @@ export interface ProductItem {
   imageUrl: string;
   brandName: string;
   productName: string;
+  category: string;
   productType: "food" | "beauty" | "pet" | "other";
   createdDate: string;
+  productInfo: ProductInfo;
+  extraInfo: ExtraInformation;
 }
 
 export interface ProductState {
@@ -92,4 +96,10 @@ export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unk
 export const initializeProductState = (): AppThunk<Promise<void>> => async (dispatch) => {
   const loadedState = await loadStateFromAsyncStorage();
   dispatch(setInitialState(loadedState));
+}
+
+export const resetStorage = (): AppThunk<Promise<void>> => async (dispatch) => {
+  await AsyncStorage.removeItem('@productState');
+  dispatch(setInitialState(initialState));
+  return;
 }

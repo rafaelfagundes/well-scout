@@ -4,13 +4,14 @@ import { useLocalSearchParams, Stack } from 'expo-router';
 import { useDispatch } from 'react-redux';
 import { addProductToHistory } from '@/features/products/productSlice';
 import ProductDetailScreen from '@/features/products/ProductDetailScreen';
+import { extractExtraInformation, extractProductInfo, ExtraInformation, ProductInfo } from '@/features/products/Product';
 
 export default function Product() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const dispatch = useDispatch();
-  const [product, setProduct] = useState<any>(null);
+  const [product, setProduct] = useState<ProductInfo>();
   const [error, setError] = useState<string | null>(null);
-  const [extraInformation, setExtraInformation] = useState<any>(null);
+  const [extraInformation, setExtraInformation] = useState<ExtraInformation>();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -21,9 +22,11 @@ export default function Product() {
         ]);
         const productData = await productResponse.json();
         const extraData = await extraResponse.json();
-        setProduct(productData);
-        setExtraInformation(extraData);
-        if (productData.product) {
+        const productInfo: ProductInfo = extractProductInfo(productData);
+        const extraInfo: ExtraInformation = extractExtraInformation(extraData);
+        setProduct(productInfo);
+        setExtraInformation(extraInfo);
+        if (productInfo && extraInfo) {
           dispatch(addProductToHistory({
             imageUrl: productData.product.image_front_url,
             productName: productData.product.product_name,
@@ -32,7 +35,9 @@ export default function Product() {
             ecoScore: productData.product.ecoscore_grade,
             id: productData.code,
             productType: productData.product.product_type,
-            createdDate: new Date().toISOString()
+            createdDate: new Date().toISOString(),
+            productInfo: productInfo,
+            extraInfo: extraInfo
           }));
         }
       } catch (err) {
@@ -60,7 +65,7 @@ export default function Product() {
     </>
   }
 
-  if (!product.product) {
+  if (!product) {
     return <>
       <Stack.Screen options={{ title: 'Product Not Found', headerBackTitle }} />
       <NoProductView />
@@ -69,8 +74,9 @@ export default function Product() {
 
   return (
     <>
-      <Stack.Screen options={{ title: product.product?.product_name ?? "Unkown Product", headerBackTitle }} />
-      <ProductDetailScreen product={product} extraInformation={extraInformation}></ProductDetailScreen>
+      <Stack.Screen options={{ title: product.productName ?? "Unkown Product", headerBackTitle }} />
+      <ProductDetailScreen productInfo={product} extraInfo={extraInformation}></ProductDetailScreen>
+
     </>
   );
 }

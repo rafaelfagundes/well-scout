@@ -4,7 +4,7 @@ import React from 'react';
 import { HapticTab } from '@/components/HapticTab';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { Swap, Cube, Barcode, Gauge, MagnifyingGlass } from 'phosphor-react-native';
+import { Cube, Barcode, Gauge, MagnifyingGlass, Sparkle } from 'phosphor-react-native';
 import { Fonts } from '@/constants/Fonts';
 
 
@@ -41,10 +41,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="swap"
+        name="advisor"
         options={{
-          title: 'Swap',
-          tabBarIcon: ({ color }) => <Swap color={color} size={ICON_SIZE} />
+          title: 'Advisor',
+          tabBarIcon: ({ color }) => <Sparkle color={color} size={ICON_SIZE} />
         }}
       />
       <Tabs.Screen

@@ -1,7 +1,7 @@
 import { StyleSheet, useColorScheme, View, ScrollView, Text } from 'react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { Colors } from '@/constants/Colors';
-import { extractExtraInformation, extractProductInfo, ExtraInformation } from './Product';
+import { extractExtraInformation, extractProductInfo, ExtraInformation, ProductInfo } from './Product';
 import { Carrot, Orange, Flask, ShieldWarning, Package, Factory, Tag } from 'phosphor-react-native';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import { capitalizeAll, removeDashes } from '@/lib/text';
@@ -11,8 +11,8 @@ import AdditiveItem from './AdditiveItem';
 import NutrientItem from './NutrientItem';
 
 interface ProductDetailsScreen {
-  product: any;
-  extraInformation: any;
+  productInfo: ProductInfo;
+  extraInfo: ExtraInformation;
 }
 
 interface NutrientItemType {
@@ -29,18 +29,12 @@ interface NutrientEval {
   };
 }
 
-const ProductDetailScreen: React.FC<ProductDetailsScreen> = ({ product, extraInformation }) => {
-  console.log("barcode", product.code)
+const ProductDetailScreen: React.FC<ProductDetailsScreen> = ({ productInfo, extraInfo }) => {
   const colorScheme = useColorScheme();
-  const productInfo = extractProductInfo(product);
-  const extraInfo: ExtraInformation = extractExtraInformation(extraInformation);
-  console.log(extraInfo)
   const colors = Colors[colorScheme ?? 'light'];
-
   const nutrients = extraInfo.health.nutrients
   const nutrientsEval: NutrientEval = {};
   const nutrientList: any = [];
-  const typedNutrientList: NutrientItemType[] = [];
 
   for (const nutrient in nutrients) {
     const item = nutrients[nutrient]

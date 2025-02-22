@@ -2,6 +2,7 @@ export interface ProductInfo {
   productName: string;
   genericName: string;
   brand: string;
+  category: string;
   image: string;
   nutriscore: string;
   novaGroup: number;
@@ -250,6 +251,7 @@ export function extractProductInfo(data: any): ProductInfo {
     productName: product.product_name_en || product.product_name || "",
     genericName: product.generic_name_en || product.generic_name || "",
     brand: product.brands || product.brands_tags[0] || "",
+    category: product.category_properties["ciqual_food_name:en"] || product.compared_to_category.replace('en:', "").replaceAll("-", " ") || "",
     image: product.image_front_url || "",
     nutriscore: product.nutriscore_grade || "not-applicable",
     novaGroup: product.nova_group || -1,
