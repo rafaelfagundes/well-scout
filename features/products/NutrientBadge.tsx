@@ -43,12 +43,14 @@ export function NutrientBadge({ evaluation, information, toggleInformation }: { 
   });
 
   return (
-    <View style={styles.badge}>
-      <Text style={styles.text}>{capitalize(evaluation!)}</Text>
-      <Pressable onPress={toggleInformation}>
-        <Info size={16} color={colors.invertedText} />
-      </Pressable>
-    </View>
+    <Pressable onPress={toggleInformation}>
+      <View style={styles.badge}>
+        <Text style={styles.text}>{capitalize(evaluation!)}</Text>
+        <View>
+          <Info size={16} color={colors.invertedText} />
+        </View>
+      </View>
+    </Pressable>
   );
 }
 
