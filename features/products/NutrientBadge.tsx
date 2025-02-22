@@ -1,5 +1,5 @@
 import { Colors } from "@/constants/Colors";
-import { Fonts } from "@/constants/Fonts";
+import { Fonts } from '../../constants/Fonts';
 import { capitalize } from "@/lib/text";
 import { Info } from "phosphor-react-native";
 import { useColorScheme, View, Pressable, StyleSheet, Text } from "react-native";

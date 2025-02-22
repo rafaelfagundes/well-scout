@@ -40,7 +40,7 @@ const ProductDetailScreen: React.FC<ProductDetailsScreen> = ({ product, extraInf
   const nutrients = extraInfo.health.nutrients
   const nutrientsEval: NutrientEval = {};
   const nutrientList: any = [];
-
+  const typedNutrientList: NutrientItemType[] = [];
 
   for (const nutrient in nutrients) {
     const item = nutrients[nutrient]
@@ -50,7 +50,7 @@ const ProductDetailScreen: React.FC<ProductDetailsScreen> = ({ product, extraInf
       information: item.information,
     }
     nutrientList.push({
-      name: item.id,
+      name: item.id ,
       value: (productInfo.nutriments[item.id as keyof typeof productInfo.nutriments] || 0) + " g",
       evaluation: item.evaluation,
       information: item.information,
@@ -240,7 +240,7 @@ const ProductDetailScreen: React.FC<ProductDetailsScreen> = ({ product, extraInf
             </View>
             <View>
               {nutrientList.map((nutrient, index) => (
-                <NutrientItem key={index} nutrient={nutrient as NutrientItemType} isLast={index === nutrientList.length - 1} />
+                <NutrientItem key={index} nutrient={nutrient} isLast={index === nutrientList.length - 1} />
               ))}
             </View>
 
