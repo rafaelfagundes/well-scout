@@ -67,27 +67,33 @@ export default function AdivisorScreen() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     const fetchData = async () => {
       try {
-        const abortController = new AbortController();
-        const signal = abortController.signal;
         setIsLoading(true);
         const simplifiedProducts = createSimplifiedProductList(productState);
         const systemPrompt = generatePromptForAdvisor(simplifiedProducts);
-        const data = await callGeminiAPI(systemPrompt);
-        setData(JSON.parse(data));
+        const data = await callGeminiAPI(systemPrompt, abortController.signal);
+        if (!abortController.signal.aborted) {
+          setData(JSON.parse(data));
+        }
       } catch (error) {
-        console.error("Error fetching ", error);
+        if (!abortController.signal.aborted) {
+          console.error("Error fetching ", error);
+        }
+      } finally {
+        if (!abortController.signal.aborted) {
+          setIsLoading(false);
+        }
       }
-      finally {
-        setIsLoading(false);
-      }
-      // Cleanup function to cancel the fetch if the component unmounts or dependencies change
-      return () => {
-        abortController.abort();
-      };
     };
+
     fetchData();
+
+    return () => {
+      abortController.abort();
+    };
   }, [productState.history]); // Depend on productState.history to refetch when history changes
 
   const styles = StyleSheet.create({
