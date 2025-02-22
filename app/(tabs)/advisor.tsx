@@ -69,9 +69,11 @@ export default function AdivisorScreen() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const abortController = new AbortController();
+        const signal = abortController.signal;
         setIsLoading(true);
         const simplifiedProducts = createSimplifiedProductList(productState);
-        const systemPrompt = generatePromptForAdvisor(simplifiedProducts);
+        const systemPrompt = generatePromptForAdvisor(simplifiedProducts); // Ensure generatePromptForAdvisor is synchronous or does not initiate async operations that need to be cancelled
         const data = await callGeminiAPI(systemPrompt);
         setData(JSON.parse(data));
       } catch (error) {
@@ -80,9 +82,13 @@ export default function AdivisorScreen() {
       finally {
         setIsLoading(false);
       }
+      // Cleanup function to cancel the fetch if the component unmounts or dependencies change
+      return () => {
+        abortController.abort();
+      };
     };
     fetchData();
-  }, [productState.history]);
+  }, [productState.history]); // Depend on productState.history to refetch when history changes
 
   const styles = StyleSheet.create({
     activityIndicator: {
