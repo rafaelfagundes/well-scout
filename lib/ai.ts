@@ -1,3 +1,24 @@
+const {
+  GoogleGenerativeAI,
+  HarmCategory,
+  HarmBlockThreshold,
+} = require("@google/generative-ai");
+
+const apiKey = process.env.GEMINI_API_KEY;
+const genAI = new GoogleGenerativeAI(apiKey);
+
+const model = genAI.getGenerativeModel({
+  model: "gemini-2.0-flash",
+});
+
+const generationConfig = {
+  temperature: 1,
+  topP: 0.95,
+  topK: 40,
+  maxOutputTokens: 8192,
+  responseMimeType: "text/plain",
+};
+
 export function generatePromptForAdvisor(productsJson: object) {
   const prompt = `
 You are a health and nutrition expert. Your task is to analyze the provided product data and generate a detailed report on how the user can improve their health based on the products they are consuming. The product data includes information on ingredients, nutritional values, allergens, additives, health scores, and health warnings.
@@ -6,7 +27,7 @@ Here is the product data in JSON format:
 
 ${JSON.stringify(productsJson)}
 
-Please note the following when interpreting the data:
+Please note the following when interpreting the 
 
 - Nutritional values are provided per 100g for solid products (e.g., chips) and per 100ml for liquid products (e.g., beverages), as specified in the "nutrimentsPer" field.
 - The Nutri-Score is a health score ranging from A (healthiest) to E (least healthy).
@@ -177,5 +198,17 @@ Remember that this analysis is based on limited data about the user's diet. Your
   return prompt;
 }
 
+export async function callGeminiAPI(prompt: string): Promise<string> {
+  try {
+    const chatSession = model.startChat({
+      generationConfig,
+      history: [],
+    });
 
-
+    const result = await chatSession.sendMessage(prompt);
+    return result.response.text();
+  } catch (error) {
+    console.error("Failed to call Gemini API:", error);
+    return "Failed to generate response from Gemini API."; // Or handle error as needed
+  }
+}
