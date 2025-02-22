@@ -208,13 +208,11 @@ export async function callGeminiAPI(prompt: string): Promise<string> {
       generationConfig,
       history: [],
     });
-
     const result = await chatSession.sendMessage(prompt);
     const finalResult = removeJsonTags(result.response.text());
-    console.log("Gemini API response:", finalResult);
     return finalResult;
   } catch (error) {
     console.error("Failed to call Gemini API:", error);
-    return "Failed to generate response from Gemini API."; // Or handle error as needed
+    return "Failed to generate response from Gemini API.";
   }
 }
