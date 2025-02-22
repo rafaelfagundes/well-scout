@@ -232,7 +232,7 @@ const ProductDetailScreen = ({ product, extraInformation }: ProductDetailsScreen
                 <AdditiveItem key={index} additive={additive} isLast={index === extraInfo.health.additives.length - 1} />
               ))
             ) : (
-              <Text style={[styles.additiveItem, styles.noBorderNoPadding]}>No additives listed</Text>
+              <Text style={[styles.listItem, styles.noBorderNoPadding]}>No additives listed</Text>
             )}
           </Animated.View>
           <Animated.View style={styles.section} entering={FadeInUp.duration(500).delay(400)}>
