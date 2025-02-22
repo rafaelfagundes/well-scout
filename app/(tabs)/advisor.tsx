@@ -7,6 +7,7 @@ import { callGeminiAPI, generatePromptForAdvisor } from '@/lib/ai';
 import DietaryAnalysis from '@/features/advisor/DietaryAnalysis';
 import { useEffect, useState } from 'react';
 import { Text, ActivityIndicator, StyleSheet, View } from 'react-native';
+import AdvisorLogo from '@/components/ui/AdvisorLogo';
 
 
 function createSimplifiedProductList(originalJson: ProductState) {
@@ -92,7 +93,16 @@ export default function AdivisorScreen() {
   });
 
   if (isLoading) {
-    return <View style={{flex: 1, backgroundColor: 'white'}}><ActivityIndicator size="large" style={styles.activityIndicator} /></View>;
+    return (
+      <BackgroundImage>
+        <ScreenContainer>
+          <View style={{ height: 20 }}></View>
+          <AdvisorLogo size={200} />
+          <View style={{ height: 40 }}></View>
+          <View style={{ flex: 1, height: "100%" }}><ActivityIndicator size="large" style={styles.activityIndicator} /></View>)
+        </ScreenContainer>
+      </BackgroundImage>
+    );
   }
 
   return (
