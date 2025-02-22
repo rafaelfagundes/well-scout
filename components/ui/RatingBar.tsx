@@ -1,10 +1,7 @@
 import { Colors } from '@/constants/Colors';
 import { Fonts } from '@/constants/Fonts';
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, useColorScheme } from 'react-native';
-
-// Screen width minus padding
-const SCREEN_WIDTH = Dimensions.get('window').width - 32;
+import { View, Text, StyleSheet, useColorScheme } from 'react-native';
 
 interface RatingBarProps {
   ratings: { [key: string]: number };

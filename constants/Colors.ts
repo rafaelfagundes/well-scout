@@ -43,7 +43,9 @@ export const Colors = {
     icon: '#687076',
     tabIconDefault: '#687076',
     tabIconSelected: tintColorLight,
-    ratings: ratingColors.light
+    ratings: ratingColors.light,
+    vegan: '#0C9157',
+    vegetarian: '#3F88C5',
   },
   dark: {
     text: '#ECEDEE',
@@ -56,6 +58,8 @@ export const Colors = {
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,
-    ratings: ratingColors.dark
+    ratings: ratingColors.dark,
+    vegan: '#96E6B3',
+    vegetarian: '#01BAEF',
   },
 }; 

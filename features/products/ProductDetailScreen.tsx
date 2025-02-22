@@ -1,11 +1,11 @@
-import { StyleSheet, useColorScheme, View, ScrollView, Text, Pressable } from 'react-native';
-import React, { useState } from 'react';
-import Animated, { FadeIn, FadeInUp, FadeOut, SlideInDown, SlideOutDown, Layout, SlideInUp, AnimatePresence } from 'react-native-reanimated';
+import { StyleSheet, useColorScheme, View, ScrollView, Text, Pressable, Dimensions } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import Animated, { FadeInUp, SlideOutDown, SlideInUp, SlideInDown, useSharedValue, withTiming, useAnimatedStyle } from 'react-native-reanimated';
 import { Colors } from '@/constants/Colors';
-import { extractExtraInformation, extractProductInfo } from './Product';
+import { extractExtraInformation, extractProductInfo, ExtraInformation } from './Product';
 import { Carrot, Orange, Flask, ShieldWarning, Package, Factory, Tag, Info } from 'phosphor-react-native';
 import BackgroundImage from '@/components/ui/BackgroundImage';
-import { capitalizeAll, removeDashes } from '@/lib/text';
+import { capitalize, capitalizeAll, removeDashes, removeHTMLTags } from '@/lib/text';
 import { Fonts } from '@/constants/Fonts';
 import ProductHeader from './ProductHeader';
 
@@ -14,13 +14,41 @@ interface ProductDetailsScreen {
   extraInformation: any;
 }
 
+interface NutrientEval {
+  [key: string]: {
+    evaluation?: string;
+    information?: string;
+  };
+}
+
 const ProductDetailScreen = ({ product, extraInformation }: ProductDetailsScreen) => {
   console.log("barcode", product.code)
   const colorScheme = useColorScheme();
   const productInfo = extractProductInfo(product);
-  const extraInfo = extractExtraInformation(extraInformation);
+  const extraInfo: ExtraInformation = extractExtraInformation(extraInformation);
   console.log(extraInfo)
   const colors = Colors[colorScheme ?? 'light'];
+
+
+  const [isNutrientsInformationExpanded, setIsNutrientsInformationExpanded] = useState({
+    fat: false,
+    saturatedFat: false,
+    sugars: false,
+    salt: false,
+  });
+
+  const nutrients = extraInfo.health.nutrients
+  const nutrientsEval: NutrientEval = {};
+
+  for (const nutrient in nutrients) {
+    const item = nutrients[nutrient]
+
+    nutrientsEval[item.id] = {
+      evaluation: item.evaluation,
+      information: item.information,
+    }
+  }
+  console.log(nutrientsEval)
 
   const styles = StyleSheet.create({
     container: {
@@ -84,9 +112,14 @@ const ProductDetailScreen = ({ product, extraInformation }: ProductDetailsScreen
     nutrimentRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
+      alignItems: 'center',
       borderBottomWidth: 1,
       borderBottomColor: Colors[colorScheme ?? 'light'].text + '10',
       paddingVertical: 8,
+    },
+    nutrimentColumn: {
+      flexDirection: 'column',
+      gap: 8,
     },
     nutrimentLabel: {
       fontWeight: 'bold',
@@ -122,7 +155,15 @@ const ProductDetailScreen = ({ product, extraInformation }: ProductDetailsScreen
     noBorderNoPadding: {
       borderBottomWidth: 0,
       paddingBottom: 0,
-    }
+    },
+    information: {
+      fontSize: 12,
+      color: colors.text,
+      opacity: 0.75,
+      marginTop: 4,
+      lineHeight: 16,
+    },
+
   });
 
   return (
@@ -163,9 +204,18 @@ const ProductDetailScreen = ({ product, extraInformation }: ProductDetailsScreen
               <Orange size={24} color={Colors[colorScheme ?? 'light'].text} />
               <Text style={styles.sectionTitle}>Nutritional Information (per 100g)</Text>
             </View>
-            <View style={styles.nutrimentRow}>
-              <Text style={styles.nutrimentLabel}>Fat</Text>
-              <Text style={styles.nutrimentValue}>{(productInfo.nutriments.fat || 0) + " g"}</Text>
+            <View style={styles.nutrimentColumn}>
+              <View style={styles.nutrimentRow}>
+                <Text style={styles.nutrimentLabel}>Fat</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                  <Text style={styles.nutrimentValue}>{(productInfo.nutriments.fat || 0) + " g"}</Text>
+                  <NutrientBadge evaluation={nutrientsEval.fat.evaluation} information={nutrientsEval.fat.information} />
+                </View>
+              </View>
+              {nutrientsEval.fat.information && isNutrientsInformationExpanded.fat ? (
+                <View>
+                  <Text style={styles.information}>{removeHTMLTags(nutrientsEval.fat.information)}</Text>
+                </View>) : null}
             </View>
             <View style={styles.nutrimentRow}>
               <Text style={styles.nutrimentLabel}>Saturated Fat</Text>
@@ -295,17 +345,78 @@ const ProductDetailScreen = ({ product, extraInformation }: ProductDetailsScreen
 
 export default ProductDetailScreen;
 
-function AdditiveItem({ additive, isLast = false }: { additive: any, isLast?: boolean }) {
+function NutrientBadge({ evaluation, information, toggleInformation }: { evaluation?: string, information?: string, toggleInformation?: () => void }) {
+  if (!evaluation && !information) {
+    return null;
+  }
+  const colorScheme = useColorScheme();
+  const colors = Colors[colorScheme ?? 'light'];
+
+  const getBackgroundColor = () => {
+    if (evaluation === 'good') {
+      return colors.ratings.a;
+    }
+    else if (evaluation === 'average') {
+      return colors.ratings.c;
+    }
+    else if (evaluation === 'bad') {
+      return colors.ratings.e;
+    }
+  }
+
+  const styles = StyleSheet.create({
+    badge: {
+      flexDirection: 'row',
+      color: colors.vegetarian,
+      alignItems: 'center',
+      backgroundColor: getBackgroundColor(),
+      paddingRight: 3,
+      paddingLeft: 8,
+      paddingVertical: 2,
+      borderRadius: 20,
+      gap: 2,
+    },
+    text: {
+      fontFamily: Fonts.sansSerif,
+      fontSize: 12,
+      color: colors.invertedText,
+    }
+  });
+
+  return (
+    <View style={styles.badge}>
+      <Text style={styles.text}>{capitalize(evaluation!)}</Text>
+      <Pressable onPress={toggleInformation}>
+        <Info size={16} color={colors.invertedText} />
+      </Pressable>
+    </View>
+  );
+}
+
+function AdditiveItem({ additive, isLast = false }: { additive: any; isLast?: boolean }) {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
   const [isExpanded, setIsExpanded] = useState(false);
+  const [fullHeight, setFullHeight] = useState(0);
+  const animatedHeight = useSharedValue(0);
+
+  // Animate height when isExpanded or fullHeight changes
+  useEffect(() => {
+    animatedHeight.value = withTiming(isExpanded ? fullHeight : 0, { duration: 300 });
+  }, [isExpanded, fullHeight]);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      height: animatedHeight.value,
+      overflow: 'hidden',
+    };
+  });
 
   const styles = StyleSheet.create({
     additiveItem: {
       borderBottomWidth: isLast ? 0 : 1,
       borderBottomColor: colors.text + '10',
       paddingVertical: 8,
-      overflow: 'hidden',
     },
     text: {
       color: colors.text,
@@ -315,7 +426,7 @@ function AdditiveItem({ additive, isLast = false }: { additive: any, isLast?: bo
     information: {
       fontSize: 12,
       color: colors.text,
-      opacity: .75,
+      opacity: 0.75,
       marginTop: 4,
       lineHeight: 16,
     },
@@ -325,34 +436,52 @@ function AdditiveItem({ additive, isLast = false }: { additive: any, isLast?: bo
       alignItems: 'center',
       backgroundColor: colors.background,
     },
+    offscreen: {
+      position: 'absolute',
+      top: -9999,
+      left: 0,
+      width: Dimensions.get('window').width - 16, // Match container width minus padding
+      opacity: 0,
+    },
   });
 
-  function formatText(text: string) {
-    // remove HTML tags
-    const regex = /(<([^>]+)>)/ig;
-    const cleanedText = text?.replace(regex, '');
-    return cleanedText;
-  }
+  const handleLayout = (event: any) => {
+    const height = event.nativeEvent.layout.height;
+    if (height > 0 && height !== fullHeight) {
+      setFullHeight(height);
+      animatedHeight.value = isExpanded ? height : 0; // Set initial height
+    }
+  };
+
+  const informationText = removeHTMLTags(additive.information);
 
   return (
     <View style={styles.additiveItem}>
       <View style={styles.row}>
         <Text style={styles.text}>{additive.name}</Text>
-        {additive.information ? <Pressable onPress={() => setIsExpanded(!isExpanded)}>
-          <Info size={22} color={colors.vegetarian} />
-        </Pressable> : null}
+        {additive.information ? (
+          <Pressable onPress={() => setIsExpanded(!isExpanded)}>
+            <Info size={22} color={colors.vegetarian} />
+          </Pressable>
+        ) : null}
       </View>
-      <AnimatePresence>
-        {isExpanded && (
-          <Animated.View
-            key="additive-info"
-            entering={SlideInUp.duration(300)}
-            exiting={SlideOutDown.duration(300)}
-          >
-            <Text style={[styles.text, styles.information]}>{formatText(additive.information)}</Text>
+      {additive.information && (
+        <>
+          {/* Offscreen measurement */}
+          <View style={styles.offscreen} onLayout={handleLayout}>
+            <Text style={[styles.text, styles.information]}>
+              {informationText}
+            </Text>
+          </View>
+
+          {/* Animated content */}
+          <Animated.View style={animatedStyle}>
+            <Text style={[styles.text, styles.information]}>
+              {informationText}
+            </Text>
           </Animated.View>
-        )}
-      </AnimatePresence>
+        </>
+      )}
     </View>
-  )
+  );
 }

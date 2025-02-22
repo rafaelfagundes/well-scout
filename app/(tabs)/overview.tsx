@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
@@ -57,12 +57,14 @@ export default function OverviewScreen() {
     return { ratings, productsByRating };
   }, [filteredProducts]);
 
+  console.log(filteredProducts)
+
   return (
     <BackgroundImage>
       <ScreenContainer scrollView={false}>
         <CategoryTabs activeTab={activeTab} setActiveTab={setActiveTab} />
         <View style={{ height: 10 }} />
-        {activeTab === Tabs.FOOD && <RatingBar ratings={ratings} />}
+        {activeTab === Tabs.FOOD && filteredProducts.length > 0 && <RatingBar ratings={ratings} />}
         <View style={{ height: 10 }} />
         {activeTab === Tabs.FOOD && <ProductListByRating productsByRating={productsByRating} />}
         {activeTab !== Tabs.FOOD && <ProductList products={filteredProducts} />}
@@ -71,6 +73,4 @@ export default function OverviewScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-});
 

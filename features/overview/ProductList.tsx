@@ -5,6 +5,7 @@ import { ProductItem as ProductItemType } from '../products/productSlice'
 import { EmptyList } from '@/components/ui/EmptyList'
 import { Barcode, MagnifyingGlass } from 'phosphor-react-native'
 import { useRouter } from 'expo-router'
+import { Colors } from '@/constants/Colors'
 
 interface ProductListProps {
   products: ProductItemType[]

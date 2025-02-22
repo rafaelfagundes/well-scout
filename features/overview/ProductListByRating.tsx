@@ -30,6 +30,10 @@ const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => 
       borderRadius: 12,
       marginBottom: 6,
       justifyContent: 'center',
+    }, sectionHeaderText: {
+      fontSize: 14,
+      color: colors.invertedText,
+      fontFamily: Fonts.sansSerif,
     },
   })
 
@@ -45,12 +49,7 @@ const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => 
       onPress: () => router.push('/(tabs)/search'),
       text: 'Search Items'
     }
-    sectionHeaderText: {
-      fontSize: 14,
-      color: colors.invertedText,
-      fontFamily: Fonts.sansSerif,
-    },
-  })
+  ]
 
   const sections = Object.entries(productsByRating)
     .filter(([rating, data]) => Array.isArray(data) && data.length > 0)

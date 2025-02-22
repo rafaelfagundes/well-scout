@@ -1,6 +1,6 @@
 import React from 'react'
 import { SafeAreaView, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
-import { UserCircleGear } from 'phosphor-react-native'
+import { SlidersHorizontal } from 'phosphor-react-native'
 import { Colors } from '@/constants/Colors'
 import { useColorScheme } from '@/hooks/useColorScheme.web'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
@@ -72,7 +72,7 @@ export default function ScreenContainer({ children, scrollView = true, horizonta
               </TouchableOpacity>
             ))}
             <TouchableOpacity>
-              <UserCircleGear size={32} color={colors.text} />
+              <SlidersHorizontal size={32} color={colors.text} />
             </TouchableOpacity>
           </View>
         </View>

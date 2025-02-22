@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, useColorScheme } from 'react-native';
+import { View, Text, Image, StyleSheet, useColorScheme, Dimensions } from 'react-native';
 import NutriAndEcoScore from './NutriAndEcoScore';
 import { Colors } from '@/constants/Colors';
 import { Fonts } from '@/constants/Fonts';
@@ -24,10 +24,80 @@ export default function ProductHeader({
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
 
+
+  const styles = StyleSheet.create({
+    container: {
+      alignItems: 'center',
+      paddingHorizontal: 16,
+      marginBottom: 16
+    },
+    image: {
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').width,
+    },
+    textContainer: {
+      alignItems: 'center',
+      marginBottom: 16
+    },
+    brand: {
+      fontFamily: Fonts.sansSerif,
+      fontSize: 16,
+      textAlign: 'center',
+    },
+    productName: {
+      fontFamily: Fonts.sansSerif,
+      fontSize: 20,
+      fontWeight: 'bold',
+      marginTop: 8,
+      textAlign: 'center',
+    },
+    genericName: {
+      fontFamily: Fonts.sansSerif,
+      fontSize: 12,
+      fontStyle: 'italic',
+      marginTop: 8,
+      textAlign: 'center',
+    },
+    imageContainer: {
+      width: Dimensions.get('screen').width - 32,
+      height: Dimensions.get('screen').width - 32,
+      position: 'relative',
+      marginBottom: 16,
+      justifyContent: 'center',
+      alignItems: 'center',
+      overflow: 'hidden',
+      borderRadius: 20,
+      marginTop: 16,
+    },
+    blurredImage: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: Dimensions.get('screen').width - 32,
+      height: Dimensions.get('screen').width - 32,
+    },
+    shader: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: Dimensions.get('screen').width - 32,
+      height: Dimensions.get('screen').width - 32,
+      backgroundColor: colors.background,
+      opacity: 0.5,
+    },
+    foregroundImage: {
+      width: Dimensions.get('screen').width - 132,
+      height: Dimensions.get('screen').width - 132,
+      borderRadius: 20,
+      overflow: 'hidden',
+    }
+  });
+
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image source={{ uri: imageUrl }} style={[styles.image, styles.blurredImage]} resizeMode="cover" blurRadius={20} />
+        <View style={[styles.image, styles.shader]} />
         <Image source={{ uri: imageUrl }} style={[styles.image, styles.foregroundImage]} resizeMode="contain" />
       </View>
       <View style={styles.textContainer}>
@@ -42,51 +112,3 @@ export default function ProductHeader({
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    padding: 16
-  },
-  image: {
-    width: 200,
-    height: 200,
-    marginBottom: 16
-  },
-  textContainer: {
-    alignItems: 'center',
-    marginBottom: 16
-  },
-  brand: {
-    fontFamily: Fonts.sansSerif,
-    fontSize: 16,
-  },
-  productName: {
-    fontFamily: Fonts.sansSerif,
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginTop: 4
-  },
-  genericName: {
-    fontFamily: Fonts.sansSerif,
-    fontSize: 14,
-    fontStyle: 'italic',
-    marginTop: 2
-  },
-  imageContainer: {
-    width: 200,
-    height: 200,
-    position: 'relative',
-    marginBottom: 16,
-  },
-  blurredImage: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: 200,
-    height: 200,
-  },
-  foregroundImage: {
-    width: 200,
-    height: 200,
-  }
-});
