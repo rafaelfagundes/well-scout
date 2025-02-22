@@ -1,6 +1,6 @@
 import { StyleSheet, useColorScheme, View, ScrollView, Text, Pressable } from 'react-native';
 import React, { useState } from 'react';
-import Animated, { FadeIn, FadeInUp } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeInUp, FadeOut, Layout } from 'react-native-reanimated';
 import { Colors } from '@/constants/Colors';
 import { extractExtraInformation, extractProductInfo } from './Product';
 import { Carrot, Orange, Flask, ShieldWarning, Package, Factory, Tag, Info } from 'phosphor-react-native';
@@ -341,7 +341,11 @@ function AdditiveItem({ additive, isLast = false }: { additive: any, isLast?: bo
         </Pressable> : null}
       </View>
       {isExpanded && (
-        <Animated.View entering={FadeIn.duration(300)}>
+        <Animated.View 
+          entering={FadeIn.duration(300)} 
+          exiting={FadeOut.duration(300)}
+          layout={Layout.springify()}
+        >
           <Text style={[styles.text, styles.information]}>{formatText(additive.information)}</Text>
         </Animated.View>
       )}
