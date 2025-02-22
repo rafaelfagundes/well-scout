@@ -1,4 +1,5 @@
-import { StyleSheet, View, Image } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import { SvgUri } from 'react-native-svg';
 
 export default function AdvisorLogo() {
   const styles = StyleSheet.create({
@@ -12,7 +13,9 @@ export default function AdvisorLogo() {
 
   return (
     <View style={styles.logoContainer}>
-      <Image style={styles.logo} source={require('../../assets/images/advisor-logo.svg')} />
+      <SvgUri
+        style={styles.logo}
+        uri={require('../../assets/images/advisor-logo.svg').uri} />
     </View>
   )
 }
