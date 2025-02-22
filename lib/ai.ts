@@ -202,13 +202,13 @@ function removeJsonTags(jsonString: string): string {
   return resultJson;
 }
 
-export async function callGeminiAPI(prompt: string): Promise<string> {
+export async function callGeminiAPI(prompt: string, signal?: AbortSignal): Promise<string> {
   try {
     const chatSession = model.startChat({
       generationConfig,
       history: [],
     });
-    const result = await chatSession.sendMessage(prompt);
+    const result = await chatSession.sendMessage(prompt, { signal });
     const finalResult = removeJsonTags(result.response.text());
     return finalResult;
   } catch (error) {
