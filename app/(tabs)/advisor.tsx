@@ -6,7 +6,7 @@ import { ProductState } from '@/features/products/productSlice';
 import { callGeminiAPI, generatePromptForAdvisor } from '@/lib/ai';
 import DietaryAnalysis from '@/features/advisor/DietaryAnalysis';
 import { useEffect, useState } from 'react';
-import { Text } from 'react-native';
+import { Text, ActivityIndicator, StyleSheet, View } from 'react-native';
 
 
 function createSimplifiedProductList(originalJson: ProductState) {
@@ -74,7 +74,7 @@ export default function AdivisorScreen() {
         const data = await callGeminiAPI(systemPrompt);
         setData(JSON.parse(data));
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching ", error);
       }
       finally {
         setIsLoading(false);
@@ -83,8 +83,16 @@ export default function AdivisorScreen() {
     fetchData();
   }, [productState.history]);
 
+  const styles = StyleSheet.create({
+    activityIndicator: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  });
+
   if (isLoading) {
-    return <Text>Loading...</Text>;
+    return <View style={{flex: 1, backgroundColor: 'white'}}><ActivityIndicator size="large" style={styles.activityIndicator} /></View>;
   }
 
   return (
