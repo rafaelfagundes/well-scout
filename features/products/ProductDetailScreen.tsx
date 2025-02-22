@@ -1,6 +1,6 @@
 import { StyleSheet, useColorScheme, View, ScrollView, Text, Pressable } from 'react-native';
 import React, { useState } from 'react';
-import Animated, { FadeIn, FadeInUp, FadeOut, SlideInDown, SlideOutDown, Layout } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeInUp, FadeOut, SlideInDown, SlideOutDown, Layout, SlideInUp } from 'react-native-reanimated';
 import { Colors } from '@/constants/Colors';
 import { extractExtraInformation, extractProductInfo } from './Product';
 import { Carrot, Orange, Flask, ShieldWarning, Package, Factory, Tag, Info } from 'phosphor-react-native';
@@ -305,6 +305,7 @@ function AdditiveItem({ additive, isLast = false }: { additive: any, isLast?: bo
       borderBottomWidth: isLast ? 0 : 1,
       borderBottomColor: colors.text + '10',
       paddingVertical: 8,
+      overflow: 'hidden',
     },
     text: {
       color: colors.text,
@@ -322,13 +323,14 @@ function AdditiveItem({ additive, isLast = false }: { additive: any, isLast?: bo
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+      backgroundColor: colors.background,
     },
   });
 
   function formatText(text: string) {
     // remove HTML tags
     const regex = /(<([^>]+)>)/ig;
-    const cleanedText = text.replace(regex, '');
+    const cleanedText = text?.replace(regex, '');
     return cleanedText;
   }
 
@@ -340,14 +342,12 @@ function AdditiveItem({ additive, isLast = false }: { additive: any, isLast?: bo
           <Info size={22} color={colors.vegetarian} />
         </Pressable> : null}
       </View>
-      {isExpanded && (
-        <Animated.View
-          entering={SlideInDown.duration(300)}
-          exiting={SlideOutDown.duration(300)}
-        >
-          <Text style={[styles.text, styles.information]}>{formatText(additive.information)}</Text>
-        </Animated.View>
-      )}
+      <Animated.View
+        entering={SlideInUp.duration(300)}
+        exiting={SlideOutDown.duration(300)}
+      >
+        <Text style={[styles.text, styles.information]}>{formatText(additive.information)}</Text>
+      </Animated.View>
     </View>
   )
 }
