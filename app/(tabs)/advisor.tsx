@@ -73,7 +73,7 @@ export default function AdivisorScreen() {
         const signal = abortController.signal;
         setIsLoading(true);
         const simplifiedProducts = createSimplifiedProductList(productState);
-        const systemPrompt = generatePromptForAdvisor(simplifiedProducts); // Ensure generatePromptForAdvisor is synchronous or does not initiate async operations that need to be cancelled
+        const systemPrompt = generatePromptForAdvisor(simplifiedProducts);
         const data = await callGeminiAPI(systemPrompt);
         setData(JSON.parse(data));
       } catch (error) {
