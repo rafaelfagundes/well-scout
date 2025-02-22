@@ -1,21 +1,25 @@
-import { StyleSheet, useColorScheme, View, ScrollView, Text } from 'react-native';
-import React from 'react';
-import Animated, { FadeInUp } from 'react-native-reanimated';
+import { StyleSheet, useColorScheme, View, ScrollView, Text, Pressable } from 'react-native';
+import React, { useState } from 'react';
+import Animated, { FadeIn, FadeInUp } from 'react-native-reanimated';
 import { Colors } from '@/constants/Colors';
-import { extractProductInfo, ProductInfo } from './Product';
-import { Carrot, Orange, Flask, ShieldWarning, Cube, Factory, Tag } from 'phosphor-react-native';
+import { extractExtraInformation, extractProductInfo } from './Product';
+import { Carrot, Orange, Flask, ShieldWarning, Package, Factory, Tag, Info } from 'phosphor-react-native';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import { capitalizeAll, removeDashes } from '@/lib/text';
 import { Fonts } from '@/constants/Fonts';
 import ProductHeader from './ProductHeader';
 
 interface ProductDetailsScreen {
-  product: ProductInfo;
+  product: any;
+  extraInformation: any;
 }
 
-const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
+const ProductDetailScreen = ({ product, extraInformation }: ProductDetailsScreen) => {
+  console.log("barcode", product.code)
   const colorScheme = useColorScheme();
   const productInfo = extractProductInfo(product);
+  const extraInfo = extractExtraInformation(extraInformation);
+  console.log(extraInfo)
   const colors = Colors[colorScheme ?? 'light'];
 
   const styles = StyleSheet.create({
@@ -171,54 +175,50 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
               <Text style={styles.nutrimentLabel}>Sugars</Text>
               <Text style={styles.nutrimentValue}>{(productInfo.nutriments.sugars || 0) + " g"}</Text>
             </View>
-            <View style={styles.nutrimentRow}>
-              <Text style={styles.nutrimentLabel}>Salt</Text>
-              <Text style={styles.nutrimentValue}>{(productInfo.nutriments.salt || 0) + " g"}</Text>
-            </View>
-            {productInfo.nutriments.energyKj && (
+            {productInfo.nutriments.energyKj ? (
               <View style={styles.nutrimentRow}>
                 <Text style={styles.nutrimentLabel}>Energy (kJ)</Text>
-                <Text style={styles.nutrimentValue}>{productInfo.nutriments.energyKj + " kJ"}</Text>
+                <Text style={styles.nutrimentValue}>{(productInfo.nutriments.energyKj || 0) + " kJ"}</Text>
               </View>
-            )}
-            {productInfo.nutriments.energyKcal && (
+            ) : null}
+            {productInfo.nutriments.energyKcal ? (
               <View style={styles.nutrimentRow}>
                 <Text style={styles.nutrimentLabel}>Energy (kcal)</Text>
-                <Text style={styles.nutrimentValue}>{productInfo.nutriments.energyKcal + " kcal"}</Text>
+                <Text style={styles.nutrimentValue}>{(productInfo.nutriments.energyKcal || 0) + " kcal"}</Text>
               </View>
-            )}
-            {productInfo.nutriments.carbohydrates && (
+            ) : null}
+            {productInfo.nutriments.carbohydrates ? (
               <View style={styles.nutrimentRow}>
                 <Text style={styles.nutrimentLabel}>Carbohydrates</Text>
-                <Text style={styles.nutrimentValue}>{productInfo.nutriments.carbohydrates + " g"}</Text>
+                <Text style={styles.nutrimentValue}>{(productInfo.nutriments.carbohydrates || 0) + " g"}</Text>
               </View>
-            )}
-            {productInfo.nutriments.proteins && (
+            ) : null}
+            {productInfo.nutriments.proteins ? (
               <View style={styles.nutrimentRow}>
                 <Text style={styles.nutrimentLabel}>Proteins</Text>
-                <Text style={styles.nutrimentValue}>{productInfo.nutriments.proteins + " g"}</Text>
+                <Text style={styles.nutrimentValue}>{(productInfo.nutriments.proteins || 0) + " g"}</Text>
               </View>
-            )}
-            {productInfo.nutriments.fiber && (
+            ) : null}
+            {productInfo.nutriments.fiber ? (
               <View style={styles.nutrimentRow}>
                 <Text style={styles.nutrimentLabel}>Fiber</Text>
-                <Text style={styles.nutrimentValue}>{productInfo.nutriments.fiber + " g"}</Text>
+                <Text style={styles.nutrimentValue}>{(productInfo.nutriments.fiber || 0) + " g"}</Text>
               </View>
-            )}
+            ) : null}
             {productInfo.nutriments.sodium && (
               <View style={styles.nutrimentRow}>
                 <Text style={styles.nutrimentLabel}>Sodium</Text>
-                <Text style={styles.nutrimentValue}>{productInfo.nutriments.sodium + " g"}</Text>
+                <Text style={styles.nutrimentValue}>{(productInfo.nutriments.sodium || 0) + " g"}</Text>
               </View>
             )}
             {productInfo.servingSize && (
               <Text style={styles.text}>
-                Serving Size: {productInfo.servingSize}
+                Serving Size: {productInfo.servingSize || "0"}
               </Text>
             )}
             {productInfo.quantity && (
               <Text style={styles.text}>
-                Quantity: {productInfo.quantity}
+                Quantity: {productInfo.quantity || "0"}
               </Text>
             )}
           </Animated.View>
@@ -227,12 +227,12 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
               <Flask size={24} color={Colors[colorScheme ?? 'light'].text} />
               <Text style={styles.sectionTitle}>Additives</Text>
             </View>
-            {productInfo.additives.length > 0 ? (
-              productInfo.additives.map((additive, index) => (
-                <Text key={index} style={[styles.listItem, index === productInfo.additives.length - 1 && styles.noBorderNoPadding]}>{additive}</Text>
+            {extraInfo.health.additives.length > 0 ? (
+              extraInfo.health.additives.map((additive, index) => (
+                <AdditiveItem key={index} additive={additive} isLast={index === extraInfo.health.additives.length - 1} />
               ))
             ) : (
-              <Text style={[styles.listItem, styles.noBorderNoPadding]}>No additives listed</Text>
+              <Text style={[styles.additiveItem, styles.noBorderNoPadding]}>No additives listed</Text>
             )}
           </Animated.View>
           <Animated.View style={styles.section} entering={FadeInUp.duration(500).delay(400)}>
@@ -250,7 +250,7 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
           </Animated.View>
           <Animated.View style={styles.section} entering={FadeInUp.duration(500).delay(500)}>
             <View style={styles.sectionTitleContainer}>
-              <Cube size={24} color={Colors[colorScheme ?? 'light'].text} />
+              <Package size={24} color={Colors[colorScheme ?? 'light'].text} />
               <Text style={styles.sectionTitle}>Packaging</Text>
             </View>
             {productInfo.packaging.length > 0 ? (
@@ -294,3 +294,57 @@ const ProductDetailScreen = ({ product }: ProductDetailsScreen) => {
 };
 
 export default ProductDetailScreen;
+
+function AdditiveItem({ additive, isLast = false }: { additive: any, isLast?: boolean }) {
+  const colorScheme = useColorScheme();
+  const colors = Colors[colorScheme ?? 'light'];
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const styles = StyleSheet.create({
+    additiveItem: {
+      borderBottomWidth: isLast ? 0 : 1,
+      borderBottomColor: colors.text + '10',
+      paddingVertical: 8,
+    },
+    text: {
+      color: colors.text,
+      textTransform: 'capitalize',
+      fontFamily: Fonts.sansSerif,
+    },
+    information: {
+      fontSize: 12,
+      color: colors.text,
+      opacity: .75,
+      marginTop: 4,
+      lineHeight: 16,
+    },
+    row: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+  });
+
+  function formatText(text: string) {
+    // remove HTML tags
+    const regex = /(<([^>]+)>)/ig;
+    const cleanedText = text.replace(regex, '');
+    return cleanedText;
+  }
+
+  return (
+    <View style={styles.additiveItem}>
+      <View style={styles.row}>
+        <Text style={styles.text}>{additive.name}</Text>
+        {additive.information ? <Pressable onPress={() => setIsExpanded(!isExpanded)}>
+          <Info size={22} color={colors.vegetarian} />
+        </Pressable> : null}
+      </View>
+      {isExpanded && (
+        <Animated.View entering={FadeIn.duration(300)}>
+          <Text style={[styles.text, styles.information]}>{formatText(additive.information)}</Text>
+        </Animated.View>
+      )}
+    </View>
+  )
+}
