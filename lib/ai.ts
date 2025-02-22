@@ -1,11 +1,9 @@
-const {
+import {
   GoogleGenerativeAI,
-  HarmCategory,
-  HarmBlockThreshold,
-} = require("@google/generative-ai");
+} from "@google/generative-ai";
+import { config } from "../config";
 
-const apiKey = process.env.GEMINI_API_KEY;
-const genAI = new GoogleGenerativeAI(apiKey);
+const genAI = new GoogleGenerativeAI(config.googleGeminiApiKey);
 
 const model = genAI.getGenerativeModel({
   model: "gemini-2.0-flash",
@@ -15,7 +13,7 @@ const generationConfig = {
   temperature: 1,
   topP: 0.95,
   topK: 40,
-  maxOutputTokens: 8192,
+  maxOutputTokens: 16_384,
   responseMimeType: "text/plain",
 };
 
@@ -198,6 +196,12 @@ Remember that this analysis is based on limited data about the user's diet. Your
   return prompt;
 }
 
+
+function removeJsonTags(jsonString: string): string {
+  const resultJson = jsonString.replace("\`\`\` json", "").replace("\`\`\`", "");
+  return resultJson;
+}
+
 export async function callGeminiAPI(prompt: string): Promise<string> {
   try {
     const chatSession = model.startChat({
@@ -206,7 +210,9 @@ export async function callGeminiAPI(prompt: string): Promise<string> {
     });
 
     const result = await chatSession.sendMessage(prompt);
-    return result.response.text();
+    const finalResult = removeJsonTags(result.response.text());
+    console.log("Gemini API response:", finalResult);
+    return finalResult;
   } catch (error) {
     console.error("Failed to call Gemini API:", error);
     return "Failed to generate response from Gemini API."; // Or handle error as needed
