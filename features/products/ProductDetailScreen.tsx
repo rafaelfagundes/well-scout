@@ -1,15 +1,13 @@
-import { StyleSheet, useColorScheme, View, ScrollView, Text, Pressable, Dimensions } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import Animated, { FadeInUp, SlideOutDown, SlideInUp, SlideInDown, useSharedValue, withTiming, useAnimatedStyle } from 'react-native-reanimated';
+import { StyleSheet, useColorScheme, View, ScrollView, Text } from 'react-native';
+import Animated, { FadeInUp } from 'react-native-reanimated';
 import { Colors } from '@/constants/Colors';
 import { extractExtraInformation, extractProductInfo, ExtraInformation } from './Product';
-import { Carrot, Orange, Flask, ShieldWarning, Package, Factory, Tag, Info } from 'phosphor-react-native';
+import { Carrot, Orange, Flask, ShieldWarning, Package, Factory, Tag } from 'phosphor-react-native';
 import BackgroundImage from '@/components/ui/BackgroundImage';
-import { capitalize, capitalizeAll, removeDashes, removeHTMLTags } from '@/lib/text';
+import { capitalizeAll, removeDashes } from '@/lib/text';
 import { Fonts } from '@/constants/Fonts';
 import ProductHeader from './ProductHeader';
 import AdditiveItem from './AdditiveItem';
-import { NutrientBadge } from './NutrientBadge';
 import NutrientItem from './NutrientItem';
 
 interface ProductDetailsScreen {
@@ -32,14 +30,6 @@ const ProductDetailScreen = ({ product, extraInformation }: ProductDetailsScreen
   console.log(extraInfo)
   const colors = Colors[colorScheme ?? 'light'];
 
-
-  const [isNutrientsInformationExpanded, setIsNutrientsInformationExpanded] = useState({
-    fat: false,
-    saturatedFat: false,
-    sugars: false,
-    salt: false,
-  });
-
   const nutrients = extraInfo.health.nutrients
   const nutrientsEval: NutrientEval = {};
   const nutrientList: any = [];
@@ -54,7 +44,7 @@ const ProductDetailScreen = ({ product, extraInformation }: ProductDetailsScreen
     }
     nutrientList.push({
       name: item.id,
-      value: (productInfo.nutriments[item.id] || 0) + " g",
+      value: (productInfo.nutriments[item.id as keyof typeof productInfo.nutriments] || 0) + " g",
       evaluation: item.evaluation,
       information: item.information,
     })
@@ -75,7 +65,7 @@ const ProductDetailScreen = ({ product, extraInformation }: ProductDetailsScreen
     })
   }
 
-    // Add carbohydrates if they exist
+  // Add carbohydrates if they exist
   if (productInfo.nutriments.carbohydrates) {
     nutrientList.push({
       name: "carbohydrates",
