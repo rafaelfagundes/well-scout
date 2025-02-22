@@ -198,7 +198,7 @@ Remember that this analysis is based on limited data about the user's diet. Your
 
 
 function removeJsonTags(jsonString: string): string {
-  const resultJson = jsonString.replace("\`\`\` json", "").replace("\`\`\`", "");
+  const resultJson = jsonString.replace("```json", "").replace("```", "");
   return resultJson;
 }
 
