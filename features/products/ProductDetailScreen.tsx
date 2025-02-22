@@ -343,12 +343,12 @@ function AdditiveItem({ additive, isLast = false }: { additive: any, isLast?: bo
         </Pressable> : null}
       </View>
       {isExpanded && (
-      <Animated.View
-        entering={SlideInUp.duration(300)}
-        exiting={SlideOutDown.duration(300)}
-      >
-        <Text style={[styles.text, styles.information]}>{formatText(additive.information)}</Text>
-      </Animated.View>
+        <Animated.View
+          entering={SlideInUp.duration(300)}
+          exiting={SlideOutDown.duration(300)}
+        >
+          <Text style={[styles.text, styles.information]}>{formatText(additive.information)}</Text>
+        </Animated.View>
       )}
     </View>
   )
