@@ -15,6 +15,13 @@ interface ProductDetailsScreen {
   extraInformation: any;
 }
 
+interface NutrientItemType {
+  name: string;
+  value: string;
+  evaluation?: string;
+  information?: string;
+}
+
 interface NutrientEval {
   [key: string]: {
     evaluation?: string;
@@ -22,7 +29,7 @@ interface NutrientEval {
   };
 }
 
-const ProductDetailScreen = ({ product, extraInformation }: ProductDetailsScreen) => {
+const ProductDetailScreen: React.FC<ProductDetailsScreen> = ({ product, extraInformation }) => {
   console.log("barcode", product.code)
   const colorScheme = useColorScheme();
   const productInfo = extractProductInfo(product);
@@ -233,7 +240,7 @@ const ProductDetailScreen = ({ product, extraInformation }: ProductDetailsScreen
             </View>
             <View>
               {nutrientList.map((nutrient, index) => (
-                <NutrientItem key={index} nutrient={nutrient} isLast={index === nutrientList.length - 1} />
+                <NutrientItem key={index} nutrient={nutrient as NutrientItemType} isLast={index === nutrientList.length - 1} />
               ))}
             </View>
 
