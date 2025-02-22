@@ -10,6 +10,7 @@ import { Fonts } from '@/constants/Fonts';
 import ProductHeader from './ProductHeader';
 import AdditiveItem from './AdditiveItem';
 import { NutrientBadge } from './NutrientBadge';
+import NutrientItem from './NutrientItem';
 
 interface ProductDetailsScreen {
   product: any;
@@ -41,6 +42,8 @@ const ProductDetailScreen = ({ product, extraInformation }: ProductDetailsScreen
 
   const nutrients = extraInfo.health.nutrients
   const nutrientsEval: NutrientEval = {};
+  const nutrientList: any = [];
+
 
   for (const nutrient in nutrients) {
     const item = nutrients[nutrient]
@@ -49,7 +52,61 @@ const ProductDetailScreen = ({ product, extraInformation }: ProductDetailsScreen
       evaluation: item.evaluation,
       information: item.information,
     }
+    nutrientList.push({
+      name: item.id,
+      value: (productInfo.nutriments[item.id] || 0) + " g",
+      evaluation: item.evaluation,
+      information: item.information,
+    })
   }
+
+  // Add energyKj and energyKcal if they exist
+  if (productInfo.nutriments.energyKj) {
+    nutrientList.push({
+      name: "energy (kJ)",
+      value: (productInfo.nutriments.energyKj || 0) + " kJ",
+    })
+  }
+
+  if (productInfo.nutriments.energyKcal) {
+    nutrientList.push({
+      name: "energy (kcal)",
+      value: (productInfo.nutriments.energyKcal || 0) + " kcal",
+    })
+  }
+
+    // Add carbohydrates if they exist
+  if (productInfo.nutriments.carbohydrates) {
+    nutrientList.push({
+      name: "carbohydrates",
+      value: (productInfo.nutriments.carbohydrates || 0) + " g",
+    })
+  }
+
+  // Add proteins if they exist
+  if (productInfo.nutriments.proteins) {
+    nutrientList.push({
+      name: "proteins",
+      value: (productInfo.nutriments.proteins || 0) + " g",
+    })
+  }
+
+  // Add fiber if they exist
+  if (productInfo.nutriments.fiber) {
+    nutrientList.push({
+      name: "fiber",
+      value: (productInfo.nutriments.fiber || 0) + " g",
+    })
+  }
+
+  // Add sodium if they exist
+  if (productInfo.nutriments.sodium) {
+    nutrientList.push({
+      name: "sodium",
+      value: (productInfo.nutriments.sodium || 0) + " g",
+    })
+  }
+
   console.log(nutrientsEval)
 
   const styles = StyleSheet.create({
@@ -110,28 +167,6 @@ const ProductDetailScreen = ({ product, extraInformation }: ProductDetailsScreen
       fontSize: 12,
       color: colors.vegetarian,
       backgroundColor: colors.vegetarian + '2F',
-    },
-    nutrimentRow: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      borderBottomWidth: 1,
-      borderBottomColor: Colors[colorScheme ?? 'light'].text + '10',
-      paddingVertical: 8,
-    },
-    nutrimentColumn: {
-      flexDirection: 'column',
-      gap: 8,
-    },
-    nutrimentLabel: {
-      fontWeight: 'bold',
-      color: Colors[colorScheme ?? 'light'].text,
-      textTransform: 'capitalize',
-      fontFamily: Fonts.sansSerif,
-    },
-    nutrimentValue: {
-      color: Colors[colorScheme ?? 'light'].text,
-      fontFamily: Fonts.sansSerif,
     },
     listItem: {
       marginBottom: 4,
@@ -206,63 +241,12 @@ const ProductDetailScreen = ({ product, extraInformation }: ProductDetailsScreen
               <Orange size={24} color={Colors[colorScheme ?? 'light'].text} />
               <Text style={styles.sectionTitle}>Nutritional Information (per 100g)</Text>
             </View>
-            <View style={styles.nutrimentColumn}>
-              <View style={styles.nutrimentRow}>
-                <Text style={styles.nutrimentLabel}>Fat</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-                  <Text style={styles.nutrimentValue}>{(productInfo.nutriments.fat || 0) + " g"}</Text>
-                  <NutrientBadge evaluation={nutrientsEval.fat.evaluation} information={nutrientsEval.fat.information} />
-                </View>
-              </View>
-              {nutrientsEval.fat.information && isNutrientsInformationExpanded.fat ? (
-                <View>
-                  <Text style={styles.information}>{removeHTMLTags(nutrientsEval.fat.information)}</Text>
-                </View>) : null}
+            <View>
+              {nutrientList.map((nutrient, index) => (
+                <NutrientItem key={index} nutrient={nutrient} isLast={index === nutrientList.length - 1} />
+              ))}
             </View>
-            <View style={styles.nutrimentRow}>
-              <Text style={styles.nutrimentLabel}>Saturated Fat</Text>
-              <Text style={styles.nutrimentValue}>{(productInfo.nutriments.saturatedFat || 0) + " g"}</Text>
-            </View>
-            <View style={styles.nutrimentRow}>
-              <Text style={styles.nutrimentLabel}>Sugars</Text>
-              <Text style={styles.nutrimentValue}>{(productInfo.nutriments.sugars || 0) + " g"}</Text>
-            </View>
-            {productInfo.nutriments.energyKj ? (
-              <View style={styles.nutrimentRow}>
-                <Text style={styles.nutrimentLabel}>Energy (kJ)</Text>
-                <Text style={styles.nutrimentValue}>{(productInfo.nutriments.energyKj || 0) + " kJ"}</Text>
-              </View>
-            ) : null}
-            {productInfo.nutriments.energyKcal ? (
-              <View style={styles.nutrimentRow}>
-                <Text style={styles.nutrimentLabel}>Energy (kcal)</Text>
-                <Text style={styles.nutrimentValue}>{(productInfo.nutriments.energyKcal || 0) + " kcal"}</Text>
-              </View>
-            ) : null}
-            {productInfo.nutriments.carbohydrates ? (
-              <View style={styles.nutrimentRow}>
-                <Text style={styles.nutrimentLabel}>Carbohydrates</Text>
-                <Text style={styles.nutrimentValue}>{(productInfo.nutriments.carbohydrates || 0) + " g"}</Text>
-              </View>
-            ) : null}
-            {productInfo.nutriments.proteins ? (
-              <View style={styles.nutrimentRow}>
-                <Text style={styles.nutrimentLabel}>Proteins</Text>
-                <Text style={styles.nutrimentValue}>{(productInfo.nutriments.proteins || 0) + " g"}</Text>
-              </View>
-            ) : null}
-            {productInfo.nutriments.fiber ? (
-              <View style={styles.nutrimentRow}>
-                <Text style={styles.nutrimentLabel}>Fiber</Text>
-                <Text style={styles.nutrimentValue}>{(productInfo.nutriments.fiber || 0) + " g"}</Text>
-              </View>
-            ) : null}
-            {productInfo.nutriments.sodium && (
-              <View style={styles.nutrimentRow}>
-                <Text style={styles.nutrimentLabel}>Sodium</Text>
-                <Text style={styles.nutrimentValue}>{(productInfo.nutriments.sodium || 0) + " g"}</Text>
-              </View>
-            )}
+
             {productInfo.servingSize && (
               <Text style={styles.text}>
                 Serving Size: {productInfo.servingSize || "0"}
@@ -346,4 +330,3 @@ const ProductDetailScreen = ({ product, extraInformation }: ProductDetailsScreen
 };
 
 export default ProductDetailScreen;
-
