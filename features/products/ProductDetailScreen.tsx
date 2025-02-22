@@ -50,7 +50,7 @@ const ProductDetailScreen: React.FC<ProductDetailsScreen> = ({ product, extraInf
       information: item.information,
     }
     nutrientList.push({
-      name: item.id ,
+      name: item.id,
       value: (productInfo.nutriments[item.id as keyof typeof productInfo.nutriments] || 0) + " g",
       evaluation: item.evaluation,
       information: item.information,
@@ -239,7 +239,7 @@ const ProductDetailScreen: React.FC<ProductDetailsScreen> = ({ product, extraInf
               <Text style={styles.sectionTitle}>Nutritional Information (per 100g)</Text>
             </View>
             <View>
-              {nutrientList.map((nutrient, index) => (
+              {nutrientList.map((nutrient: any, index: number) => (
                 <NutrientItem key={index} nutrient={nutrient} isLast={index === nutrientList.length - 1} />
               ))}
             </View>
