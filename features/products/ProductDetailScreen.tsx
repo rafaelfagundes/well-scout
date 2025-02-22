@@ -341,10 +341,9 @@ function AdditiveItem({ additive, isLast = false }: { additive: any, isLast?: bo
         </Pressable> : null}
       </View>
       {isExpanded && (
-        <Animated.View 
-          entering={FadeIn.duration(300)} 
+        <Animated.View
+          entering={FadeIn.duration(300)}
           exiting={FadeOut.duration(300)}
-          layout={Layout.springify()}
         >
           <Text style={[styles.text, styles.information]}>{formatText(additive.information)}</Text>
         </Animated.View>
