@@ -65,7 +65,7 @@ export const RecommendationsSection: React.FC<{
       <Text style={styles.sectionTitle}>Recurring Issues</Text>
       {recommendations.recurringIssues.map((issue, index) => (
         <View key={index} style={styles.issueItem}>
-          <Warning size={20} color={colors.ratings.d} />
+          <Warning size={20} color={colors.warning} weight="fill" />
           <Text style={styles.issueText}>{issue}</Text>
         </View>
       ))}
@@ -73,7 +73,7 @@ export const RecommendationsSection: React.FC<{
       <Text style={styles.sectionTitle}>Improvement Strategies</Text>
       {recommendations.healthImprovementStrategies.map((strategy, index) => (
         <View key={index} style={styles.strategyItem}>
-          <Star size={20} color={colors.ratings.a} />
+          <Star size={20} color={colors.success} weight="fill" />
           <Text style={styles.strategyText}>{strategy}</Text>
         </View>
       ))}

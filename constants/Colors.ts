@@ -46,6 +46,9 @@ export const Colors = {
     ratings: ratingColors.light,
     vegan: '#0C9157',
     vegetarian: '#3F88C5',
+    error: '#FF0000',
+    warning: '#FFA500',
+    success: '#13B95B',
   },
   dark: {
     text: '#ECEDEE',
@@ -61,5 +64,8 @@ export const Colors = {
     ratings: ratingColors.dark,
     vegan: '#96E6B3',
     vegetarian: '#01BAEF',
+    error: '#FF0000',
+    warning: '#FFA500',
+    success: '#00FF00',
   },
 }; 
