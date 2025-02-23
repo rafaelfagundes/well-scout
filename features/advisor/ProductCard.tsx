@@ -21,7 +21,7 @@ export interface Product {
 export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   const [expanded, setExpanded] = useState(false);
   const rotation = useSharedValue(0);
-  const colorScheme = useColorScheme();
+  const colors = Colors[useColorScheme() ?? 'light'];
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ rotateZ: `${interpolate(rotation.value, [0, 1], [0, 180])}deg` }],
@@ -32,23 +32,12 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
     setExpanded(!expanded);
   };
 
-  // Color theme
-  const ratingColors = {
-    light: Colors.light.ratings,
-    dark: Colors.dark.ratings,
-  };
-
 
   const styles = StyleSheet.create({
     productCard: {
-      backgroundColor: '#fff',
+      backgroundColor: colors.background,
       borderRadius: 12,
-      marginBottom: 16,
       elevation: 3,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
       overflow: 'hidden',
     },
     productHeader: {
@@ -58,22 +47,23 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
       padding: 16,
     },
     productName: {
-      fontSize: 18,
+      fontSize: 14,
       fontWeight: '600',
-      color: '#333',
+      color: colors.text,
       fontFamily: Fonts.sansSerif,
       maxWidth: Dimensions.get('window').width - 105,
     },
     brandName: {
-      fontSize: 14,
-      color: '#666',
+      fontSize: 12,
+      color: colors.text,
       marginTop: 4,
       fontFamily: Fonts.sansSerif,
+      opacity: 0.8,
     },
     productDetails: {
       padding: 16,
       borderTopWidth: 1,
-      borderTopColor: '#eee',
+      borderTopColor: colors.text + '11',
       overflow: 'hidden',
     },
     scoreContainer: {
@@ -82,31 +72,34 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
     },
     summary: {
       fontSize: 14,
-      color: '#666',
-      lineHeight: 22,
-      marginBottom: 16,
+      color: colors.text,
+      opacity: 0.8,
       fontFamily: Fonts.sansSerif,
+      lineHeight: 20
     },
     concernsContainer: {
       flexDirection: 'row',
       alignItems: 'flex-start',
       gap: 12,
-      backgroundColor: '#fff3f3',
+      borderWidth: 1,
+      borderColor: colors.ratings.d + '44',
+      backgroundColor: colors.ratings.d + '10',
       padding: 12,
-      borderRadius: 8,
-      marginBottom: 16,
+      paddingRight: 20,
+      borderRadius: 16,
     },
     concernsText: {
       flex: 1,
       fontSize: 14,
-      color: ratingColors.light.d,
+      color: colors.ratings.d,
       lineHeight: 20,
       fontFamily: Fonts.sansSerif,
     },
     recommendationsTitle: {
       fontSize: 16,
       fontWeight: '600',
-      color: '#333',
+      color: colors.text,
+      opacity: 0.9,
       marginBottom: 12,
       fontFamily: Fonts.sansSerif,
     },
@@ -117,11 +110,12 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
       marginBottom: 8,
     },
     recommendationText: {
-      flex: 1,
       fontSize: 14,
-      color: '#666',
+      color: colors.text,
+      opacity: 0.8,
       lineHeight: 20,
       fontFamily: Fonts.sansSerif,
+      paddingRight: 30,
     },
   });
 
@@ -136,7 +130,7 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           <Text style={styles.brandName}>{product.brand}</Text>
         </View>
         <Animated.View style={animatedStyle}>
-          <CaretDown size={24} color="#666" />
+          <CaretDown size={18} color={colors.text} />
         </Animated.View>
       </TouchableOpacity>
 
@@ -153,18 +147,20 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
               <ScoreBadge label="Eco" score={product.ecoScore} />
             )}
           </View>
-          <View style={{ height: 10 }}></View>
+          <View style={{ height: 16 }}></View>
           <Text style={styles.summary}>{product.summary}</Text>
 
+          <View style={{ height: 16 }}></View>
           <View style={styles.concernsContainer}>
-            <Warning size={24} color={ratingColors.light.d} />
+            <Warning size={24} color={colors.ratings.d} />
             <Text style={styles.concernsText}>{product.healthConcerns}</Text>
           </View>
+          <View style={{ height: 16 }}></View>
 
           <Text style={styles.recommendationsTitle}>Recommendations</Text>
           {product.recommendations.map((rec, index) => (
             <View key={index} style={styles.recommendationItem}>
-              <ArrowRight size={20} color={ratingColors.light.a} />
+              <ArrowRight size={20} color={colors.ratings.a} />
               <Text style={styles.recommendationText}>{rec}</Text>
             </View>
           ))}
