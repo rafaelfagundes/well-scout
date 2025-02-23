@@ -37,3 +37,6 @@ yarn-error.*
 
 app-example
 .aider*
+
+# dev config
+config.ts

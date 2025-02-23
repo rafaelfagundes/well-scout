@@ -75,8 +75,9 @@ export default function AdivisorScreen() {
         const simplifiedProducts = createSimplifiedProductList(productState);
         const systemPrompt = generatePromptForAdvisor(simplifiedProducts);
         const data = await callGeminiAPI(systemPrompt, abortController.signal);
+
         if (!abortController.signal.aborted) {
-          setData(JSON.parse(data));
+          setData({ report: JSON.parse(data), reportDate: new Date().toISOString() });
         }
       } catch (error) {
         if (!abortController.signal.aborted) {
@@ -111,7 +112,9 @@ export default function AdivisorScreen() {
           <View style={{ height: 20 }}></View>
           <AdvisorLogo size={200} />
           <View style={{ height: 40 }}></View>
-          <View style={{ flex: 1, height: "100%" }}><ActivityIndicator size="large" style={styles.activityIndicator} /></View>)
+          <View style={{ flex: 1, height: "100%" }}>
+            <ActivityIndicator size="large" style={styles.activityIndicator} />
+          </View>
         </ScreenContainer>
       </BackgroundImage>
     );
@@ -120,7 +123,7 @@ export default function AdivisorScreen() {
   return (
     <BackgroundImage>
       <ScreenContainer>
-        <DietaryAnalysis data={data} />
+        {data && <DietaryAnalysis report={data.report} reportDate={new Date(data.reportDate)} />}
       </ScreenContainer>
     </BackgroundImage>
   );

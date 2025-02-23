@@ -210,6 +210,7 @@ export async function callGeminiAPI(prompt: string, signal?: AbortSignal): Promi
     });
     const result = await chatSession.sendMessage(prompt, { signal });
     const finalResult = removeJsonTags(result.response.text());
+    console.log("Gemini API response:", finalResult);
     return finalResult;
   } catch (error) {
     console.error("Failed to call Gemini API:", error);
