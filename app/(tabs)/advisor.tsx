@@ -70,6 +70,9 @@ export default function AdivisorScreen() {
     const abortController = new AbortController();
 
     const fetchData = async () => {
+      if (productState.history.length === 0) {
+        return;
+      }
       try {
         setIsLoading(true);
         const simplifiedProducts = createSimplifiedProductList(productState);
@@ -95,7 +98,7 @@ export default function AdivisorScreen() {
     return () => {
       abortController.abort();
     };
-  }, [productState.history]); // Depend on productState.history to refetch when history changes
+  }, [productState.history]);
 
   const styles = StyleSheet.create({
     activityIndicator: {
