@@ -85,7 +85,21 @@ function NutrientItem({ nutrient, isLast = false }: { nutrient: any; isLast?: bo
           <Text style={styles.nutrimentLabel}>{nutrient.name}</Text>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-          <Text style={styles.nutrimentValue}>{nutrient.value}</Text>
+          <Text style={styles.nutrimentValue}>
+            {(() => {
+              // Split value into number and unit parts
+              const matches = `${nutrient.value}`.match(/^(\d+\.?\d*)(.*)/);
+              if (matches) {
+                const [_, numberPart, unitPart] = matches;
+                const formattedNumber = Number.parseFloat(numberPart).toFixed(2);
+                const trimmedUnit = unitPart.trim();
+                return trimmedUnit 
+                  ? `${formattedNumber} ${trimmedUnit}` 
+                  : formattedNumber;
+              }
+              return nutrient.value; // Fallback for non-numeric values
+            })()}
+          </Text>
           {nutrient.evaluation && <NutrientBadge evaluation={nutrient.evaluation} information={nutrient.information} toggleInformation={() => setIsExpanded(!isExpanded)} />}
         </View>
       </View>
