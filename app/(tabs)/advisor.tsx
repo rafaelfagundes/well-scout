@@ -4,20 +4,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/state/store';
 import { AppDispatch } from '@/state/store';
 import { initializeAdvisorState, generateReport } from '@/features/advisor/advisorSlice';
-import { ProductState } from '@/features/products/productSlice';
-import { callGeminiAPI, generatePromptForAdvisor } from '@/lib/ai';
 import DietaryAnalysis from '@/features/advisor/DietaryAnalysis';
-import { useEffect, useState } from 'react';
-import { Text, ActivityIndicator, StyleSheet, View } from 'react-native';
+import { useEffect } from 'react';
+import { View } from 'react-native';
 import AdvisorLogo from '@/components/ui/AdvisorLogo';
-import { ArrowCounterClockwise, Barcode, MagnifyingGlass, Sparkle } from 'phosphor-react-native';
+import { Barcode, MagnifyingGlass, Sparkle } from 'phosphor-react-native';
 import { EmptyList, EmptyListButton } from '@/components/ui/EmptyList';
 import { useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import TimedLoading from '@/components/ui/TimedLoading';
-
-
 
 export default function AdivisorScreen() {
   const productState = useSelector((state: RootState) => state.product);
@@ -36,14 +32,6 @@ export default function AdivisorScreen() {
     dispatch(generateReport(productState));
   }, [productState.history]);
 
-  const styles = StyleSheet.create({
-    activityIndicator: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  });
-
   if (advisorState.isLoading) {
     return (
       <BackgroundImage>
@@ -53,7 +41,7 @@ export default function AdivisorScreen() {
           <View style={{ height: 40 }}></View>
           <View style={{ flex: 1, height: "100%" }}>
             {/* <ActivityIndicator size="large" style={styles.activityIndicator} /> */}
-            <TimedLoading duration={15000} color={colors.tint} trackColor={colors.background} />
+            <TimedLoading duration={10000} color={colors.tint} trackColor={colors.background} />
           </View>
         </ScreenContainer>
       </BackgroundImage>

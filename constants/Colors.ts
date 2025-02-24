@@ -49,6 +49,7 @@ export const Colors = {
     error: '#FF0000',
     warning: '#FFA500',
     success: '#13B95B',
+    inputOnCard: '#F2F2F2',
   },
   dark: {
     text: '#ECEDEE',
@@ -67,5 +68,6 @@ export const Colors = {
     error: '#FF0000',
     warning: '#FFA500',
     success: '#00FF00',
+    inputOnCard: '#222'
   },
 }; 

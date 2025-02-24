@@ -1,7 +1,6 @@
 import {
   GoogleGenerativeAI,
 } from "@google/generative-ai";
-import { config } from "../config";
 
 export function generatePromptForAdvisor(productsJson: object) {
   const prompt = `
@@ -189,6 +188,7 @@ function removeJsonTags(jsonString: string): string {
 }
 
 export async function callGeminiAPI(apiKey: string, prompt: string, signal?: AbortSignal): Promise<string> {
+  console.log("API Key:", apiKey);
   try {
     console.log("Calling Gemini API...");
     const genAI = new GoogleGenerativeAI(apiKey);

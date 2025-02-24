@@ -7,7 +7,6 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import Logo from './Logo'
 import { Link } from 'expo-router';
 
-
 interface ExtraButton {
   icon: React.ReactNode,
   onPress: () => void
@@ -72,10 +71,9 @@ export default function ScreenContainer({ children, scrollView = true, horizonta
                 {button.icon}
               </TouchableOpacity>
             ))}
-            {/* No longer needed, as expo-router provides a back button */}
-            {/* <Link href="/preferences">
-                <SlidersHorizontal size={32} color={colors.text} />
-            </Link> */}
+            <Link href="/preferences">
+              <SlidersHorizontal size={32} color={colors.text} />
+            </Link>
           </View>
         </View>
         {scrollView !== false ? (
