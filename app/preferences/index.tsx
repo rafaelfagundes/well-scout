@@ -4,14 +4,13 @@ import { View, Text, TextInput, StyleSheet, useColorScheme } from 'react-native'
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 import { useDispatch, useSelector } from 'react-redux';
-import { selectTheme, setLanguage, setTheme, initializePreferencesState } from '@/features/preferences/preferencesSlice';
+import { selectGeminiApiKey, setGeminiApiKey, initializePreferencesState } from '@/features/preferences/preferencesSlice';
 import { RootState } from '@/state/store';
 import type { AppDispatch } from '@/state/store';
 
 const PreferencesScreen = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const theme = useSelector((state: RootState) => state.preferences.theme);
-    // const language = useSelector(selectLanguage); // Example if you add more
+    const geminiApiKey = useSelector(selectGeminiApiKey);
 
     useEffect(() => {
         dispatch(initializePreferencesState());
@@ -55,10 +54,9 @@ const PreferencesScreen = () => {
                     <Text style={styles.settingText}>Gemini API Key</Text>
                     <TextInput
                         style={styles.input}
-                        // Replace with a selector if you add API key to preferencesSlice
-                        value={""}
+                        value={geminiApiKey}
                         onChangeText={(text) => {
-                            // Dispatch an action to update the API key in preferencesSlice
+                            dispatch(setGeminiApiKey(text));
                         }}
                         placeholder="Enter API Key"
                         secureTextEntry

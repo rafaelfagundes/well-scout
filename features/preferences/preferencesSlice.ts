@@ -5,15 +5,11 @@ import { ThunkAction } from '@reduxjs/toolkit';
 import { Action } from 'redux';
 
 export interface Preferences {
-  theme: string;
-  language: string;
-  notificationsEnabled: boolean;
+  geminiApiKey: string;
 }
 
 const initialState: Preferences = {
-  theme: "light",
-  language: "en",
-  notificationsEnabled: true,
+  geminiApiKey: "",
 };
 
 const loadPreferencesFromAsyncStorage = async (): Promise<Preferences> => {
@@ -42,37 +38,22 @@ const preferencesSlice = createSlice({
   name: "preferences",
   initialState,
   reducers: {
-    setTheme: (state, action: PayloadAction<string>) => {
-      state.theme = action.payload;
-      savePreferencesToAsyncStorage(state);
-    },
-    setLanguage: (state, action: PayloadAction<string>) => {
-      state.language = action.payload;
-      savePreferencesToAsyncStorage(state);
-    },
-    toggleNotificationsEnabled: (state) => {
-      state.notificationsEnabled = !state.notificationsEnabled;
+    setGeminiApiKey: (state, action: PayloadAction<string>) => {
+      state.geminiApiKey = action.payload;
       savePreferencesToAsyncStorage(state);
     },
     setInitialPreferences: (state, action: PayloadAction<Preferences>) => {
-      state.theme = action.payload.theme;
-      state.language = action.payload.language;
-      state.notificationsEnabled = action.payload.notificationsEnabled;
+      state.geminiApiKey = action.payload.geminiApiKey;
     },
   },
 });
 
 export const {
-  setTheme,
-  setLanguage,
-  toggleNotificationsEnabled,
+  setGeminiApiKey,
   setInitialPreferences,
 } = preferencesSlice.actions;
 
-export const selectTheme = (state: RootState) => state.preferences.theme;
-export const selectLanguage = (state: RootState) => state.preferences.language;
-export const selectNotificationsEnabled = (state: RootState) =>
-  state.preferences.notificationsEnabled;
+export const selectGeminiApiKey = (state: RootState) => state.preferences.geminiApiKey;
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
 
