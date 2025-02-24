@@ -5,6 +5,10 @@ import { useDispatch } from 'react-redux';
 import { addProductToHistory, ProductItem } from '@/features/products/productSlice';
 import ProductDetailScreen from '@/features/products/ProductDetailScreen';
 import { extractExtraInformation, extractProductInfo, ExtraInformation, ProductInfo } from '@/features/products/Product';
+import BackgroundImage from '@/components/ui/BackgroundImage';
+import { EmptyList } from '@/components/ui/EmptyList';
+import { ListMagnifyingGlass } from 'phosphor-react-native';
+import { NoProductView } from '@/components/ui/NoProductView';
 
 export default function Product() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -12,6 +16,7 @@ export default function Product() {
   const [product, setProduct] = useState<ProductInfo>();
   const [error, setError] = useState<string | null>(null);
   const [extraInformation, setExtraInformation] = useState<ExtraInformation>();
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -23,6 +28,14 @@ export default function Product() {
 
         const productData = await productResponse.json();
         const extraData = await extraResponse.json();
+
+        if (productData.result?.id === "product_not_found") {
+          setNotFound(true);
+          return;
+        }
+
+        console.log(JSON.stringify(productData, null, 2));
+
         const productInfo: ProductInfo = extractProductInfo(productData);
         const extraInfo: ExtraInformation = extractExtraInformation(extraData);
         setProduct(productInfo);
@@ -45,6 +58,7 @@ export default function Product() {
           dispatch(addProductToHistory(product));
         }
       } catch (err) {
+        console.log(err)
         setError('Failed to fetch product');
       }
     };
@@ -52,6 +66,13 @@ export default function Product() {
   }, [id]);
 
   const headerBackTitle = "Back"
+
+  if (notFound) {
+    return <>
+      <Stack.Screen options={{ title: 'Product Not Found', headerBackTitle }} />
+      <NoProductView />
+    </>
+  }
 
   if (error) {
     return <>
@@ -92,15 +113,6 @@ function LoadingView() {
     </View>
   );
 }
-
-function NoProductView() {
-  return (
-    <View style={styles.centered}>
-      <Text>No product found</Text>
-    </View>
-  );
-}
-
 
 const styles = StyleSheet.create({
   centered: {

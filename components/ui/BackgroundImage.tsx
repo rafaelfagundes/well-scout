@@ -2,9 +2,9 @@ import { StyleSheet } from "react-native"
 import { ImageBackground } from "react-native"
 import { useColorScheme } from "../../hooks/useColorScheme"
 
-function BackgroundImage({ children }) {
+function BackgroundImage({ children }: { children: React.ReactNode }) {
   const colorScheme = useColorScheme()
-  const backgroundImage = colorScheme === 'dark' 
+  const backgroundImage = colorScheme === 'dark'
     ? require('../../assets/images/background-dark.png')
     : require('../../assets/images/background-light.png')
 

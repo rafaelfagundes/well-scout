@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { useFocusEffect } from '@react-navigation/native';
-
+import { usePathname } from 'expo-router';
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
@@ -14,6 +14,9 @@ import { Colors } from '@/constants/Colors';
 export default function ScanScreen() {
   const { hasPermission, requestPermission } = useCameraPermission();
   const device = useCameraDevice('back')
+  const pathname = usePathname();
+
+  console.log(pathname)
 
   useEffect(() => {
     if (!hasPermission) {
@@ -115,8 +118,9 @@ export default function ScanScreen() {
     );
   }
 
+  const isScanScreen = pathname.includes('/scan');
   const extraToolbarButton = {
-    icon: <Flashlight size={32} color={colors.text} weight={enableTorch ? 'fill' : 'regular'} />,
+    icon: <Flashlight size={32} color={colors.text} weight={enableTorch && isScanScreen ? 'fill' : 'regular'} />,
     onPress: () => setEnableTorch(!enableTorch),
   };
 
@@ -128,8 +132,8 @@ export default function ScanScreen() {
             style={styles.cameraView}
             codeScanner={codeScanner}
             device={device}
-            isActive={scanned ? false : true}
-            torch={enableTorch ? 'on' : 'off'}
+            isActive={isScanScreen}
+            torch={enableTorch && isScanScreen ? 'on' : 'off'}
             zoom={2}
           />}
         </View>

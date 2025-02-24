@@ -14,9 +14,10 @@ interface EmptyListProps {
   text: string;
   buttons?: EmptyListButton[];
   icon?: React.ReactElement;
+  marginTop?: number;
 }
 
-export function EmptyList({ title, text, buttons, icon }: EmptyListProps) {
+export function EmptyList({ title, text, buttons, icon, marginTop = 0 }: EmptyListProps) {
   const colorScheme = useColorScheme()
   const colors = Colors[colorScheme ?? 'light']
 
@@ -30,10 +31,11 @@ export function EmptyList({ title, text, buttons, icon }: EmptyListProps) {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 40,
+        marginTop: marginTop
       },
       emptyText: {
         fontSize: 16,
+        lineHeight: 22,
         color: colors.text,
         textAlign: 'center',
         marginBottom: 20,

@@ -17,13 +17,16 @@ const PreferencesScreen = () => {
     dispatch(initializePreferencesState());
   }, [dispatch]);
 
+
+  const colors = Colors[useColorScheme() ?? 'light'];
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       padding: 20,
     },
     settingItem: {
-      backgroundColor: Colors[useColorScheme() ?? 'light'].background,
+      backgroundColor: colors.background,
       borderRadius: 12,
       elevation: 3,
       overflow: 'hidden',
@@ -31,7 +34,7 @@ const PreferencesScreen = () => {
     },
     settingText: {
       fontSize: 16,
-      color: Colors[useColorScheme() ?? 'light'].text,
+      color: colors.text,
       fontWeight: '600',
       fontFamily: Fonts.sansSerif,
       marginBottom: 10,
@@ -39,12 +42,29 @@ const PreferencesScreen = () => {
     input: {
       height: 40,
       borderWidth: 1,
-      borderColor: Colors[useColorScheme() ?? 'light'].text + '11',
+      borderColor: colors.text + '11',
       borderRadius: 4,
       paddingHorizontal: 10,
-      color: Colors[useColorScheme() ?? 'light'].text,
-      backgroundColor: Colors[useColorScheme() ?? 'light'].inputOnCard,
+      color: colors.text,
+      backgroundColor: colors.inputOnCard,
       fontSize: 16,
+    },
+    sectionTitle: {
+      fontSize: 18,
+      fontWeight: '600',
+      color: colors.text,
+      marginBottom: 12,
+      fontFamily: Fonts.sansSerif,
+    },
+    itemFootnote: {
+      fontSize: 12,
+      lineHeight: 16,
+      color: colors.text,
+      opacity: 0.8,
+      fontStyle: 'italic',
+      fontFamily: Fonts.sansSerif,
+      paddingHorizontal: 16,
+      marginTop: 4
     },
   });
 
@@ -52,6 +72,7 @@ const PreferencesScreen = () => {
     <BackgroundImage>
       <Stack.Screen options={{ title: 'Preferences', headerBackTitle: "Back" }} />
       <View style={styles.container}>
+        <Text style={styles.sectionTitle}>AI Advisor</Text>
         <View style={styles.settingItem}>
           <Text style={styles.settingText}>Gemini API Key</Text>
           <TextInput
@@ -64,6 +85,7 @@ const PreferencesScreen = () => {
             secureTextEntry
           />
         </View>
+        <Text style={styles.itemFootnote}>In order to use the AI Advisor, you need to set up a Google Gemini API key. You can get one at aistudio.google.com for free.</Text>
       </View>
     </BackgroundImage>
   );

@@ -45,7 +45,7 @@ const ProductList = ({ products }: ProductListProps) => {
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         ItemSeparatorComponent={() => <View style={{ height: 6 }} />}
-        ListEmptyComponent={<EmptyList title="No products" text="There are no products available to generate an overview." buttons={emptyActionButtons} />}
+        ListEmptyComponent={<EmptyList marginTop={40} title="No products" text="There are no products available to generate an overview." buttons={emptyActionButtons} />}
       />
     </View>
   )

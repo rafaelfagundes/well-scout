@@ -49,10 +49,42 @@ export default function AdivisorScreen() {
       <BackgroundImage>
         <ScreenContainer>
           <EmptyList
+            marginTop={40}
             icon={noApiKeyEmptyIcon}
             title="No API Key"
             text="To use the advisor, you need to set up an API key in the preferences."
             buttons={noApiKeyActionButtons}
+          />
+        </ScreenContainer>
+      </BackgroundImage>
+    );
+  }
+
+  const emptyActionButtons: EmptyListButton[] = [
+    {
+      icon: <Barcode size={32} color={Colors[colorScheme ?? 'light'].text} />,
+      onPress: () => router.push('/(tabs)/scan'),
+      text: 'Scan Product'
+    },
+    {
+      icon: <MagnifyingGlass size={32} color={Colors[colorScheme ?? 'light'].text} />,
+      onPress: () => router.push('/(tabs)/search'),
+      text: 'Search Items'
+    }
+  ];
+
+  const historyEmptyIcon = <Sparkle size={64} color={Colors[colorScheme ?? 'light'].text} />;
+
+  if (productState.history.length === 0) {
+    return (
+      <BackgroundImage>
+        <ScreenContainer>
+          <EmptyList
+            marginTop={40}
+            icon={historyEmptyIcon}
+            title="No items to analyze"
+            text="Scan or search for products to generate a dietary analysis report."
+            buttons={emptyActionButtons}
           />
         </ScreenContainer>
       </BackgroundImage>
@@ -74,31 +106,19 @@ export default function AdivisorScreen() {
     );
   }
 
-  const emptyActionButtons: EmptyListButton[] = [
-    {
-      icon: <Barcode size={32} color={Colors[colorScheme ?? 'light'].text} />,
-      onPress: () => router.push('/(tabs)/scan'),
-      text: 'Scan Product'
-    },
-    {
-      icon: <MagnifyingGlass size={32} color={Colors[colorScheme ?? 'light'].text} />,
-      onPress: () => router.push('/(tabs)/search'),
-      text: 'Search Items'
-    }
-  ];
-
-  const historyEmptyIcon = <Sparkle size={64} color={Colors[colorScheme ?? 'light'].text} />;
-
   return (
     <BackgroundImage>
       <ScreenContainer>
         {productState.history.length === 0 ? (
-          <EmptyList
-            icon={historyEmptyIcon}
-            title="No items to analyze"
-            text="Scan or search for products to generate a dietary analysis report."
-            buttons={emptyActionButtons}
-          />
+          <>
+            <EmptyList
+              marginTop={40}
+              icon={historyEmptyIcon}
+              title="No items to analyze"
+              text="Scan or search for products to generate a dietary analysis report."
+              buttons={emptyActionButtons}
+            />
+          </>
         ) : (
           advisorState.lastReport.report && <DietaryAnalysis
             report={advisorState.lastReport.report}

@@ -198,8 +198,8 @@ export default function ProductsScreen() {
             )}
             keyExtractor={item => item.id}
             ListEmptyComponent={
-              activeTab === Tabs.HISTORY ? <EmptyList icon={historyEmptyIcon} title='No items in history' text='Scan a product or search for a specific item.' buttons={emptyActionButtonsHistory} />
-                : <EmptyList icon={favoriteEmptyIcon} title='No favorites' text='Go to history and add some favorite items.' buttons={emptyActionButtonsFavorites} />
+              activeTab === Tabs.HISTORY ? <EmptyList marginTop={40} icon={historyEmptyIcon} title='No items in history' text='Scan a product or search for a specific item.' buttons={emptyActionButtonsHistory} />
+                : <EmptyList marginTop={40} icon={favoriteEmptyIcon} title='No favorites' text='Go to history and add some favorite items.' buttons={emptyActionButtonsFavorites} />
             }
           />
         </ScreenContainer>
