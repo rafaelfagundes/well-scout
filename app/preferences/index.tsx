@@ -1,6 +1,8 @@
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import React, { useState } from 'react';
-import { View, Text, TextInput, Switch, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, useColorScheme } from 'react-native';
+import { Colors } from "@/constants/Colors";
+import { Fonts } from "@/constants/Fonts";
 
 const PreferencesScreen = () => {
   const [apiKey, setApiKey] = useState('');
@@ -32,20 +34,28 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   settingItem: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    backgroundColor: Colors[useColorScheme() ?? 'light'].background,
+    borderRadius: 12,
+    elevation: 3,
+    overflow: 'hidden',
     marginBottom: 20,
   },
   settingText: {
     fontSize: 16,
+    color: Colors[useColorScheme() ?? 'light'].text,
+    fontWeight: '600',
+    fontFamily: Fonts.sansSerif,
+    padding: 16,
   },
   input: {
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: Colors[useColorScheme() ?? 'light'].text + '11',
     borderRadius: 5,
     padding: 10,
     flex: 1,
+    marginHorizontal: 16,
+    marginBottom: 16,
+    color: Colors[useColorScheme() ?? 'light'].text,
   },
 });
 
