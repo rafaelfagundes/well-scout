@@ -1,31 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import BackgroundImage from '@/components/ui/BackgroundImage';
+import React, { useState } from 'react';
 import { View, Text, TextInput, Switch, StyleSheet } from 'react-native';
 
 const PreferencesScreen = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [apiKey, setApiKey] = useState('');
 
   //  Ideally, load and save preferences using AsyncStorage (or similar)
   //  For simplicity, this example doesn't include persistent storage.
 
   return (
-    <View style={styles.container}>
-      <View style={styles.settingItem}>
-        <Text style={styles.settingText}>Dark Mode:</Text>
-        <Switch value={isDarkMode} onValueChange={setIsDarkMode} />
+    <BackgroundImage>
+      <View style={styles.container}>
+        <View style={styles.settingItem}>
+          <Text style={styles.settingText}>Gemini API Key</Text>
+          <TextInput
+            style={styles.input}
+            value={apiKey}
+            onChangeText={setApiKey}
+            placeholder="Enter API Key"
+            secureTextEntry
+          />
+        </View>
       </View>
-
-      <View style={styles.settingItem}>
-        <Text style={styles.settingText}>Gemini API Key:</Text>
-        <TextInput
-          style={styles.input}
-          value={apiKey}
-          onChangeText={setApiKey}
-          placeholder="Enter API Key"
-          secureTextEntry
-        />
-      </View>
-    </View>
+    </BackgroundImage>
   );
 };
 
@@ -35,7 +32,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   settingItem: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 20,
@@ -49,7 +46,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     flex: 1,
-    marginLeft: 20,
   },
 });
 
