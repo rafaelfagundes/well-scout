@@ -128,7 +128,7 @@ export default function ScanScreen() {
             style={styles.cameraView}
             codeScanner={codeScanner}
             device={device}
-            isActive={true}
+            isActive={scanned ? false : true}
             torch={enableTorch ? 'on' : 'off'}
             zoom={2}
           />}

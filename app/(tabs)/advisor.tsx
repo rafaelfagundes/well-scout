@@ -8,7 +8,7 @@ import DietaryAnalysis from '@/features/advisor/DietaryAnalysis';
 import { useEffect } from 'react';
 import { View } from 'react-native';
 import AdvisorLogo from '@/components/ui/AdvisorLogo';
-import { Barcode, MagnifyingGlass, Sparkle } from 'phosphor-react-native';
+import { Barcode, Key, MagnifyingGlass, SlidersHorizontal, Sparkle } from 'phosphor-react-native';
 import { EmptyList, EmptyListButton } from '@/components/ui/EmptyList';
 import { useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';
@@ -18,6 +18,7 @@ import TimedLoading from '@/components/ui/TimedLoading';
 export default function AdivisorScreen() {
   const productState = useSelector((state: RootState) => state.product);
   const advisorState = useSelector((state: RootState) => state.advisor);
+  const preferencesState = useSelector((state: RootState) => state.preferences);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const colorScheme = useColorScheme();
@@ -32,6 +33,32 @@ export default function AdivisorScreen() {
     dispatch(generateReport(productState));
   }, [productState.history]);
 
+
+  const noApiKeyActionButtons: EmptyListButton[] = [
+    {
+      icon: <SlidersHorizontal size={32} color={Colors[colorScheme ?? 'light'].text} />,
+      onPress: () => router.push('/preferences'),
+      text: 'Open Preferences'
+    },
+  ];
+
+  const noApiKeyEmptyIcon = <Key size={64} color={Colors[colorScheme ?? 'light'].text} />;
+
+  if (preferencesState.geminiApiKey === "") {
+    return (
+      <BackgroundImage>
+        <ScreenContainer>
+          <EmptyList
+            icon={noApiKeyEmptyIcon}
+            title="No API Key"
+            text="To use the advisor, you need to set up an API key in the preferences."
+            buttons={noApiKeyActionButtons}
+          />
+        </ScreenContainer>
+      </BackgroundImage>
+    );
+  }
+
   if (advisorState.isLoading) {
     return (
       <BackgroundImage>
@@ -40,7 +67,6 @@ export default function AdivisorScreen() {
           <AdvisorLogo size={200} />
           <View style={{ height: 40 }}></View>
           <View style={{ flex: 1, height: "100%" }}>
-            {/* <ActivityIndicator size="large" style={styles.activityIndicator} /> */}
             <TimedLoading duration={10000} color={colors.tint} trackColor={colors.background} />
           </View>
         </ScreenContainer>

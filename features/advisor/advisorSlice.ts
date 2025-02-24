@@ -84,6 +84,10 @@ export const generateReport = (productState: ProductState): ThunkAction<Promise<
     const systemPrompt = generatePromptForAdvisor(simplifiedProducts);
 
     const geminiApiKey = selectGeminiApiKey(getState()); // Get API key from state
+    if (geminiApiKey === "") {
+      dispatch(setLoading(false));
+      throw new Error("Advisor: No API key provided.")
+    };
 
     const data = await callGeminiAPI(geminiApiKey, systemPrompt); // Pass API key
 

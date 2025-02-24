@@ -188,7 +188,8 @@ function removeJsonTags(jsonString: string): string {
 }
 
 export async function callGeminiAPI(apiKey: string, prompt: string, signal?: AbortSignal): Promise<string> {
-  console.log("API Key:", apiKey);
+  if (apiKey === "") throw new Error("No API key provided.");
+
   try {
     console.log("Calling Gemini API...");
     const genAI = new GoogleGenerativeAI(apiKey);
@@ -210,7 +211,7 @@ export async function callGeminiAPI(apiKey: string, prompt: string, signal?: Abo
     });
     const result = await chatSession.sendMessage(prompt, { signal });
     const finalResult = removeJsonTags(result.response.text());
-    console.log("Gemini API response:", finalResult);
+    console.log("Response was sent")
     return finalResult;
   } catch (error) {
     console.error("Failed to call Gemini API:", error);
