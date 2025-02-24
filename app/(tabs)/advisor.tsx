@@ -1,7 +1,9 @@
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/state/store';
+import { AppDispatch } from '@/state/store';
+import { initializeAdvisorState, generateReport } from '@/features/advisor/advisorSlice';
 import { ProductState } from '@/features/products/productSlice';
 import { callGeminiAPI, generatePromptForAdvisor } from '@/lib/ai';
 import DietaryAnalysis from '@/features/advisor/DietaryAnalysis';
@@ -68,43 +70,18 @@ function createSimplifiedProductList(originalJson: ProductState) {
 
 export default function AdivisorScreen() {
   const productState = useSelector((state: RootState) => state.product);
-  const [data, setData] = useState<any>();
-  const [isLoading, setIsLoading] = useState(false);
+  const advisorState = useSelector((state: RootState) => state.advisor);
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const colorScheme = useColorScheme();
 
   useEffect(() => {
-    const abortController = new AbortController();
+    dispatch(initializeAdvisorState());
+  }, [dispatch]);
 
-    const fetchData = async () => {
-      if (productState.history.length === 0) {
-        return;
-      }
-      try {
-        setIsLoading(true);
-        const simplifiedProducts = createSimplifiedProductList(productState);
-        const systemPrompt = generatePromptForAdvisor(simplifiedProducts);
-        const data = await callGeminiAPI(systemPrompt, abortController.signal);
-
-        if (!abortController.signal.aborted) {
-          setData({ report: JSON.parse(data), reportDate: new Date().toISOString() });
-        }
-      } catch (error) {
-        if (!abortController.signal.aborted) {
-          console.error("Error fetching ", error);
-        }
-      } finally {
-        if (!abortController.signal.aborted) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    fetchData();
-
-    return () => {
-      abortController.abort();
-    };
+  useEffect(() => {
+    // Generate report when product history changes
+    dispatch(generateReport(productState));
   }, [productState.history]);
 
   const styles = StyleSheet.create({
@@ -115,7 +92,7 @@ export default function AdivisorScreen() {
     },
   });
 
-  if (isLoading) {
+  if (advisorState.isLoading) {
     return (
       <BackgroundImage>
         <ScreenContainer>
@@ -156,7 +133,10 @@ export default function AdivisorScreen() {
             buttons={emptyActionButtons}
           />
         ) : (
-          data && <DietaryAnalysis report={data.report} reportDate={new Date(data.reportDate)} />
+          advisorState.lastReport.report && <DietaryAnalysis 
+            report={advisorState.lastReport.report} 
+            reportDate={new Date(advisorState.lastReport.reportDate ?? '')} 
+          />
         )}
       </ScreenContainer>
     </BackgroundImage>
