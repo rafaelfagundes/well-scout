@@ -196,7 +196,6 @@ Remember that this analysis is based on limited data about the user's diet. Your
   return prompt;
 }
 
-
 function removeJsonTags(jsonString: string): string {
   const resultJson = jsonString.replace("```json", "").replace("```", "");
   return resultJson;
@@ -210,7 +209,6 @@ export async function callGeminiAPI(prompt: string, signal?: AbortSignal): Promi
     });
     const result = await chatSession.sendMessage(prompt, { signal });
     const finalResult = removeJsonTags(result.response.text());
-    console.log("Gemini API response:", finalResult);
     return finalResult;
   } catch (error) {
     console.error("Failed to call Gemini API:", error);

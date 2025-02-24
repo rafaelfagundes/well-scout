@@ -98,8 +98,6 @@ const ProductDetailScreen: React.FC<ProductDetailsScreen> = ({ productInfo, extr
     })
   }
 
-  console.log(nutrientsEval)
-
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -239,14 +237,21 @@ const ProductDetailScreen: React.FC<ProductDetailsScreen> = ({ productInfo, extr
             </View>
 
             {productInfo.servingSize && (
-              <Text style={styles.text}>
-                Serving Size: {productInfo.servingSize || "0"}
-              </Text>
+              <>
+                <View style={{ marginBottom: 8, height: 8, borderTopWidth: 1, borderTopColor: Colors[colorScheme ?? 'light'].text + '10' }} />
+                <Text style={styles.text}>
+                  Serving Size: {productInfo.servingSize || "0"}
+                </Text>
+              </>
             )}
             {productInfo.quantity && (
-              <Text style={styles.text}>
-                Quantity: {productInfo.quantity || "0"}
-              </Text>
+              <>
+                <View style={{ height: 8 }} />
+                <Text style={styles.text}>
+                  Quantity: {productInfo.quantity || "0"}
+                </Text>
+                <View style={{ height: 8 }} />
+              </>
             )}
           </Animated.View>
           <Animated.View style={styles.section} entering={FadeInUp.duration(500).delay(300)}>

@@ -57,8 +57,6 @@ export default function OverviewScreen() {
     return { ratings, productsByRating };
   }, [filteredProducts]);
 
-  console.log(filteredProducts)
-
   return (
     <BackgroundImage>
       <ScreenContainer scrollView={false}>

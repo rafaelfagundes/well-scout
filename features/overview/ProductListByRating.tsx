@@ -84,7 +84,7 @@ const ProductListByRating = ({ productsByRating }: ProductListByRatingProps) => 
           </View>
         )}
         ItemSeparatorComponent={() => <View style={{ height: 6 }} />}
-        ListEmptyComponent={<EmptyList title="No rating products" text="There are no rating products available." buttons={emptyActionButtons} />}
+        ListEmptyComponent={<EmptyList title="No products" text="There are no products available to generate an overview." buttons={emptyActionButtons} />}
       />
     </View>
   )

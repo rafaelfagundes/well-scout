@@ -113,7 +113,7 @@ export default function ProductsScreen() {
   useEffect(() => {
     dispatch(initializeProductState());
     // reset state (uncomment to reset state)
-    // dispatch(resetStorage());
+    dispatch(resetStorage());
   }, [dispatch]);
 
   useEffect(() => {

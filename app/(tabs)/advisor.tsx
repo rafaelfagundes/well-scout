@@ -8,7 +8,7 @@ import DietaryAnalysis from '@/features/advisor/DietaryAnalysis';
 import { useEffect, useState } from 'react';
 import { Text, ActivityIndicator, StyleSheet, View } from 'react-native';
 import AdvisorLogo from '@/components/ui/AdvisorLogo';
-import { ArrowCounterClockwise, Barcode, MagnifyingGlass } from 'phosphor-react-native';
+import { ArrowCounterClockwise, Barcode, MagnifyingGlass, Sparkle } from 'phosphor-react-native';
 import { EmptyList, EmptyListButton } from '@/components/ui/EmptyList';
 import { useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';
@@ -143,7 +143,7 @@ export default function AdivisorScreen() {
     }
   ];
 
-  const historyEmptyIcon = <ArrowCounterClockwise size={64} color={Colors[colorScheme ?? 'light'].text} />;
+  const historyEmptyIcon = <Sparkle size={64} color={Colors[colorScheme ?? 'light'].text} />;
 
   return (
     <BackgroundImage>
