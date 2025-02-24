@@ -1,4 +1,5 @@
 import { View, Text, Image, StyleSheet, useColorScheme, Dimensions, Pressable } from 'react-native';
+import NoImage from '@/components/ui/NoImage';
 import { Link } from 'expo-router';
 import { Clock } from 'phosphor-react-native';
 import { Fonts } from '@/constants/Fonts';
@@ -105,7 +106,11 @@ export default function ProductItem({
           <View style={styles.topContainer}>
             <View style={styles.productInfo}>
               <View style={styles.imageContainer}>
-                <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" />
+                {imageUrl ? (
+                  <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" />
+                ) : (
+                  <NoImage />
+                )}
               </View>
               <View style={styles.infoContainer}>
                 <View>
