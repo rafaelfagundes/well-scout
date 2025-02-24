@@ -17,56 +17,6 @@ import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 
-function createSimplifiedProductList(originalJson: ProductState) {
-  // Extract the history array containing product data
-  const products = originalJson.history;
-
-  // Map each product to a simplified object
-  const simplifiedProducts = products.map(product => {
-    const productInfo = product.productInfo;
-    const extraInfo = product.extraInfo;
-
-    // Determine if the product is a solid or liquid for nutrimentsPer (heuristic based on category)
-    const isLiquid = productInfo.category.toLowerCase().includes('beverage') ||
-      productInfo.category.toLowerCase().includes('drink') ||
-      productInfo.quantity.toLowerCase().includes('ml') ||
-      productInfo.quantity.toLowerCase().includes('l');
-    const nutrimentsPer = isLiquid ? '100ml' : '100g';
-
-    // Extract ingredients as a simple array of text
-    const ingredients = productInfo.ingredients.map(ingredient => ingredient.text);
-
-    // Standardize energy fields in nutriments
-    const nutriments = {
-      ...productInfo.nutriments,
-      energyKj: productInfo.nutriments.energy || productInfo.nutriments.energyKj,
-      energyKcal: productInfo.nutriments.energyKcal
-    };
-    delete nutriments.energy; // Remove ambiguous "energy" field if present
-
-    // Extract health warnings
-    const healthWarnings = extraInfo.health.warnings.map(warning => warning.text);
-
-    return {
-      productName: productInfo.productName,
-      brand: productInfo.brand,
-      ingredients: ingredients,
-      nutrimentsPer: nutrimentsPer,
-      nutriments: nutriments,
-      allergens: productInfo.allergens,
-      additives: productInfo.additives,
-      nutriScore: productInfo.nutriscore,
-      ecoScore: productInfo.ecoscore,
-      novaGroup: productInfo.novaGroup,
-      servingSize: productInfo.servingSize,
-      quantity: productInfo.quantity,
-      healthWarnings: healthWarnings
-    };
-  });
-
-  // Return the array of simplified product objects
-  return simplifiedProducts;
-}
 
 export default function AdivisorScreen() {
   const productState = useSelector((state: RootState) => state.product);
