@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectGeminiApiKey, setGeminiApiKey, initializePreferencesState } from '@/features/preferences/preferencesSlice';
 import { RootState } from '@/state/store';
 import type { AppDispatch } from '@/state/store';
+import { Stack } from 'expo-router';
 
 const PreferencesScreen = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -49,6 +50,7 @@ const PreferencesScreen = () => {
 
     return (
         <BackgroundImage>
+            <Stack.Screen options={{ title: 'Preferences' }} />
             <View style={styles.container}>
                 <View style={styles.settingItem}>
                     <Text style={styles.settingText}>Gemini API Key</Text>

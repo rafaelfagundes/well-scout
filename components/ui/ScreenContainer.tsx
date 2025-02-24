@@ -72,9 +72,10 @@ export default function ScreenContainer({ children, scrollView = true, horizonta
                 {button.icon}
               </TouchableOpacity>
             ))}
-            <Link href="/preferences">
+            {/* No longer needed, as expo-router provides a back button */}
+            {/* <Link href="/preferences">
                 <SlidersHorizontal size={32} color={colors.text} />
-            </Link>
+            </Link> */}
           </View>
         </View>
         {scrollView !== false ? (
