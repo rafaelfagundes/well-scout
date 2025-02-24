@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, useColorScheme, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams, Stack } from 'expo-router';
 import { useDispatch } from 'react-redux';
 import { addProductToHistory, ProductItem } from '@/features/products/productSlice';
 import ProductDetailScreen from '@/features/products/ProductDetailScreen';
 import { extractExtraInformation, extractProductInfo, ExtraInformation, ProductInfo } from '@/features/products/Product';
-import BackgroundImage from '@/components/ui/BackgroundImage';
-import { EmptyList } from '@/components/ui/EmptyList';
-import { ListMagnifyingGlass } from 'phosphor-react-native';
 import { NoProductView } from '@/components/ui/NoProductView';
+import TimedLoading from '@/components/ui/TimedLoading';
+import { Colors } from '@/constants/Colors';
+import BackgroundImage from '@/components/ui/BackgroundImage';
 
 export default function Product() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -34,8 +34,6 @@ export default function Product() {
           return;
         }
 
-        console.log(JSON.stringify(productData, null, 2));
-
         const productInfo: ProductInfo = extractProductInfo(productData);
         const extraInfo: ExtraInformation = extractExtraInformation(extraData);
         setProduct(productInfo);
@@ -58,7 +56,7 @@ export default function Product() {
           dispatch(addProductToHistory(product));
         }
       } catch (err) {
-        console.log(err)
+        console.error(err)
         setError('Failed to fetch product');
       }
     };
@@ -101,23 +99,27 @@ export default function Product() {
     <>
       <Stack.Screen options={{ title: product.productName ?? "Unkown Product", headerBackTitle }} />
       <ProductDetailScreen productInfo={product} extraInfo={extraInformation}></ProductDetailScreen>
-
     </>
   );
 }
 
 function LoadingView() {
+  const colors = Colors[useColorScheme() ?? 'light'];
   return (
-    <View style={styles.centered}>
-      <Text>Loading...</Text>
-    </View>
+    <BackgroundImage>
+      <View style={styles.centered}>
+        <TimedLoading duration={500} color={colors.tint} trackColor={colors.background} />
+      </View>
+    </BackgroundImage>
   );
 }
 
 const styles = StyleSheet.create({
   centered: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: 80,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    paddingHorizontal: 32,
   },
 })

@@ -6,13 +6,12 @@ import { AppDispatch } from '@/state/store';
 import { initializeAdvisorState, generateReport } from '@/features/advisor/advisorSlice';
 import DietaryAnalysis from '@/features/advisor/DietaryAnalysis';
 import { useEffect } from 'react';
-import { View } from 'react-native';
+import { useColorScheme, View } from 'react-native';
 import AdvisorLogo from '@/components/ui/AdvisorLogo';
 import { Barcode, Key, MagnifyingGlass, SlidersHorizontal, Sparkle } from 'phosphor-react-native';
 import { EmptyList, EmptyListButton } from '@/components/ui/EmptyList';
 import { useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
 import TimedLoading from '@/components/ui/TimedLoading';
 
 export default function AdivisorScreen() {
@@ -21,8 +20,7 @@ export default function AdivisorScreen() {
   const preferencesState = useSelector((state: RootState) => state.preferences);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const colors = Colors[useColorScheme() ?? 'light'];
 
   useEffect(() => {
     dispatch(initializeAdvisorState());
@@ -36,13 +34,13 @@ export default function AdivisorScreen() {
 
   const noApiKeyActionButtons: EmptyListButton[] = [
     {
-      icon: <SlidersHorizontal size={32} color={Colors[colorScheme ?? 'light'].text} />,
+      icon: <SlidersHorizontal size={32} color={colors.text} />,
       onPress: () => router.push('/preferences'),
       text: 'Open Preferences'
     },
   ];
 
-  const noApiKeyEmptyIcon = <Key size={64} color={Colors[colorScheme ?? 'light'].text} />;
+  const noApiKeyEmptyIcon = <Key size={64} color={colors.text} />;
 
   if (preferencesState.geminiApiKey === "") {
     return (
@@ -62,18 +60,18 @@ export default function AdivisorScreen() {
 
   const emptyActionButtons: EmptyListButton[] = [
     {
-      icon: <Barcode size={32} color={Colors[colorScheme ?? 'light'].text} />,
+      icon: <Barcode size={32} color={colors.text} />,
       onPress: () => router.push('/(tabs)/scan'),
       text: 'Scan Product'
     },
     {
-      icon: <MagnifyingGlass size={32} color={Colors[colorScheme ?? 'light'].text} />,
+      icon: <MagnifyingGlass size={32} color={colors.text} />,
       onPress: () => router.push('/(tabs)/search'),
       text: 'Search Items'
     }
   ];
 
-  const historyEmptyIcon = <Sparkle size={64} color={Colors[colorScheme ?? 'light'].text} />;
+  const historyEmptyIcon = <Sparkle size={64} color={colors.text} />;
 
   if (productState.history.length === 0) {
     return (

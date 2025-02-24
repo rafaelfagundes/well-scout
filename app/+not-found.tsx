@@ -1,9 +1,9 @@
-import { Link, Stack, useRouter } from 'expo-router';
-import { View, StyleSheet } from 'react-native';
+import { Stack, useRouter } from 'expo-router';
+import { View, StyleSheet, useColorScheme } from 'react-native';
 import { EmptyList } from "@/components/ui/EmptyList";
 import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme.web";
-import { Barcode, XCircle } from "phosphor-react-native";
+import { ArrowBendUpLeft, XCircle } from "phosphor-react-native";
+import BackgroundImage from '@/components/ui/BackgroundImage';
 
 export default function NotFoundScreen() {
   const colors = Colors[useColorScheme() ?? 'light'];
@@ -13,22 +13,20 @@ export default function NotFoundScreen() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      // alignItems: 'center', // Removed per NoProductView
-      // justifyContent: 'center', // Removed per NoProductView
-      paddingHorizontal: 16, // Added per NoProductView
+      paddingHorizontal: 16,
     },
   });
 
   const buttons = [
     {
-      icon: <Barcode size={32} color={colors.text} />,
+      icon: <ArrowBendUpLeft size={32} color={colors.text} />,
       onPress: () => router.back(),
       text: 'Go Back'
     },
   ];
 
   return (
-    <>
+    <BackgroundImage>
       <Stack.Screen options={{ title: 'Not Found', headerBackTitle: "Back" }} />
       <View style={styles.container}>
         <EmptyList
@@ -38,6 +36,6 @@ export default function NotFoundScreen() {
           buttons={buttons}
         />
       </View>
-    </>
+    </BackgroundImage>
   );
 }

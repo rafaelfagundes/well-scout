@@ -1,5 +1,4 @@
 import { View } from 'react-native';
-
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import { CategoryTabs, Tabs } from '@/features/overview/CategoryTabs';

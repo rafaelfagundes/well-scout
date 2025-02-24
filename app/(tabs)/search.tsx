@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList, Text, ActivityIndicator, TouchableOpacity, useColorScheme } from 'react-native';
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
-import SearchBar from '@/components/SearchBar';
+import SearchBar from '@/components/ui/SearchBar';
 import ProductItem from '@/features/products/ProductItem';
 import { Fonts } from '@/constants/Fonts';
 import { Colors } from '@/constants/Colors';

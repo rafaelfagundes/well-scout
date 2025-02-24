@@ -1,8 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Animated, StyleSheet } from 'react-native';
-import PropTypes from 'prop-types';
 
-const TimedLoading = ({ duration = 15000, color = '#4CAF50', trackColor = '#E0E0E0' }) => {
+interface TimedLoadingProps {
+  duration?: number;
+  color?: string;
+  trackColor?: string;
+}
+
+const TimedLoading = ({ duration = 15000, color = '#4CAF50', trackColor = '#E0E0E0' }: TimedLoadingProps) => {
   const progress = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -15,7 +20,7 @@ const TimedLoading = ({ duration = 15000, color = '#4CAF50', trackColor = '#E0E0
 
   const widthInterpolation = progress.interpolate({
     inputRange: [0, 1],
-    outputRange: ['10%', '100%'],
+    outputRange: ['5%', '100%'],
   });
 
   return (
@@ -43,11 +48,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   }
 });
-
-TimedLoading.propTypes = {
-  duration: PropTypes.number,
-  color: PropTypes.string,
-  trackColor: PropTypes.string
-};
 
 export default TimedLoading;

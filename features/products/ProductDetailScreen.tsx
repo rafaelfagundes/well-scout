@@ -1,7 +1,7 @@
 import { StyleSheet, useColorScheme, View, ScrollView, Text } from 'react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { Colors } from '@/constants/Colors';
-import { extractExtraInformation, extractProductInfo, ExtraInformation, ProductInfo } from './Product';
+import { ExtraInformation, ProductInfo } from './Product';
 import { Carrot, Orange, Flask, ShieldWarning, Package, Factory, Tag } from 'phosphor-react-native';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import { capitalizeAll, removeDashes } from '@/lib/text';
@@ -13,13 +13,6 @@ import NutrientItem from './NutrientItem';
 interface ProductDetailsScreen {
   productInfo: ProductInfo;
   extraInfo: ExtraInformation;
-}
-
-interface NutrientItemType {
-  name: string;
-  value: string;
-  evaluation?: string;
-  information?: string;
 }
 
 interface NutrientEval {

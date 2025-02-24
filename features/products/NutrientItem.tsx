@@ -1,4 +1,4 @@
-import { Dimensions, Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, useColorScheme, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Fonts } from "@/constants/Fonts";
 import { Colors } from '@/constants/Colors';
@@ -93,8 +93,8 @@ function NutrientItem({ nutrient, isLast = false }: { nutrient: any; isLast?: bo
                 const [_, numberPart, unitPart] = matches;
                 const formattedNumber = Number.parseFloat(numberPart).toFixed(2);
                 const trimmedUnit = unitPart.trim();
-                return trimmedUnit 
-                  ? `${formattedNumber} ${trimmedUnit}` 
+                return trimmedUnit
+                  ? `${formattedNumber} ${trimmedUnit}`
                   : formattedNumber;
               }
               return nutrient.value; // Fallback for non-numeric values

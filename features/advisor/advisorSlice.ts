@@ -62,7 +62,7 @@ const advisorSlice = createSlice({
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
-    setInitialState: (state, action: PayloadAction<AdvisorState>) => {
+    setInitialState: (_, action: PayloadAction<AdvisorState>) => {
       return action.payload;
     }
   }

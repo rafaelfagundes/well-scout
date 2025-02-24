@@ -1,8 +1,7 @@
 import React from 'react'
-import { SafeAreaView, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import { SafeAreaView, View, StyleSheet, TouchableOpacity, ScrollView, useColorScheme } from 'react-native'
 import { SlidersHorizontal } from 'phosphor-react-native'
 import { Colors } from '@/constants/Colors'
-import { useColorScheme } from '@/hooks/useColorScheme.web'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import Logo from './Logo'
 import { Link } from 'expo-router';

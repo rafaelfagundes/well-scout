@@ -1,7 +1,7 @@
 import { StyleSheet, FlatList, View, Text, useColorScheme } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ArrowCounterClockwise, Barcode, Clock, HeartBreak, MagnifyingGlass } from 'phosphor-react-native';
-import SearchBar from '@/components/SearchBar';
+import SearchBar from '@/components/ui/SearchBar';
 import ScreenContainer from '@/components/ui/ScreenContainer';
 import BackgroundImage from '@/components/ui/BackgroundImage';
 import ProductItem from '@/features/products/ProductItem';
@@ -13,11 +13,10 @@ import { ProductsTabs } from '@/features/products/ProductTabs';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing } from 'react-native-reanimated';
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '@/state/store';
-import { removeProductFromHistory, addProductToFavorites, initializeProductState, removeProductFromFavorites, resetStorage } from '@/features/products/productSlice';
+import { removeProductFromHistory, addProductToFavorites, initializeProductState, removeProductFromFavorites } from '@/features/products/productSlice';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { EmptyList, EmptyListButton } from '@/components/ui/EmptyList';
-import TimedLoading from '@/components/ui/TimedLoading';
 import { initializePreferencesState } from '@/features/preferences/preferencesSlice';
 
 
@@ -151,34 +150,34 @@ export default function ProductsScreen() {
   );
 
   const extraToolbarButton = {
-    icon: <MagnifyingGlass size={32} color={Colors[useColorScheme() ?? 'light'].text} />,
+    icon: <MagnifyingGlass size={32} color={colors.text} />,
     onPress: () => setShowSearch(!showSearch),
   };
 
   const emptyActionButtonsHistory: EmptyListButton[] = [
     {
-      icon: <Barcode size={32} color={Colors[useColorScheme() ?? 'light'].text} />,
+      icon: <Barcode size={32} color={colors.text} />,
       onPress: () => router.push('/(tabs)/scan'),
       text: 'Scan Product'
     },
     {
-      icon: <MagnifyingGlass size={32} color={Colors[useColorScheme() ?? 'light'].text} />,
+      icon: <MagnifyingGlass size={32} color={colors.text} />,
       onPress: () => router.push('/(tabs)/search'),
       text: 'Search Items'
     }
   ];
 
-  const historyEmptyIcon = <ArrowCounterClockwise size={64} color={Colors[useColorScheme() ?? 'light'].text} />;
+  const historyEmptyIcon = <ArrowCounterClockwise size={64} color={colors.text} />;
 
   const emptyActionButtonsFavorites: EmptyListButton[] = [
     {
-      icon: <Clock size={32} color={Colors[useColorScheme() ?? 'light'].text} />,
+      icon: <Clock size={32} color={colors.text} />,
       onPress: () => setActiveTab(Tabs.HISTORY),
       text: 'Go to history'
     }
   ];
 
-  const favoriteEmptyIcon = <HeartBreak size={64} color={Colors[useColorScheme() ?? 'light'].text} />;
+  const favoriteEmptyIcon = <HeartBreak size={64} color={colors.text} />;
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -206,5 +205,4 @@ export default function ProductsScreen() {
       </BackgroundImage>
     </GestureHandlerRootView>
   );
-
 }

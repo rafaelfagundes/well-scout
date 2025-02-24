@@ -16,8 +16,6 @@ export default function ScanScreen() {
   const device = useCameraDevice('back')
   const pathname = usePathname();
 
-  console.log(pathname)
-
   useEffect(() => {
     if (!hasPermission) {
       requestPermission();
@@ -78,7 +76,6 @@ export default function ScanScreen() {
   const codeScanner = useCodeScanner({
     codeTypes: ['qr', 'ean-13'],
     onCodeScanned: (codes) => {
-      // console.log(`Scanned ${codes.length} codes!`)
       if (codes[0].value !== barCode) {
         setBarCode(codes[0].value ?? "")
       }
@@ -86,7 +83,6 @@ export default function ScanScreen() {
   });
 
   useEffect(() => {
-    console.log(barCode)
     if (barCode !== "") {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       router.push(`/product/${barCode}`);

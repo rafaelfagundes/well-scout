@@ -5,7 +5,6 @@ import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 import { useDispatch, useSelector } from 'react-redux';
 import { selectGeminiApiKey, setGeminiApiKey, initializePreferencesState } from '@/features/preferences/preferencesSlice';
-import { RootState } from '@/state/store';
 import type { AppDispatch } from '@/state/store';
 import { Stack } from 'expo-router';
 

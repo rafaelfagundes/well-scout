@@ -1,6 +1,5 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet, useColorScheme } from "react-native"
 import { ImageBackground } from "react-native"
-import { useColorScheme } from "../../hooks/useColorScheme"
 
 function BackgroundImage({ children }: { children: React.ReactNode }) {
   const colorScheme = useColorScheme()

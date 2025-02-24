@@ -1,8 +1,7 @@
 import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
 import { Barcode, ListMagnifyingGlass } from "phosphor-react-native";
 import BackgroundImage from "./BackgroundImage";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, useColorScheme } from "react-native";
 import { EmptyList } from "./EmptyList";
 import { useRouter } from "expo-router";
 

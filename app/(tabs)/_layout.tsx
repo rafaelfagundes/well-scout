@@ -1,23 +1,21 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-
 import { HapticTab } from '@/components/HapticTab';
 import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { Cube, Barcode, Gauge, MagnifyingGlass, Sparkle } from 'phosphor-react-native';
 import { Fonts } from '@/constants/Fonts';
-
+import { useColorScheme } from 'react-native';
 
 const ICON_SIZE = 32
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const colors = Colors[useColorScheme() ?? 'light'];
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].activeTabBarItem,
-        tabBarInactiveTintColor: Colors[colorScheme ?? 'light'].inactiveTabBarItem,
+        tabBarActiveTintColor: colors.activeTabBarItem,
+        tabBarInactiveTintColor: colors.inactiveTabBarItem,
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: undefined,

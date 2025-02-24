@@ -9,12 +9,6 @@ export interface OverallRecommendations {
   healthImprovementStrategies: string[];
 }
 
-// Color theme
-const ratingColors = {
-  light: Colors.light.ratings,
-  dark: Colors.dark.ratings,
-};
-
 export const RecommendationsSection: React.FC<{
   recommendations: OverallRecommendations;
 }> = ({ recommendations }) => {

@@ -4,7 +4,7 @@ import { Fonts } from '@/constants/Fonts';
 import { removeHTMLTags } from '@/lib/text';
 import { Info } from 'phosphor-react-native';
 import { Colors } from '@/constants/Colors';
-import Animated, { FadeInUp, SlideOutDown, SlideInUp, SlideInDown, useSharedValue, withTiming, useAnimatedStyle } from 'react-native-reanimated';
+import Animated, { useSharedValue, withTiming, useAnimatedStyle } from 'react-native-reanimated';
 
 
 function AdditiveItem({ additive, isLast = false }: { additive: any; isLast?: boolean }) {
