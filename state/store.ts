@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import productReducer from '../features/products/productSlice'
-import advisorReducer from '../features/advisor/advisorSlice'
+import productReducer from '@/features/products/productSlice'
+import advisorReducer from '@/features/advisor/advisorSlice'
 
 export const store = configureStore({
   reducer: {

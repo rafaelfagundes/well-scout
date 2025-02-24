@@ -151,3 +151,5 @@ export const initializeAdvisorState = (): ThunkAction<Promise<void>, RootState, 
   const loadedState = await loadAdvisorStateFromAsyncStorage();
   dispatch(setInitialState(loadedState));
 };
+
+export default advisorSlice.reducer;
