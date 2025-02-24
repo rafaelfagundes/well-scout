@@ -8,6 +8,11 @@ import DietaryAnalysis from '@/features/advisor/DietaryAnalysis';
 import { useEffect, useState } from 'react';
 import { Text, ActivityIndicator, StyleSheet, View } from 'react-native';
 import AdvisorLogo from '@/components/ui/AdvisorLogo';
+import { ArrowCounterClockwise, Barcode, MagnifyingGlass } from 'phosphor-react-native';
+import { EmptyList, EmptyListButton } from '@/components/ui/EmptyList';
+import { useRouter } from 'expo-router';
+import { Colors } from '@/constants/Colors';
+import { useColorScheme } from '@/hooks/useColorScheme';
 
 
 function createSimplifiedProductList(originalJson: ProductState) {
@@ -65,6 +70,8 @@ export default function AdivisorScreen() {
   const productState = useSelector((state: RootState) => state.product);
   const [data, setData] = useState<any>();
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const colorScheme = useColorScheme();
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -123,10 +130,34 @@ export default function AdivisorScreen() {
     );
   }
 
+  const emptyActionButtons: EmptyListButton[] = [
+    {
+      icon: <Barcode size={32} color={Colors[colorScheme ?? 'light'].text} />,
+      onPress: () => router.push('/(tabs)/scan'),
+      text: 'Scan Product'
+    },
+    {
+      icon: <MagnifyingGlass size={32} color={Colors[colorScheme ?? 'light'].text} />,
+      onPress: () => router.push('/(tabs)/search'),
+      text: 'Search Items'
+    }
+  ];
+
+  const historyEmptyIcon = <ArrowCounterClockwise size={64} color={Colors[colorScheme ?? 'light'].text} />;
+
   return (
     <BackgroundImage>
       <ScreenContainer>
-        {data && <DietaryAnalysis report={data.report} reportDate={new Date(data.reportDate)} />}
+        {productState.history.length === 0 ? (
+          <EmptyList
+            icon={historyEmptyIcon}
+            title="No items to analyze"
+            text="Scan or search for products to generate a dietary analysis report."
+            buttons={emptyActionButtons}
+          />
+        ) : (
+          data && <DietaryAnalysis report={data.report} reportDate={new Date(data.reportDate)} />
+        )}
       </ScreenContainer>
     </BackgroundImage>
   );
