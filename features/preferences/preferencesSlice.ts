@@ -77,8 +77,8 @@ export const selectNotificationsEnabled = (state: RootState) =>
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
 
 export const initializePreferencesState = (): AppThunk<Promise<void>> => async (dispatch) => {
-    const loadedPreferences = await loadPreferencesFromAsyncStorage();
-    dispatch(setInitialPreferences(loadedPreferences));
-  }
+  const loadedPreferences = await loadPreferencesFromAsyncStorage();
+  dispatch(setInitialPreferences(loadedPreferences));
+}
 
 export default preferencesSlice.reducer;
