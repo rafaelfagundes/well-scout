@@ -18,6 +18,7 @@ import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeabl
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { EmptyList, EmptyListButton } from '@/components/ui/EmptyList';
 import TimedLoading from '@/components/ui/TimedLoading';
+import { initializePreferencesState } from '@/features/preferences/preferencesSlice';
 
 
 enum Tabs {
@@ -114,6 +115,7 @@ export default function ProductsScreen() {
 
   useEffect(() => {
     dispatch(initializeProductState());
+    dispatch(initializePreferencesState());
     // reset state (uncomment to reset state)
     // dispatch(resetStorage());
   }, [dispatch]);
