@@ -3,20 +3,6 @@ import {
 } from "@google/generative-ai";
 import { config } from "../config";
 
-const genAI = new GoogleGenerativeAI(config.googleGeminiApiKey);
-
-const model = genAI.getGenerativeModel({
-  model: "gemini-2.0-flash",
-});
-
-const generationConfig = {
-  temperature: 1,
-  topP: 0.95,
-  topK: 40,
-  maxOutputTokens: 16_384,
-  responseMimeType: "text/plain",
-};
-
 export function generatePromptForAdvisor(productsJson: object) {
   const prompt = `
 You are a health and nutrition expert. Your task is to analyze the provided product data and generate a detailed report on how the user can improve their health based on the products they are consuming. The product data includes information on ingredients, nutritional values, allergens, additives, health scores, and health warnings.
@@ -121,6 +107,7 @@ The output should be in this json format:
       "recommendations": [
         "string",
         "string",
+        "string",
         "string"
       ]
     },
@@ -135,6 +122,7 @@ The output should be in this json format:
       "recommendations": [
         "string",
         "string",
+        "string",
         "string"
       ]
     },
@@ -147,6 +135,7 @@ The output should be in this json format:
       "novaGroup": "number",
       "healthConcerns": "string",
       "recommendations": [
+        "string",
         "string",
         "string",
         "string"
@@ -199,9 +188,22 @@ function removeJsonTags(jsonString: string): string {
   return resultJson;
 }
 
-export async function callGeminiAPI(prompt: string, signal?: AbortSignal): Promise<string> {
+export async function callGeminiAPI(apiKey: string, prompt: string, signal?: AbortSignal): Promise<string> {
   try {
     console.log("Calling Gemini API...");
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.0-flash",
+    });
+
+    const generationConfig = {
+      temperature: 1,
+      topP: 0.95,
+      topK: 40,
+      maxOutputTokens: 16_384,
+      responseMimeType: "text/plain",
+    };
+
     const chatSession = model.startChat({
       generationConfig,
       history: [],

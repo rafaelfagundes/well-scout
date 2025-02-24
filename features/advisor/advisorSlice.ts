@@ -6,6 +6,7 @@ import { Action } from 'redux';
 import { callGeminiAPI, generatePromptForAdvisor } from "@/lib/ai";
 import { ProductState } from "@/features/products/productSlice";
 import { DietaryReport } from "./DietaryAnalysis";
+import { selectGeminiApiKey } from "../preferences/preferencesSlice";
 
 export interface AdvisorState {
   lastReport: {
@@ -70,7 +71,7 @@ const advisorSlice = createSlice({
 export const { setLastReport, clearLastReport, setLoading, setInitialState } = advisorSlice.actions;
 
 // Thunk action to generate and save report
-export const generateReport = (productState: ProductState): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (dispatch) => {
+export const generateReport = (productState: ProductState): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (dispatch, getState) => { // Use getState
   try {
     dispatch(setLoading(true));
 
@@ -81,7 +82,10 @@ export const generateReport = (productState: ProductState): ThunkAction<Promise<
 
     const simplifiedProducts = createSimplifiedProductList(productState);
     const systemPrompt = generatePromptForAdvisor(simplifiedProducts);
-    const data = await callGeminiAPI(systemPrompt);
+
+    const geminiApiKey = selectGeminiApiKey(getState()); // Get API key from state
+
+    const data = await callGeminiAPI(geminiApiKey, systemPrompt); // Pass API key
 
     dispatch(setLastReport({
       report: JSON.parse(data),
