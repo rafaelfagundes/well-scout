@@ -15,6 +15,7 @@ import { EmptyList, EmptyListButton } from '@/components/ui/EmptyList';
 import { useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import TimedLoading from '@/components/ui/TimedLoading';
 
 
 
@@ -24,6 +25,7 @@ export default function AdivisorScreen() {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const colorScheme = useColorScheme();
+  const colors = Colors[colorScheme ?? 'light'];
 
   useEffect(() => {
     dispatch(initializeAdvisorState());
@@ -50,7 +52,8 @@ export default function AdivisorScreen() {
           <AdvisorLogo size={200} />
           <View style={{ height: 40 }}></View>
           <View style={{ flex: 1, height: "100%" }}>
-            <ActivityIndicator size="large" style={styles.activityIndicator} />
+            {/* <ActivityIndicator size="large" style={styles.activityIndicator} /> */}
+            <TimedLoading duration={15000} color={colors.tint} trackColor={colors.background} />
           </View>
         </ScreenContainer>
       </BackgroundImage>
@@ -83,9 +86,9 @@ export default function AdivisorScreen() {
             buttons={emptyActionButtons}
           />
         ) : (
-          advisorState.lastReport.report && <DietaryAnalysis 
-            report={advisorState.lastReport.report} 
-            reportDate={new Date(advisorState.lastReport.reportDate ?? '')} 
+          advisorState.lastReport.report && <DietaryAnalysis
+            report={advisorState.lastReport.report}
+            reportDate={new Date(advisorState.lastReport.reportDate ?? '')}
           />
         )}
       </ScreenContainer>

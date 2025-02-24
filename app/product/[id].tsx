@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams, Stack } from 'expo-router';
 import { useDispatch } from 'react-redux';
-import { addProductToHistory } from '@/features/products/productSlice';
+import { addProductToHistory, ProductItem } from '@/features/products/productSlice';
 import ProductDetailScreen from '@/features/products/ProductDetailScreen';
 import { extractExtraInformation, extractProductInfo, ExtraInformation, ProductInfo } from '@/features/products/Product';
 
@@ -20,25 +20,29 @@ export default function Product() {
           fetch(`https://world.openfoodfacts.org/api/v3/product/${id}.json?product_type=all`),
           fetch(`https://world.openfoodfacts.org/api/v3/product/${id}?product_type=all&fields=knowledge_panels`)
         ]);
+
         const productData = await productResponse.json();
         const extraData = await extraResponse.json();
         const productInfo: ProductInfo = extractProductInfo(productData);
         const extraInfo: ExtraInformation = extractExtraInformation(extraData);
         setProduct(productInfo);
         setExtraInformation(extraInfo);
+
         if (productInfo && extraInfo) {
-          dispatch(addProductToHistory({
-            imageUrl: productData.product.image_front_url,
-            productName: productData.product.product_name,
-            brandName: productData.product.brands,
-            nutriScore: productData.product.nutriscore_grade,
-            ecoScore: productData.product.ecoscore_grade,
+          const product: ProductItem = {
             id: productData.code,
+            ecoScore: productData.product.ecoscore_grade,
+            nutriScore: productData.product.nutriscore_grade,
+            imageUrl: productData.product.image_front_url,
+            brandName: productData.product.brands,
+            productName: productData.product.product_name,
+            category: productData.product.categories_tags ? productData.product.categories_tags.map((category: string) => category.replace('en:', '')) : [],
             productType: productData.product.product_type,
             createdDate: new Date().toISOString(),
             productInfo: productInfo,
             extraInfo: extraInfo
-          }));
+          };
+          dispatch(addProductToHistory(product));
         }
       } catch (err) {
         setError('Failed to fetch product');

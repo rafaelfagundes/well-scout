@@ -15,29 +15,32 @@ const TimedLoading = ({ duration = 15000, color = '#4CAF50', trackColor = '#E0E0
 
   const widthInterpolation = progress.interpolate({
     inputRange: [0, 1],
-    outputRange: ['0%', '100%'],
+    outputRange: ['10%', '100%'],
   });
 
   return (
     <View style={[styles.container, { backgroundColor: trackColor }]}>
-      <Animated.View style={[styles.progressBar, { 
+      <Animated.View style={[styles.progressBar, {
         width: widthInterpolation,
         backgroundColor: color
-      }]}/>
+      }]} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: 4,
-    borderRadius: 2,
+    height: 20,
+    borderRadius: 10,
     overflow: 'hidden',
     width: '100%',
+    justifyContent: 'center',
+    padding: 4
+
   },
   progressBar: {
     height: '100%',
-    borderRadius: 2,
+    borderRadius: 10,
   }
 });
 

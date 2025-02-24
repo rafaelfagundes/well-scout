@@ -191,8 +191,6 @@ Be specific and actionable in your advice, and explain the reasoning behind your
 
 Remember that this analysis is based on limited data about the user's diet. Your recommendations should be tailored to the provided product information and should not make assumptions about the user's entire diet or health status. If necessary, suggest that the user consults with a healthcare professional for personalized advice.
 `
-
-
   return prompt;
 }
 
@@ -203,12 +201,14 @@ function removeJsonTags(jsonString: string): string {
 
 export async function callGeminiAPI(prompt: string, signal?: AbortSignal): Promise<string> {
   try {
+    console.log("Calling Gemini API...");
     const chatSession = model.startChat({
       generationConfig,
       history: [],
     });
     const result = await chatSession.sendMessage(prompt, { signal });
     const finalResult = removeJsonTags(result.response.text());
+    console.log("Gemini API response:", finalResult);
     return finalResult;
   } catch (error) {
     console.error("Failed to call Gemini API:", error);

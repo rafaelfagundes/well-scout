@@ -109,7 +109,7 @@ export default function ProductItem({
                 {imageUrl ? (
                   <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" />
                 ) : (
-                  <NoImage />
+                  <NoImage imageSize={imageSize} />
                 )}
               </View>
               <View style={styles.infoContainer}>

@@ -1,28 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
-  useColorScheme,
-  Dimensions,
-  Image
+  useColorScheme
 } from 'react-native';
-import Animated, {
-  FadeIn,
-  FadeOut,
-  useAnimatedStyle,
-  withSpring,
-  useSharedValue,
-  interpolate,
-  SlideInDown,
-} from 'react-native-reanimated';
-import {
-  Warning,
-  ArrowRight,
-  Star,
-  CaretDown,
-} from 'phosphor-react-native';
 import { Fonts } from '@/constants/Fonts';
 import { Colors } from '@/constants/Colors';
 import AdvisorLogo from '../../components/ui/AdvisorLogo';
@@ -30,7 +12,7 @@ import { Product, ProductCard } from './ProductCard';
 import { OverallRecommendations, RecommendationsSection } from './RecommendationsSection';
 
 
-interface DietaryReport {
+export interface DietaryReport {
   reportTitle: string;
   introduction: {
     overview: string;

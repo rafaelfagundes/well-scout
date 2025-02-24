@@ -34,7 +34,7 @@ export const RecommendationsSection: React.FC<{
       flexDirection: 'row',
       alignItems: 'flex-start',
       gap: 12,
-      marginBottom: 12,
+      marginBottom: 8,
     },
     issueText: {
       flex: 1,

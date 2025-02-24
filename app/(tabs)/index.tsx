@@ -17,6 +17,7 @@ import { removeProductFromHistory, addProductToFavorites, initializeProductState
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { EmptyList, EmptyListButton } from '@/components/ui/EmptyList';
+import TimedLoading from '@/components/ui/TimedLoading';
 
 
 enum Tabs {
@@ -106,6 +107,7 @@ export default function ProductsScreen() {
   const [debouncedSearchText, setDebouncedSearchText] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const searchBarHeight = useSharedValue(showSearch ? 50 : 0);
+  const colors = Colors[useColorScheme() ?? 'light'];
 
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
@@ -113,7 +115,7 @@ export default function ProductsScreen() {
   useEffect(() => {
     dispatch(initializeProductState());
     // reset state (uncomment to reset state)
-    dispatch(resetStorage());
+    // dispatch(resetStorage());
   }, [dispatch]);
 
   useEffect(() => {
