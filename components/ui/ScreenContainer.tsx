@@ -5,6 +5,7 @@ import { Colors } from '@/constants/Colors'
 import { useColorScheme } from '@/hooks/useColorScheme.web'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import Logo from './Logo'
+import { useRouter } from 'expo-router';
 
 
 interface ExtraButton {
@@ -23,6 +24,7 @@ export default function ScreenContainer({ children, scrollView = true, horizonta
   const colorScheme = useColorScheme()
   const colors = Colors[colorScheme ?? 'light']
   const tabBarHeight = useBottomTabBarHeight()
+  const router = useRouter();
 
   function getHeaderButtonsViewSize() {
     if (extraButtons.length === 0) {
@@ -71,7 +73,7 @@ export default function ScreenContainer({ children, scrollView = true, horizonta
                 {button.icon}
               </TouchableOpacity>
             ))}
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push('/preferences')}>
               <SlidersHorizontal size={32} color={colors.text} />
             </TouchableOpacity>
           </View>
