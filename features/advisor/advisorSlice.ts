@@ -4,8 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ThunkAction } from '@reduxjs/toolkit';
 import { Action } from 'redux';
 import { callGeminiAPI, generatePromptForAdvisor } from "@/lib/ai";
-import { DietaryReport } from "./DietaryAnalysis";
 import { ProductState } from "@/features/products/productSlice";
+import { DietaryReport } from "./DietaryAnalysis";
 
 export interface AdvisorState {
   lastReport: {
@@ -73,7 +73,7 @@ export const { setLastReport, clearLastReport, setLoading, setInitialState } = a
 export const generateReport = (productState: ProductState): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (dispatch) => {
   try {
     dispatch(setLoading(true));
-    
+
     if (productState.history.length === 0) {
       dispatch(clearLastReport());
       return;
@@ -82,7 +82,7 @@ export const generateReport = (productState: ProductState): ThunkAction<Promise<
     const simplifiedProducts = createSimplifiedProductList(productState);
     const systemPrompt = generatePromptForAdvisor(simplifiedProducts);
     const data = await callGeminiAPI(systemPrompt);
-    
+
     dispatch(setLastReport({
       report: JSON.parse(data),
       reportDate: new Date().toISOString()
