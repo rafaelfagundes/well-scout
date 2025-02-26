@@ -1,50 +1,132 @@
-# Welcome to your Expo app 👋
+# Well-Scout
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+An Expo-based React Native project for analyzing products and providing dietary advice. This project was started with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Get started
+## Project Structure
 
-1. Install dependencies
+The project follows a typical Expo/React Native structure with some key directories:
 
-   ```bash
-   npm install
-   ```
+- **`app/`**: Contains the main application logic, including different tabs/screens. Uses file-based routing (Expo Router).
+- **`assets/`**: Stores fonts and images.
+- **`components/`**: Reusable UI components.
+- **`features/`**: Contains feature-specific logic, including:
+  - `advisor/`: Logic for generating dietary advice (likely using an external API).
+  - `overview/`: Components for displaying product overviews.
+  - `preferences/`: User preferences management (including API key).
+  - `products/`: Core product data, display, and state management.
+- **`lib/`**: Utility functions.
+- **`state/`**: Redux store for state management.
+- **`constants/`**: Project-wide constants like colors and fonts.
 
-2. Start the app
+## Getting Started
 
-   ```bash
+1.  **Install Dependencies:**
+
+    ```bash
+    npm install
+    ```
+
+2.  **Start the App:**
+
+    ```bash
     npx expo start
-   ```
+    ```
 
-In the output, you'll find options to open the app in a
+    This will start the Metro bundler and provide options to run the app on:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+    - A development build (recommended for testing on a physical device)
+    - An Android emulator
+    - An iOS simulator
+    - Expo Go (a limited sandbox for development)
+    - Web Browser
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Key Features
 
-## Get a fresh project
+- **Product Scanning (Barcode/QR):** Uses `react-native-vision-camera` to scan barcodes/QR codes. <img src="https://img.shields.io/badge/react--native--vision--camera-^4.6.3-blue" alt="react-native-vision-camera">
+- **Product Search:** Includes a search bar component (`components/SearchBar.tsx`) that allows users to search for products (likely using the Open Food Facts API).
+- **Product Details:** Displays detailed product information, including:
+  - Product name, brand, image, and generic name (if available).
+  - Nutri-Score <img src="https://img.shields.io/badge/Nutri--Score-A--E-green" alt="Nutri-Score"> and Eco-Score <img src="https://img.shields.io/badge/Eco--Score-A--E-yellowgreen" alt="Eco-Score">.
+  - Ingredients list.
+  - Additives (with expandable information panels).
+  - Nutritional information (fat, saturated fat, sugars, salt, etc.).
+  - Allergens.
+  - Packaging information.
+  - Manufacturing places.
+  - Categories.
+- **Dietary Advisor:**
+  - Integrates with Google's Gemini API to provide personalized dietary advice based on the user's product history.
+  - Displays this advice in a structured report.
+  - Fetches product and extra information using the Open Food Facts API.
+- **Preferences:**
+  - Stores the user's API-KEY
+- **Favorites/History:** Allows users to add products to a favorites list and view their product history. Uses Redux for state management and AsyncStorage for persistence.
+- **UI Components:**
+  - `ScreenContainer`: Provides a consistent layout for screens, handling the top header (with a logo and potentially extra buttons) and ensuring content respects the bottom tab bar.
+  - `BackgroundImage`: Selects background images according to theme.
+  - `ProductItem`: Displays a summarized view of a product.
+  - `ProductHeader`: Displays detailed product information at the top of the product details screen.
+  - `NutriAndEcoScore`: Displays the Nutri-Score and Eco-Score of a product.
+  - `AdditiveItem`: Displays information about a single additive, with an expandable section for details.
+  - `NutrientItem`: Displays information about a single nutrient.
+  - `RatingBar`: Displays a horizontal bar graph of ratings.
+  - `EmptyList`: Displays a message and optional buttons when a list is empty.
+  - `SearchBar`: A custom search bar component with debounce functionality.
+  - `HapticTab`: Custom tab bar button that enables/disables ScrollView.
+- **State Management:** Uses Redux Toolkit (`@reduxjs/toolkit`) for state management, with separate slices for:
+  - `productSlice`: Manages product history and favorites.
+  - `advisorSlice`: Manages the dietary report generated by the AI advisor.
+  - `preferencesSlice`: Manages user preferences (initially only the Gemini API key).
+- **Asynchronous Data Fetching:** Uses `fetch` to retrieve product data from the Open Food Facts API.
+- **Error Handling:** Includes basic error handling for API calls and displays appropriate messages.
+- **Loading Indicators:** Shows loading indicators (both a timed loading bar and an activity indicator) while fetching data.
+- **Navigation:** Uses Expo Router for file-based routing.
+- **Theming:** Supports light and dark themes using `useColorScheme` and a `Colors` constant.
+- **Responsiveness:** Considers screen dimensions and adjusts layout accordingly (e.g., limiting the width of text elements in `ProductItem`).
+- **Accessibility:** Uses `Pressable` for touchable components and `accessibilityLabel` where needed.
+- **Date Formatting:** Uses a `formatRelativeTime` utility function to display dates in a human-readable format.
+- **Text Handling:** Includes utility functions for capitalization and removing HTML tags.
+- **Haptic Feedback:** Uses `expo-haptics` for haptic feedback on certain interactions (e.g., scanning a barcode). <img src="https://img.shields.io/badge/expo--haptics-~14.0.1-blue" alt="expo-haptics">
+- **Image Handling:**
+  - Uses `expo-image` for image display, supporting features like blur radius. <img src="https://img.shields.io/badge/expo--image-^2.0.5-blue" alt="expo-image">
+  - Includes a `NoImage` component for displaying a placeholder when an image is unavailable.
 
-When you're ready, run:
+## Dependencies
+
+The project uses several key dependencies:
+
+- **Expo:** Framework for building universal React applications. <img src="https://img.shields.io/badge/expo-~52.0.35-blue" alt="expo">
+- **React Native:** Framework for building native mobile apps. <img src="https://img.shields.io/badge/react--native-0.76.7-blue" alt="react-native">
+- **Expo Router:** File-based routing for Expo apps. <img src="https://img.shields.io/badge/expo--router-~4.0.17-blue" alt="expo-router">
+- **React Native Reanimated:** For animations. <img src="https://img.shields.io/badge/react--native--reanimated-~3.16.1-blue" alt="react-native-reanimated">
+- **React Native Gesture Handler:** For handling gestures (swiping). <img src="https://img.shields.io/badge/react--native--gesture--handler-~2.20.2-blue" alt="react-native-gesture-handler">
+- **Redux Toolkit:** For state management. <img src="https://img.shields.io/badge/@reduxjs/toolkit-^2.5.1-blue" alt="@reduxjs/toolkit">
+- **AsyncStorage:** For persisting data locally. <img src="https://img.shields.io/badge/@react--native--async--storage/async--storage-^2.1.1-blue" alt="async-storage">
+- **Phosphor React Native:** For icons. <img src="https://img.shields.io/badge/phosphor--react--native-^2.3.1-blue" alt="phosphor-react-native">
+- **react-native-svg:** For rendering SVG images. <img src="https://img.shields.io/badge/react--native--svg-15.8.0-blue" alt="react-native-svg">
+- **react-native-vision-camera:** For barcode/QR code scanning. <img src="https://img.shields.io/badge/react--native--vision--camera-^4.6.3-blue" alt="react-native-vision-camera">
+
+## Setup and Configuration
+
+- **API Key:** The application requires a Google Gemini API key. This should be provided through an environment variable (`GEMINI_API_KEY`) in a `.env` file. Make sure you have a `.env` file at the root of your project, and it _must_ be listed in `.gitignore`.
+- **Dependencies:** Ensure all dependencies are installed using `npm install`.
+- **Permissions:** The `app.json` file requests camera and audio permissions, appropriate for a barcode scanning app. Ensure these permissions are granted on your device/emulator.
+
+## Running Tests
 
 ```bash
-npm run reset-project
+npm test
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+This project includes Jest tests. You can run the tests with the command above.
 
-## Learn more
+## Contributing
 
-To learn more about developing your project with Expo, look at the following resources:
+This README has been generated by an AI, so please review all details for correctness before using it for any contribution or deployment. Contributions should follow standard open-source practices:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+1.  Fork the repository.
+2.  Create a feature branch (`git checkout -b feature/my-new-feature`).
+3.  Make your changes.
+4.  Commit your changes (`git commit -am 'Add some feature'`).
+5.  Push to the branch (`git push origin feature/my-new-feature`).
+6.  Create a new Pull Request.
