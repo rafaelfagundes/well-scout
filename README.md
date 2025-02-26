@@ -1,4 +1,4 @@
-# Well-Scout
+# WellScout
 
 An Expo-based React Native project for analyzing products and providing dietary advice. This project was started with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
