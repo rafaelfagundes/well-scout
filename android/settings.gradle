@@ -21,7 +21,7 @@ extensions.configure(com.facebook.react.ReactSettingsExtension) { ex ->
   }
 }
 
-rootProject.name = 'well-scout'
+rootProject.name = 'WellScout'
 
 dependencyResolutionManagement {
   versionCatalogs {

@@ -28,6 +28,7 @@
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="myapp"/>
         <data android:scheme="com.rafaelfagundes.wellscout"/>
+        <data android:scheme="wellscout"/>
       </intent-filter>
     </activity>
   </application>
