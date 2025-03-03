@@ -69,8 +69,8 @@ describe('advisorSlice', () => {
     const reportDate = new Date().toISOString();
     store.dispatch(setLastReport({ report: mockDietaryReport, reportDate }));
     expect(store.getState().advisor.lastReport).toEqual({ report: mockDietaryReport, reportDate });
-    // Called once for setting loading state, once for setting report
-    expect(AsyncStorage.setItem).toHaveBeenCalledTimes(2);
+    // Called once for setting report
+    expect(AsyncStorage.setItem).toHaveBeenCalledTimes(1);
   });
 
   it('should handle clearLastReport', () => {
