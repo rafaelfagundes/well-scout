@@ -98,7 +98,10 @@ export const initializeProductState = (): AppThunk<Promise<void>> => async (disp
 }
 
 export const resetStorage = (): AppThunk<Promise<void>> => async (dispatch) => {
-  await AsyncStorage.removeItem('@productState');
+  try {
+    await AsyncStorage.removeItem('@productState');
+  } catch (error) {
+    console.error('Failed to reset product state in Async Storage:', error);
+  }
   dispatch(setInitialState(initialState));
-  return;
 }
