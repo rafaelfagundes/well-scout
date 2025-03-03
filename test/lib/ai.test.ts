@@ -1,5 +1,6 @@
 import { callGeminiAPI, generatePromptForAdvisor, } from '../../lib/ai';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { jest } from '@jest/globals';
 
 // Mock the entire @google/generative-ai module
 jest.mock('@google/generative-ai');
