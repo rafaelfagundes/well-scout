@@ -4,6 +4,8 @@ import productReducer, {
   removeProductFromHistory,
   addProductToFavorites,
   removeProductFromFavorites,
+  initializeProductState,
+  resetStorage,
   ProductState,
   ProductItem
 } from '../../../features/products/productSlice';
@@ -128,6 +130,16 @@ describe('productSlice', () => {
     });
   });
 
+  it('should handle setInitialState', () => {
+    const initialState = {
+      history: [mockProduct1],
+      favorites: [mockProduct2]
+    };
+    const action = { type: 'product/setInitialState', payload: initialState };
+    const state = productReducer(undefined, action);
+    expect(state).toEqual(initialState);
+  });
+
   it('should handle addProductToHistory', () => {
     store.dispatch(addProductToHistory(mockProduct1));
     expect(store.getState().product.history).toContain(mockProduct1);
@@ -170,4 +182,74 @@ describe('productSlice', () => {
     expect(AsyncStorage.setItem).toHaveBeenCalledTimes(2);
   });
 
+  describe('async actions', () => {
+    it('should initialize state from AsyncStorage', async () => {
+      const mockState = {
+        history: [mockProduct1],
+        favorites: [mockProduct2]
+      };
+      (AsyncStorage.getItem as jest.Mock).mockResolvedValueOnce(JSON.stringify(mockState));
+      
+      const store = createMockStore();
+      await store.dispatch(initializeProductState());
+      
+      expect(store.getState().product).toEqual(mockState);
+      expect(AsyncStorage.getItem).toHaveBeenCalledWith('@productState');
+    });
+
+    it('should handle empty AsyncStorage on initialize', async () => {
+      (AsyncStorage.getItem as jest.Mock).mockResolvedValueOnce(null);
+      
+      const store = createMockStore();
+      await store.dispatch(initializeProductState());
+      
+      expect(store.getState().product).toEqual({
+        history: [],
+        favorites: []
+      });
+    });
+
+    it('should handle AsyncStorage error on initialize', async () => {
+      (AsyncStorage.getItem as jest.Mock).mockRejectedValueOnce(new Error('AsyncStorage error'));
+      
+      const store = createMockStore();
+      await store.dispatch(initializeProductState());
+      
+      expect(store.getState().product).toEqual({
+        history: [],
+        favorites: []
+      });
+    });
+
+    it('should reset storage', async () => {
+      const store = createMockStore({
+        history: [mockProduct1],
+        favorites: [mockProduct2]
+      });
+      
+      await store.dispatch(resetStorage());
+      
+      expect(store.getState().product).toEqual({
+        history: [],
+        favorites: []
+      });
+      expect(AsyncStorage.removeItem).toHaveBeenCalledWith('@productState');
+    });
+
+    it('should handle AsyncStorage error on reset', async () => {
+      (AsyncStorage.removeItem as jest.Mock).mockRejectedValueOnce(new Error('AsyncStorage error'));
+      
+      const store = createMockStore({
+        history: [mockProduct1],
+        favorites: [mockProduct2]
+      });
+      
+      await store.dispatch(resetStorage());
+      
+      expect(store.getState().product).toEqual({
+        history: [],
+        favorites: []
+      });
+    });
+  });
 });
