@@ -87,7 +87,49 @@ describe('advisorSlice', () => {
   });
 
   it('should handle generateReport - success', async () => {
-    const mockProductState: ProductState = { history: [], favorites: [] };
+    const mockProductState: ProductState = { 
+      history: [{
+        id: '1',
+        brandName: 'Test Brand',
+        productName: 'Test Product',
+        ecoScore: 'A',
+        nutriScore: 'A',
+        category: "food",
+        createdDate: "1",
+        productType: 'food',
+        imageUrl: 'http://example.com',
+        productInfo: {
+          productName: "Product 1",
+          genericName: "Generic 1",
+          brand: "BrandX",
+          category: "food",
+          image: "image_url",
+          nutriscore: "A",
+          novaGroup: 1,
+          ecoscore: "A",
+          ingredients: [],
+          additives: [],
+          allergens: [],
+          nutriments: {},
+          servingSize: "100g",
+          quantity: "200g",
+          packaging: [],
+          manufacturingPlaces: [],
+          categories: [],
+        },
+        extraInfo: {
+          health: {
+            additives: [],
+            nutrients: [],
+            warnings: [],
+          },
+          other: {
+            isPalmOilFree: "unknown",
+          },
+        }
+      }],
+      favorites: []
+    };
     (ai.generatePromptForAdvisor as jest.Mock).mockReturnValue('mocked prompt');
     (ai.callGeminiAPI as jest.Mock).mockResolvedValue(JSON.stringify(mockDietaryReport));
     store.dispatch(setGeminiApiKey("test-api-key")); // Set a mock API key
@@ -164,7 +206,8 @@ describe('advisorSlice', () => {
     expect(ai.callGeminiAPI).toHaveBeenCalled();
     expect(store.getState().advisor.isLoading).toBe(false);
     expect(store.getState().advisor.lastReport.report).toBeNull(); // Report should not be set
-    expect(AsyncStorage.setItem).not.toHaveBeenCalled(); // No storage on error.
+    // AsyncStorage.setItem is called once to clear the report on error
+    expect(AsyncStorage.setItem).toHaveBeenCalledTimes(1);
   });
 
 
@@ -179,7 +222,8 @@ describe('advisorSlice', () => {
 
     expect(store.getState().advisor.isLoading).toBe(false);
     expect(ai.callGeminiAPI).not.toHaveBeenCalled();
-    expect(AsyncStorage.setItem).not.toHaveBeenCalled();
+    // AsyncStorage.setItem is called once to clear the report when no API key
+    expect(AsyncStorage.setItem).toHaveBeenCalledTimes(1);
   });
 
   it('should initialize state from AsyncStorage', async () => {
