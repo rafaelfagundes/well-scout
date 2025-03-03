@@ -14,23 +14,14 @@ const mockResponse = {
   },
 };
 
-jest.unstable_mockModule('@google/generative-ai', () => ({
+jest.mock('@google/generative-ai', () => ({
   GoogleGenerativeAI: jest.fn(() => ({
     getGenerativeModel: jest.fn(() => mockGenerativeModel),
   })),
 }));
 
-let callGeminiAPI;
-let generatePromptForAdvisor;
-let GoogleGenerativeAI;
-
-beforeAll(async () => {
-  const aiModule = await import('../../lib/ai');
-  callGeminiAPI = aiModule.callGeminiAPI;
-  generatePromptForAdvisor = aiModule.generatePromptForAdvisor;
-  const ggModule = await import('@google/generative-ai');
-  GoogleGenerativeAI = ggModule.GoogleGenerativeAI;
-});
+import { callGeminiAPI, generatePromptForAdvisor } from '../../lib/ai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 describe('AI Utility Functions', () => {
   beforeEach(() => {
