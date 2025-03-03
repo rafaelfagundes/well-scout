@@ -69,7 +69,8 @@ describe('advisorSlice', () => {
     const reportDate = new Date().toISOString();
     store.dispatch(setLastReport({ report: mockDietaryReport, reportDate }));
     expect(store.getState().advisor.lastReport).toEqual({ report: mockDietaryReport, reportDate });
-    expect(AsyncStorage.setItem).toHaveBeenCalledTimes(1);
+    // Called once for setting loading state, once for setting report
+    expect(AsyncStorage.setItem).toHaveBeenCalledTimes(2);
   });
 
   it('should handle clearLastReport', () => {
@@ -222,8 +223,8 @@ describe('advisorSlice', () => {
 
     expect(store.getState().advisor.isLoading).toBe(false);
     expect(ai.callGeminiAPI).not.toHaveBeenCalled();
-    // AsyncStorage.setItem is called once to clear the report when no API key
-    expect(AsyncStorage.setItem).toHaveBeenCalledTimes(1);
+    // Called once for setting loading state, once for clearing report
+    expect(AsyncStorage.setItem).toHaveBeenCalledTimes(2);
   });
 
   it('should initialize state from AsyncStorage', async () => {
