@@ -29,7 +29,6 @@ const initialState: ProductState = {
   favorites: []
 }
 
-// Async Storage functions
 const saveStateToAsyncStorage = async (state: ProductState) => {
   try {
     const serializedState = JSON.stringify(state);

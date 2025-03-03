@@ -19,7 +19,6 @@ export function NoProductView() {
     },
   });
 
-
   const buttons = [
     {
       icon: <Barcode size={32} color={colors.text} />,

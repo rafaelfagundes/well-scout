@@ -119,7 +119,6 @@ function NutriScore({ nutriScore, isScore = false, isFirst = false, isLast = fal
       borderBottomLeftRadius: isFirst || isScore ? 8 : 0,
       borderTopRightRadius: isLast || isScore ? 8 : 0,
       borderBottomRightRadius: isLast || isScore ? 8 : 0,
-      // marginHorizontal: isScore ? 1 : 0,
       paddingRight: isLast && !isScore ? 4 : 0,
       paddingLeft: isFirst && !isScore ? 4 : 0,
     },

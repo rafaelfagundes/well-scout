@@ -64,7 +64,7 @@ export default function ScanScreen() {
     headerButtons: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      width: 64 + 20 // margin
+      width: 64 + 20 // 20 is the margin
     },
     cameraContainer: {
       flex: 1,

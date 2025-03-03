@@ -3,7 +3,6 @@ import { Fonts } from "@/constants/Fonts";
 import { Warning, Star } from "phosphor-react-native";
 import { View, Text, StyleSheet, useColorScheme } from "react-native";
 
-// Interfaces
 export interface OverallRecommendations {
   recurringIssues: string[];
   healthImprovementStrategies: string[];

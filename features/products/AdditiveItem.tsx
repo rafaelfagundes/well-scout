@@ -6,7 +6,6 @@ import { Info } from 'phosphor-react-native';
 import { Colors } from '@/constants/Colors';
 import Animated, { useSharedValue, withTiming, useAnimatedStyle } from 'react-native-reanimated';
 
-
 function AdditiveItem({ additive, isLast = false }: { additive: any; isLast?: boolean }) {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
@@ -14,7 +13,6 @@ function AdditiveItem({ additive, isLast = false }: { additive: any; isLast?: bo
   const [fullHeight, setFullHeight] = useState(0);
   const animatedHeight = useSharedValue(0);
 
-  // Animate height when isExpanded or fullHeight changes
   useEffect(() => {
     animatedHeight.value = withTiming(isExpanded ? fullHeight : 0, { duration: 300 });
   }, [isExpanded, fullHeight]);

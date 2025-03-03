@@ -19,7 +19,6 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { EmptyList, EmptyListButton } from '@/components/ui/EmptyList';
 import { initializePreferencesState } from '@/features/preferences/preferencesSlice';
 
-
 enum Tabs {
   HISTORY = 'history',
   FAVORITES = 'favorites'
@@ -115,7 +114,7 @@ export default function ProductsScreen() {
   useEffect(() => {
     dispatch(initializeProductState());
     dispatch(initializePreferencesState());
-    // reset state (uncomment to reset state)
+    // uncomment to reset state
     // dispatch(resetStorage());
   }, [dispatch]);
 

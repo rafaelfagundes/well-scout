@@ -6,7 +6,6 @@ import Animated, { useSharedValue, useAnimatedStyle, interpolate, withSpring, Fa
 import { ScoreBadge } from "./ScoreBadge";
 import { Colors } from "@/constants/Colors";
 
-// Interfaces
 export interface Product {
   productName: string;
   brand: string;
@@ -31,7 +30,6 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
     rotation.value = withSpring(expanded ? 0 : 1);
     setExpanded(!expanded);
   };
-
 
   const styles = StyleSheet.create({
     productCard: {
@@ -169,5 +167,4 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
     </Animated.View>
   );
 };
-
 

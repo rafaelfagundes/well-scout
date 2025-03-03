@@ -27,7 +27,6 @@ export default function AdivisorScreen() {
   }, [dispatch]);
 
   useEffect(() => {
-    // Generate report when product history changes
     dispatch(generateReport(productState));
   }, [productState.history]);
 

@@ -30,12 +30,10 @@ export const ScoreBadge: React.FC<{ label: string; score: string | number }> = (
     },
   });
 
-  // Color theme
   const ratingColors = {
     light: Colors.light.ratings,
     dark: Colors.dark.ratings,
   };
-
 
   const getScoreColor = (score: string | number) => {
     if (typeof score === 'string') {

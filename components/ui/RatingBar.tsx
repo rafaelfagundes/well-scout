@@ -8,7 +8,6 @@ interface RatingBarProps {
 }
 
 function getRandomPhrase(score: number): string {
-  // Define phrases for each score range
   const phrases: { [key: string]: string[] } = {
     '0-20': [
       "A red flag for your health—time to rethink your choices.",
@@ -47,7 +46,6 @@ function getRandomPhrase(score: number): string {
     ]
   };
 
-  // Determine the score range
   let range: string;
   if (score >= 0 && score < 20) {
     range = '0-20';
@@ -63,7 +61,6 @@ function getRandomPhrase(score: number): string {
     return "Invalid score. Please provide a score between 0 and 100.";
   }
 
-  // Select a random phrase from the determined range
   const phraseArray = phrases[range];
   const randomIndex = Math.floor(Math.random() * phraseArray.length);
   return phraseArray[randomIndex];
@@ -80,7 +77,7 @@ const RatingBar = ({ ratings }: RatingBarProps) => {
       case 'c': return colors.ratings.c; // Light yellow
       case 'd': return colors.ratings.d; // Orange-red
       case 'e': return colors.ratings.e; // Dark red
-      default: return '#000';     // Black
+      default: return '#000';            // Black
     }
   };
 
@@ -112,7 +109,6 @@ const RatingBar = ({ ratings }: RatingBarProps) => {
 
   const phrase = getRandomPhrase(score);
 
-  // Styles
   const styles = StyleSheet.create({
     container: {
       padding: 4,

@@ -16,7 +16,6 @@ const PreferencesScreen = () => {
     dispatch(initializePreferencesState());
   }, [dispatch]);
 
-
   const colors = Colors[useColorScheme() ?? 'light'];
 
   const styles = StyleSheet.create({

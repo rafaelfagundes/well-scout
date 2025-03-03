@@ -14,7 +14,6 @@ function NutrientItem({ nutrient, isLast = false }: { nutrient: any; isLast?: bo
   const [fullHeight, setFullHeight] = useState(0);
   const animatedHeight = useSharedValue(0);
 
-  // Animate height when isExpanded or fullHeight changes
   useEffect(() => {
     animatedHeight.value = withTiming(isExpanded ? fullHeight : 0, { duration: 300 });
   }, [isExpanded, fullHeight]);
