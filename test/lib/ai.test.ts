@@ -32,20 +32,6 @@ beforeAll(async () => {
   GoogleGenerativeAI = ggModule.GoogleGenerativeAI;
 });
 
-const mockGenerativeModel = {
-  startChat: jest.fn(),
-};
-
-const mockChatSession = {
-  sendMessage: jest.fn(),
-};
-
-const mockResponse = {
-  response: {
-    text: jest.fn(),
-  },
-};
-
 describe('AI Utility Functions', () => {
   beforeEach(() => {
     // Clear all mock implementations before each test
