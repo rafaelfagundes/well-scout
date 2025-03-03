@@ -1,8 +1,36 @@
-import { callGeminiAPI, generatePromptForAdvisor, } from '../../lib/ai';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { jest } from '@jest/globals';
 
-// Mock the entire @google/generative-ai module
-jest.mock('@google/generative-ai');
+const mockGenerativeModel = {
+  startChat: jest.fn(),
+};
+
+const mockChatSession = {
+  sendMessage: jest.fn(),
+};
+
+const mockResponse = {
+  response: {
+    text: jest.fn(),
+  },
+};
+
+jest.unstable_mockModule('@google/generative-ai', () => ({
+  GoogleGenerativeAI: jest.fn(() => ({
+    getGenerativeModel: jest.fn(() => mockGenerativeModel),
+  })),
+}));
+
+let callGeminiAPI;
+let generatePromptForAdvisor;
+let GoogleGenerativeAI;
+
+beforeAll(async () => {
+  const aiModule = await import('../../lib/ai');
+  callGeminiAPI = aiModule.callGeminiAPI;
+  generatePromptForAdvisor = aiModule.generatePromptForAdvisor;
+  const ggModule = await import('@google/generative-ai');
+  GoogleGenerativeAI = ggModule.GoogleGenerativeAI;
+});
 
 const mockGenerativeModel = {
   startChat: jest.fn(),
