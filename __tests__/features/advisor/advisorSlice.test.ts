@@ -142,7 +142,8 @@ describe('advisorSlice', () => {
     expect(store.getState().advisor.isLoading).toBe(false);
     expect(store.getState().advisor.lastReport.report).toEqual(mockDietaryReport);
     expect(store.getState().advisor.lastReport.reportDate).toBeDefined();
-    expect(AsyncStorage.setItem).toHaveBeenCalledTimes(1);
+    // Called once for setting loading state, once for setting report
+    expect(AsyncStorage.setItem).toHaveBeenCalledTimes(2);
   });
 
   it('should handle generateReport - empty history', async () => {
